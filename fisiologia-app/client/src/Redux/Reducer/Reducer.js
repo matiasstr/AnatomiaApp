@@ -1,10 +1,10 @@
 const initialState = {}
 
-const rootReducer = (state = initialState, { type, payload }) => {
-  switch (type) {
+const rootReducer = (state = initialState, action) => {
+  switch (action.type) {
 
   case first:
-    return { ...state, ...payload }
+    return { ...state, ...action.payload }
 
   default:
     return state
