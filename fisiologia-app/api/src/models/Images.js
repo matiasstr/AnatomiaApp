@@ -3,7 +3,7 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "Usuarios",
+    "images",
     {
       id: {
         type: DataTypes.UUID,
@@ -12,22 +12,10 @@ module.exports = (sequelize) => {
         primaryKey: true,
         
       },
-      username: {
-        type: DataTypes.STRING,
+      img: {
+        type: DataTypes.BLOB('long'),
         allowNull: false,
-        unique: true,
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      isAdmin: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
+
       },
     }, 
     {
