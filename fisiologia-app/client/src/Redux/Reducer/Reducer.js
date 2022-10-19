@@ -1,10 +1,17 @@
-const initialState = {}
+import { GET_INFO } from "../Actions/Actions"
+
+const initialState = {
+contenido: [{hola: "hola"},{soy: "soy"},{hueso: "hueso"}]
+}
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
 
-  case first:
-    return { ...state, ...action.payload }
+  case GET_INFO :
+    return{
+      ...state
+      
+    }
 
   default:
     return state
