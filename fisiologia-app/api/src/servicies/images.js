@@ -3,9 +3,19 @@ const { Images } = require("../DB/db");
 const multer = require("multer");
 var path = require("path");
 
-// const uploadFile = (req, res) => {
-//   res.send({ data: "Enviar un archivo" });
-// };
+const getImage = async(req,res) => {
+    
+    try {
+        
+
+    } catch (error) {
+        
+    }
+}
+
+
+
+
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -42,4 +52,5 @@ const postImage = async (req, res) => {
 module.exports = {
   postImage,
   upload,
+  getImage
 };
