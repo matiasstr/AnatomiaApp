@@ -5,6 +5,7 @@ const path = require("path");
 const { PassThrough } = require("stream");
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 const modelUsuario = require("../models/Usuarios.js");
+const modelImages = require("../models/Images.js");
 
 let sequelize =
   process.env.NODE_ENV === "production"
@@ -60,8 +61,9 @@ let capsEntries = entries.map((entry) => [
 sequelize.models = Object.fromEntries(capsEntries);
 
 modelUsuario(sequelize);
+modelImages(sequelize);
 
-const { Usuarios} = sequelize.models;
+const { Usuarios, Images} = sequelize.models;
 
 
 module.exports = {
