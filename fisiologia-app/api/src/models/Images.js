@@ -10,14 +10,16 @@ module.exports = (sequelize) => {
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true,
-        
       },
       img: {
-        type: DataTypes.BLOB('long'),
+        type: DataTypes.STRING,
         allowNull: false,
-
       },
-    }, 
+      ref: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        allowNull: false,
+      },
+    },
     {
       timestamps: false,
     }
