@@ -6,12 +6,9 @@ import Nav from "./components/NavBar/Nav";
 function App() {
   return (
     <div className="w-screen h-screen">
-     
       <Routes>
-        <Route path="/" element={<Nav/>}>
-       
-          <Route index element={<Home/>}/>
-          <Route path="Detail" element={<Detail/>}/>
+        <Route path="/" element={<Nav />}>
+          <Route index element={<Home />} />
         </Route>
       </Routes>
     </div>
