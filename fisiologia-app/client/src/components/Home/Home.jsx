@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
@@ -30,6 +31,7 @@ function Home() {
         <a href="#item4" className="btn btn-xs">
           4
         </a>
+        <Link to='/detail'>Detalle</Link>
       </div>
     </div>
   );
