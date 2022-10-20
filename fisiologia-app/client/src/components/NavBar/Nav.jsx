@@ -1,21 +1,19 @@
-
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
 function Nav() {
-  const [input, setInput] = useState("")
-  const handleInputChange = (e)=>{
-    setInput(e.target.value)
-    
-  }
-  const handleSubmit = (e)=>{
-    if(e.key === "Enter"){
+  const [input, setInput] = useState("");
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+  };
+  const handleSubmit = (e) => {
+    if (e.key === "Enter") {
       //aqui va el dispatch de la accion para filtrar
     }
-  }
+  };
 
   return (
-    <main className="w-screen h-screen">
+    <main className="w-full h-full">
       <nav className="navbar bg-base-100">
         <div className="flex-1">
           <Link to="/" className="btn btn-ghost normal-case text-xl">
@@ -56,7 +54,7 @@ function Nav() {
           </div>
         </div>
       </nav>
-      <section className="w-screen h-screen">
+      <section className="w-full h-full">
         <Outlet />
       </section>
     </main>
