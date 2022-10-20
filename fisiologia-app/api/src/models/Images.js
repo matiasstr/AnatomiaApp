@@ -12,14 +12,26 @@ module.exports = (sequelize) => {
         primaryKey: true,
         
       },
-      path: {
+      title:{
+        type: DataTypes.STRING,
+        allowNull: false,       
+      },
+      img: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      audio: {
+      desc: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
+      podcast: {
+        type: DataTypes.STRING,
+        allowNull:false,
+      },
+      grupo: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      }
     },
     {
       timestamps: false,
