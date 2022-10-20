@@ -1,8 +1,11 @@
 require("dotenv").config();
-const { Images } = require("../DB/db");
+const { Images, Referencias } = require("../DB/db");
 const multer = require("multer");
 var path = require("path");
 const { Op } = require("sequelize");
+
+
+
 
 const getImage = async (req, res) => {
   let body = req.body;
@@ -10,12 +13,12 @@ const getImage = async (req, res) => {
   try {
 
 
-    console.log(arr)
+    // console.log(arr)
 
     let response = await Images.findAll({
       where: {
         ref: {
-          [Op.overlap]: body.data
+          [Op.contains]: body.data
         },
       },
     });
@@ -45,10 +48,13 @@ const postImage = async (req, res) => {
     let arrPath = req.files[0].path.split("\\");
     let strPath = ".." + arrPath.join("/");
 
-    const response = await Images.create({
-      img: strPath,
-      ref: arrRef,
+    const responseImg = await Images.create({
+      path: strPath
     });
+
+    const responseRef  = await Referencias.create({
+
+    })
 
     res.status(200).json(response);
   } catch (error) {

@@ -3,22 +3,17 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "images",
+    "Referencias",
     {
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true,
-        
       },
-      path: {
+      ref: {
         type: DataTypes.STRING,
         allowNull: false,
-      },
-      audio: {
-        type: DataTypes.STRING,
-        allowNull: true,
       },
     },
     {
