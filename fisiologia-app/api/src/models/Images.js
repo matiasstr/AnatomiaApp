@@ -11,14 +11,26 @@ module.exports = (sequelize) => {
         allowNull: false,
         primaryKey: true,
       },
+      title:{
+        type: DataTypes.STRING,
+        allowNull: false,       
+      },
       img: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      ref: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
+      desc: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
+      podcast: {
+        type: DataTypes.STRING,
+        allowNull:false,
+      },
+      grupo: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      }
     },
     {
       timestamps: false,
