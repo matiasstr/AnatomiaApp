@@ -9,6 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Nav />}>
           <Route index element={<Home />} />
+          <Route path="detail" element={<Detail />} />
         </Route>
       </Routes>
     </div>
