@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
 import img1 from "./anatomiaslide.png";
 import {AiOutlinePlayCircle} from 'react-icons/ai'
+import { obtenerDetalle } from "../../Redux/Actions/Actions";
 
 function Detail() {
+  const dispatch = useDispatch();
+  let detalleImg = useSelector((state) => state.detalleDeImg)
+  console.log(detalleImg);
+  let { id } = useParams();
+
+  useEffect(() => {
+    dispatch(obtenerDetalle(id))
+  },[])
+
   return (
     <div>
       <div className="flex justify-center">

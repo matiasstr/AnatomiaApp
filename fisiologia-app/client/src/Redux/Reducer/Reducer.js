@@ -1,7 +1,11 @@
-import { GET_INFO } from "../Actions/Actions";
+import { 
+  GET_INFO,
+  OBTENER_DETALLE
+ } from "../Actions/Actions";
 
 const initialState = {
   contenido: [{ nombre: "Titulo", descripcion: "hueso" }, { nombre: "Titulo", descripcion: "musculo" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" }, { nombre: "Titulo", descripcion: "musculo" }],
+  detalleDeImg: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -10,6 +14,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+    case OBTENER_DETALLE:
+      return{
+        ...state,
+        detalleDeImg: action.payload
+      }
 
     default:
       return state;
