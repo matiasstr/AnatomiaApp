@@ -4,28 +4,41 @@ const multer = require("multer");
 var path = require("path");
 const { Op } = require("sequelize");
 
+//Get de todas las imagenes
 const getImage = async (req, res) => {
-  let body = req.body;
   // console.log(body.data);
   try {
-
-
     console.log(arr)
-
-    let response = await Images.findAll({
-      where: {
-        ref: {
-          [Op.overlap]: body.data
-        },
-      },
-    });
-
+    let response = await Images.findAll();
+    console.log(body)
     // console.log(response)
     res.status(200).json(response);
   } catch (error) {
     console.log(error);
   }
 };
+
+//Get imagenes segun el grupo al que pertenece
+const getImageByRef = async (req, res) => {
+  let grupo = req.body;
+
+  console.log(body.data);
+  console.log(id_ref);
+
+  try {
+    let response = await Images.findAll({
+      where: {
+        grupo: grupo,
+      },
+    });
+    console.log(body)
+    res.status(200).json(response);
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -60,4 +73,5 @@ module.exports = {
   postImage,
   upload,
   getImage,
+  getImageByRef,
 };
