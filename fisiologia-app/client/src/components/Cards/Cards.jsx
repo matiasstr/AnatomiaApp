@@ -10,7 +10,7 @@ function Cards() {
   const priPag = ultPag - porPagina;
   let informacion = allInfo?.slice(priPag, ultPag);
   const maximo = allInfo?.length / porPagina;
-  console.log(allInfo);
+
   return (
     // <div>
 

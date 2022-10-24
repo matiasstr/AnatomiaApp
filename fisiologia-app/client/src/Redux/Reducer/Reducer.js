@@ -1,4 +1,4 @@
-import { GET_IMG, GET_INFO } from "../Actions/Actions";
+import { GET_IMG, GET_INFO, POST_IMG } from "../Actions/Actions";
 
 
 const initialState = {
@@ -13,11 +13,14 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
-    case GET_IMG:
-      console.log(action.payload)
+    case POST_IMG:
       return{
         ...state,
-        imagenes: [action.payload]
+      }
+    case GET_IMG:
+      return{
+        ...state,
+        imagenes: action.payload
       }
 
     default:

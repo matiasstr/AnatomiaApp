@@ -1,6 +1,6 @@
 require("dotenv").config();
 const { Images, Referencias } = require("../DB/db");
-const multer = require("multer");
+const { cloudinary } = require("../utils/cloudinary");
 var path = require("path");
 const fs = require("fs");
 
@@ -9,13 +9,8 @@ const getImage = async (req, res) => {
   // console.log(body.data);
   try {
     let response = await Images.findAll();
-    // const contents = await fs.readFile('/path/to/file.jpg', {encoding: 'base64'});
     
-    response.forEach((e) => {
-      
-      
-      e.img = fs.readFileSync(e.img, { encoding: "base64" });
-    });
+    console.log(response)
 
     res.status(200).json(response);
   } catch (error) {
@@ -41,33 +36,28 @@ const getImageByRef = async (req, res) => {
   }
 };
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./src/images");
-  },
-  filename: function (req, file, cb) {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "./src/images");
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, `${Date.now()}-${file.originalname}`);
+//   },
+// });
 
-const upload = multer({ storage: storage }).array("MyFile");
+// const upload = multer({ storage: storage }).array("MyFile");
 
 const postImage = async (req, res) => {
   try {
     let body = req.body;
-
-    var absolutePath = path.resolve("../images/1666627380521-matisauron.jpg");
-    console.log(absolutePath)
-
-
-
-    let arrPath = req.files[0].path.split("\\");
-    let strPath =
-      "C:/Users/Matu/Desktop/FisiologiaApp/FisiologiaApp/fisiologia-app/api/" + arrPath.join("/");
+    console.log(body)
+    const uploadedResponse = await cloudinary.uploader.upload(body.img, {
+      upload_preset: "dev_setups",
+    });
 
     const responseImg = await Images.create({
       title: body.title,
-      img: strPath,
+      img: uploadedResponse.public_id,
       desc: body.desc,
       grupo: body.grupo,
       podcast: body.podcast,
@@ -75,13 +65,13 @@ const postImage = async (req, res) => {
 
     res.status(200).json(responseImg);
   } catch (error) {
+    console.log(error);
     res.status(404).send(error);
   }
 };
 
 module.exports = {
   postImage,
-  upload,
   getImage,
   getImageByRef,
 };
