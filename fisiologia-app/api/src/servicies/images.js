@@ -8,10 +8,10 @@ const fs = require("fs");
 const getImage = async (req, res) => {
   // console.log(body.data);
   try {
+    // console.log(arr)
     let response = await Images.findAll();
-    
-    console.log(response)
-
+    // console.log(body)
+    // console.log(response)
     res.status(200).json(response);
   } catch (error) {
     console.log(error);
