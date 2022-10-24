@@ -5,6 +5,7 @@ const path = require("path");
 const { PassThrough } = require("stream");
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 const modelUsuario = require("../models/Usuarios.js");
+const modelRef = require("../models/Referencias.js");
 const modelImages = require("../models/Images.js");
 
 let sequelize =
@@ -62,8 +63,15 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 modelUsuario(sequelize);
 modelImages(sequelize);
+modelRef(sequelize);
 
-const { Usuarios, Images} = sequelize.models;
+const { Usuarios, Images, Referencias} = sequelize.models;
+
+Images.belongsToMany(Referencias, { through: "Ref-Img" })
+Referencias.belongsToMany(Images, { through: "Ref-Img" })
+
+
+
 
 
 module.exports = {
