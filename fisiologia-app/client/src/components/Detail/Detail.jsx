@@ -10,6 +10,7 @@ function Detail() {
   let detalleImg = useSelector((state) => state.detalleDeImg)
   console.log(detalleImg);
   let { id } = useParams();
+  console.log(id)
 
   useEffect(() => {
     dispatch(obtenerDetalle(id))
