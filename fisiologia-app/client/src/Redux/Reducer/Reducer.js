@@ -1,19 +1,22 @@
 import { 
   GET_INFO,
-  OBTENER_DETALLE
+  OBTENER_DETALLE,
+  OBTENER_IMG
  } from "../Actions/Actions";
 
 const initialState = {
   contenido: [{ nombre: "Titulo", descripcion: "hueso" }, { nombre: "Titulo", descripcion: "musculo" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" }, { nombre: "Titulo", descripcion: "musculo" }],
 user: {login: false},
-  detalleDeImg: []
+  detalleDeImg: [],
+  imagenes: []
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_INFO:
+    case OBTENER_IMG:
       return {
         ...state,
+        imagenes: action.payload,
       };
     case OBTENER_DETALLE:
       return{
