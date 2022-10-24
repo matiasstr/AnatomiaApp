@@ -2,6 +2,7 @@ import React from "react";
 import * as fs from 'fs'
 import { useDispatch, useSelector } from "react-redux";
 import {getImg} from "../../Redux/Actions/Actions.js"
+import Login from "../Login/Login";
 import Cards from "../Cards/Cards";
 
 function Home() {
@@ -23,6 +24,7 @@ function Home() {
     
     <button onClick={(e)=>HandleClick(e)}>BOTOOON</button>
       <Cards/>
+      {/* <Login/> */}
     </div>
   );
 }

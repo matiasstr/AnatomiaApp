@@ -3,7 +3,8 @@ import { GET_IMG, GET_INFO } from "../Actions/Actions";
 
 const initialState = {
   contenido: [{ nombre: "Titulo", descripcion: "hueso" }, { nombre: "Titulo", descripcion: "musculo" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" }, { nombre: "Titulo", descripcion: "musculo" }],
-  imagenes: []
+  imagenes: [],
+  user: {login: false}
 };
 
 const rootReducer = (state = initialState, action) => {
