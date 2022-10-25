@@ -1,11 +1,9 @@
-import {
-  GET_INFO,
-  OBTENER_DETALLE,
+import {GET_IMG, GET_INFO, POST_IMG,OBTENER_DETALLE,
   OBTENER_IMG,
   POST_IMAGEN,
   AGREGAR_AL_CARRITO,
-  QUITAR_DEL_CARRITO,
-} from "../Actions/Actions";
+  QUITAR_DEL_CARRITO,} from "../Actions/Actions";
+
 
 let carritoStorage;
 try {
@@ -22,22 +20,10 @@ if (!carritoStorage) {
 }
 
 const initialState = {
-  contenido: [
-    { nombre: "Titulo", descripcion: "hueso" },
-    { nombre: "Titulo", descripcion: "musculo" },
-    { nombre: "Titulo", descripcion: "hueso" },
-    { nombre: "Titulo", descripcion: "hueso" },
-    { nombre: "Titulo", descripcion: "hueso" },
-    { nombre: "Titulo", descripcion: "hueso" },
-    { nombre: "Titulo", descripcion: "hueso" },
-    { nombre: "Titulo", descripcion: "hueso" },
-    { nombre: "Titulo", descripcion: "musculo" },
-  ],
-  user: { login: false },
+  contenido: [{ nombre: "Titulo", descripcion: "hueso" }, { nombre: "Titulo", descripcion: "musculo" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" }, { nombre: "Titulo", descripcion: "musculo" }],
+user: {login: false},
   detalleDeImg: [],
-  imagenes: [],
-  todo: [],
-  carrito: carritoStorage,
+  imagenes: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -47,7 +33,6 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         imagenes: action.payload,
       };
-
     case OBTENER_DETALLE:
       return {
         ...state,

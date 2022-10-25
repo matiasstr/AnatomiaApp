@@ -13,7 +13,6 @@ function Nav() {
   }, []);
   let userReducer = useSelector((state) => state.user);
 
-  console.log(userReducer.login);
   return (
     <main className="w-screen h-screen">
       <nav className="navbar dark:bg-slate-800">
