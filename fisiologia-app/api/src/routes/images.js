@@ -1,11 +1,11 @@
 const { Router } = require("express");
 const route = Router();
-const {postImage,
-    upload, getImage} = require("../servicies/images.js");
+const {postImage, getImage, getImageByRef} = require("../servicies/images.js");
 require("dotenv").config();
 
 route.get("/", getImage)
-route.post("/post", upload, postImage);
+route.get("/getRef", getImageByRef)
+route.post("/post", postImage);
 // route.post("/login", postLogin);
 // route.put("/cambiar", putModificarAdmin)
 // route.put("/eliminar", putElminar)
