@@ -1,12 +1,16 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-
+import React from "react";
+import { Link } from "react-router-dom";
+import columna from "../../img/columna.png";
+import cerebro from "../../img/cerebro.png";
+import mano from "../../img/mano.png";
+import Carousel from "./Carousel";
 function LandingPage() {
   return (
-    <Link to={"/inicio"}>
-    <div>LandingPage</div>
-    </Link>
-  )
+   <>
+    <Carousel/>
+    
+   </>
+  );
 }
 
-export default LandingPage
+export default LandingPage;

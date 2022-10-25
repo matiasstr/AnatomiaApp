@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 function Login() {
   //CAPTURAR LOS INPUTS
+  const [input, setInput] = useState()
+  
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
