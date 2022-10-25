@@ -1,14 +1,43 @@
-import { 
+import {
   GET_INFO,
   OBTENER_DETALLE,
-  OBTENER_IMG
- } from "../Actions/Actions";
+  OBTENER_IMG,
+  POST_IMAGEN,
+  AGREGAR_AL_CARRITO,
+  QUITAR_DEL_CARRITO,
+} from "../Actions/Actions";
+
+let carritoStorage;
+try {
+  let local = localStorage.getItem("cart") || [];
+  if (local !== "undefined") {
+    carritoStorage = JSON.parse(local);
+  }
+} catch (error) {
+  console.log('Error carritoStorage',error)
+}
+
+if (!carritoStorage) {
+  carritoStorage = [];
+}
 
 const initialState = {
-  contenido: [{ nombre: "Titulo", descripcion: "hueso" }, { nombre: "Titulo", descripcion: "musculo" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" }, { nombre: "Titulo", descripcion: "musculo" }],
-user: {login: false},
+  contenido: [
+    { nombre: "Titulo", descripcion: "hueso" },
+    { nombre: "Titulo", descripcion: "musculo" },
+    { nombre: "Titulo", descripcion: "hueso" },
+    { nombre: "Titulo", descripcion: "hueso" },
+    { nombre: "Titulo", descripcion: "hueso" },
+    { nombre: "Titulo", descripcion: "hueso" },
+    { nombre: "Titulo", descripcion: "hueso" },
+    { nombre: "Titulo", descripcion: "hueso" },
+    { nombre: "Titulo", descripcion: "musculo" },
+  ],
+  user: { login: false },
   detalleDeImg: [],
-  imagenes: []
+  imagenes: [],
+  todo: [],
+  carrito: carritoStorage,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -18,11 +47,17 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         imagenes: action.payload,
       };
+
     case OBTENER_DETALLE:
-      return{
+      return {
         ...state,
-        detalleDeImg: action.payload
-      }
+        detalleDeImg: action.payload,
+      };
+
+    case POST_IMAGEN:
+      return {
+        ...state,
+      };
 
     default:
       return state;
