@@ -1,48 +1,66 @@
 import React, { useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import img1 from "./anatomiaslide.png";
-import {AiOutlinePlayCircle} from 'react-icons/ai'
 import { obtenerDetalle } from "../../Redux/Actions/Actions";
+
+import { BsFillJournalBookmarkFill } from "react-icons/bs";
+import { CgPlayButtonO, CgPlayPauseO } from "react-icons/cg";
+
+import img1 from "./anatomiaslide.png";
+import tremendoAudio from "../../assets/media/audio.mp3";
+
+import styles from "./Detalle.module.css";
 
 function Detail() {
   const dispatch = useDispatch();
-  let detalleImg = useSelector((state) => state.detalleDeImg)
+  let detalleImg = useSelector((state) => state.detalleDeImg);
   console.log(detalleImg);
   let { id } = useParams();
-  console.log(id)
+  console.log(id);
 
   useEffect(() => {
-    dispatch(obtenerDetalle(id))
-  },[])
+    dispatch(obtenerDetalle(id));
+  }, []);
 
   return (
     <div>
-      <div className="flex justify-center">
-         <h1>Titulo</h1>
-      </div>
-      <div className="flex p-14">
-        <div className="px-14">
-          <img className="w-[350rem] rounded-md" src={img1} alt="img" />
+      <div className={styles.detalleGeneral}>
+        <div className={styles.textoImg}>
+          {/* The button to open modal */}
+          <label htmlFor="my-modal-3" className="btn modal-button">
+            <BsFillJournalBookmarkFill />
+          </label>
+
+          {/* Put this part before </body> tag */}
+          <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+          <div className="modal">
+            <div className="modal-box relative">
+              <label
+                htmlFor="my-modal-3"
+                className="btn btn-sm btn-circle absolute right-2 top-2"
+              >
+                ✕
+              </label>
+              <h3 className="text-lg font-bold">
+                Congratulations random Internet user!
+              </h3>
+              <p className="py-4">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
+                voluptatum, molestias voluptate porro aut autem assumenda
+                perspiciatis doloribus totam obcaecati reiciendis optio a
+                consequuntur architecto non dolorum? Doloribus, vel obcaecati?
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="grid place-items-center h-screen text-center">
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum
-          </p>
+        <div>
+          <img className={styles.img_detalle} src={img1} alt="img" />
         </div>
-      </div>
-      <div className="flex justify-center pb-14 scale-150">
-         <div className="">
-            <AiOutlinePlayCircle/>
-         </div>
+        <div className={styles.player}>
+          <audio controls>
+            <source src={tremendoAudio} type="audio/mpeg" />
+          </audio>
+        </div>
       </div>
     </div>
   );

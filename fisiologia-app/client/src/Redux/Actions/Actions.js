@@ -4,6 +4,9 @@ export const GET_IMG = "GET_IMG";
 export const POST_IMG = "POST_IMG";
 export const OBTENER_DETALLE = "OBTENER_DETALLE";
 export const OBTENER_IMG = "OBTENER_IMG";
+export const POST_IMAGEN = "POST_IMAGEN";
+export const AGREGAR_AL_CARRITO = "AGREGAR_AL_CARRITO";
+export const QUITAR_DEL_CARRITO = "QUITAR_DEL_CARRITO";
 
 // export const first = (payload) => ({
 //   type: GET_INFO,
@@ -59,20 +62,30 @@ export const obtenerImg = () => {
 };
 
 export const postLogin = (payload) => {
-  return async function(dispatch){
+  return async function (dispatch) {
     try {
-      let created = payload
+      let created = payload;
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 };
-export const postRegister= (payload) => {
-  return async function(dispatch){
-    try {
-      let created = payload
-    } catch (error) {
-      console.log(error);
-    }
-  }
+export const postRegister = (payload) => {
+  return async function (dispatch) {
+    let obtenerImg = await axios("/images");
+    return {
+      type: OBTENER_IMG,
+      payload: obtenerImg.data,
+    };
+  };
+};
+
+export const postImagen = (payload) => {
+  return async function (dispatch) {
+    let imagenCreada = await axios.post(`Ruta del post a definir`, payload);
+    return dispatch({
+      type: POST_IMAGEN,
+      payload: imagenCreada.data,
+    });
+  };
 };
