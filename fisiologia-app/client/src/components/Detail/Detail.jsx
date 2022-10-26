@@ -1,10 +1,14 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import img1 from "./anatomiaslide.png";
-import { BsFillJournalBookmarkFill } from "react-icons/bs";
-import { GiSoundWaves } from "react-icons/gi"
 import { obtenerDetalle } from "../../Redux/Actions/Actions";
+
+import { BsFillJournalBookmarkFill } from "react-icons/bs";
+import { CgPlayButtonO, CgPlayPauseO } from "react-icons/cg";
+
+import img1 from "./anatomiaslide.png";
+import tremendoAudio from "../../assets/media/audio.mp3";
+
 import styles from "./Detalle.module.css";
 
 function Detail() {
@@ -24,7 +28,7 @@ function Detail() {
         <div className={styles.textoImg}>
           {/* The button to open modal */}
           <label htmlFor="my-modal-3" className="btn modal-button">
-            <BsFillJournalBookmarkFill/>
+            <BsFillJournalBookmarkFill />
           </label>
 
           {/* Put this part before </body> tag */}
@@ -49,13 +53,13 @@ function Detail() {
             </div>
           </div>
         </div>
-        <div >
+        <div>
           <img className={styles.img_detalle} src={img1} alt="img" />
         </div>
-        <div>
-          <button>
-            <GiSoundWaves className="h-[5rem] w-[5rem]"/>
-          </button>
+        <div className={styles.player}>
+          <audio controls>
+            <source src={tremendoAudio} type="audio/mpeg" />
+          </audio>
         </div>
       </div>
     </div>
