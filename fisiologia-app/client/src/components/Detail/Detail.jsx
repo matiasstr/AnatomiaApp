@@ -25,7 +25,7 @@ function Detail() {
         <div className="px-14">
           <img className="w-[350rem] rounded-md" src={img1} alt="img" />
         </div>
-        <div className="grid place-items-center h-screen text-center h-auto">
+        <div className="grid place-items-center h-screen text-center">
           <p>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text

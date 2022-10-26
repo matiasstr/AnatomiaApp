@@ -18,7 +18,7 @@ function Nav() {
       <nav className="navbar dark:bg-slate-800">
         <div className="flex-1">
           <Link
-            to="/"
+            to="/inicio"
             className="btn btn-ghost normal-case text-xl dark:text-white"
           >
             Anatomia Dibujada
