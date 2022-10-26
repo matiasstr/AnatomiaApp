@@ -7,6 +7,7 @@ import Login from "./components/Login/Login";
 import Nav from "./components/NavBar/Nav";
 import Register from "./components/Register/Register";
 import Form from "./components/Form/Form";
+import Perfil from "./components/Perfil/Perfil";
 
 
 function App() {
@@ -21,8 +22,9 @@ function App() {
           <Route path="detail" element={<Detail />} />
           <Route path="inicio" element={<Cards />} />
           <Route path="Login" element={<Login />}></Route>
-          <Route path="Register" element={<Register />}></Route></Route>
-        
+          <Route path="Register" element={<Register />}></Route>
+          <Route path="Perfil" element={<Perfil />}></Route>
+        </Route>
       </Routes>
     </div>
   );

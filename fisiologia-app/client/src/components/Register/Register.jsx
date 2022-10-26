@@ -1,10 +1,23 @@
-import React from 'react'
-import {Link} from "react-router-dom"
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { postRegister } from "../../Redux/Actions/Actions";
 function Register() {
+  const dispatch = useDispatch()
+  const [input, setInput] = useState();
+  const handleInputChange = (e) => {
+    e.preventDefault();
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // dispatch(postRegister(input))
+  };
 
-
-
-  //CAPTURAR LOS INPUTS
+console.log(input);
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -12,7 +25,7 @@ function Register() {
           <h1 className="text-5xl font-bold">Registrarse</h1>
         </div>
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-          <div className="card-body">
+          <form className="card-body" onSubmit={handleSubmit}>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Nombre</span>
@@ -21,14 +34,18 @@ function Register() {
                 type="text"
                 placeholder="Nombre"
                 className="input input-bordered"
+                name="nombre"
+                onChange={handleInputChange}
               />
               <label className="label">
                 <span className="label-text">Email</span>
               </label>
               <input
-                type="text"
+                type="email"
                 placeholder="Email"
                 className="input input-bordered"
+                name="email"
+                onChange={handleInputChange}
               />
             </div>
             <div className="form-control">
@@ -36,9 +53,11 @@ function Register() {
                 <span className="label-text">Password</span>
               </label>
               <input
-                type="text"
+                type="password"
                 placeholder="Password"
                 className="input input-bordered"
+                name="password"
+                onChange={handleInputChange}
               />
               <label className="label label-text-alt">
                 {" "}
@@ -53,11 +72,11 @@ function Register() {
                 <button className="btn btn-primary">Register</button>
               </Link>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Register
+export default Register;
