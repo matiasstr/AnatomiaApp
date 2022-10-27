@@ -29,6 +29,22 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
+      isSuscrip: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      isActiv: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      suscripFin: {
+        type: DataTypes.DATEONLY,
+        defaultValue: DataTypes.NOW,
+      },
+      // suscripTipo: {
+      //   type: DataTypes.ENUM(["mes", "trimes"]),
+      //   defaultValue:"mes"
+      //  },
     }, 
     {
       timestamps: false,
