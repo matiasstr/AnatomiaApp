@@ -1,27 +1,59 @@
 import React from "react";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { postImg } from "../../Redux/Actions/Actions";
 
 function AgregarImg() {
+  const dispatch = useDispatch();
+  const [fileInputState, setFileInputState] = useState("");
+  const [previewSource, setpreviewSource] = useState({
+    title: null,
+    img: null,
+    desc: null,
+    podcast: null,
+    grupo: null,
+  });
+
+  const handleInputFile = (e) => {
+    const file = e.target.files[0];
+    previewFile(file);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!previewSource) return;
+    uploadImage(previewSource);
+  };
+
+  const handleInputText = (e) => {
+    e.preventDefault();
+    setpreviewSource({ ...previewSource, [e.target.name]: e.target.value });
+  };
+
+  const uploadImage = (base64image) => {
+    // console.log(base64image);
+    try {
+      dispatch(postImg(base64image));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setpreviewSource({ ...previewSource, img: reader.result });
+    };
+  };
+
   return (
     <div>
-      <div>
-        <h1>Titulo</h1>
-      </div>
-      <div>
+      <form onSubmit={handleSubmit}>
         <div>
-          <img src="" alt="Imagen" />
+          <input type="text" name="title" onChange={handleInputText} />
         </div>
-        <div>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam
-            omnis culpa laborum incidunt dolore odio nostrum cumque doloremque
-            qui officia officiis vitae maxime, nam repudiandae fugiat rem eius?
-            Deserunt, eum?
-          </p>
-        </div>
-      </div>
-      <div>
-         <h1>Podcast</h1>
-      </div>
+      </form>
     </div>
   );
 }
