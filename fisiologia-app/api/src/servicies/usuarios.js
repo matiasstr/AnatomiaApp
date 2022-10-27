@@ -1,4 +1,5 @@
 require("dotenv").config();
+const {matchedData} = require ('express-validator');
 const { Usuarios } = require("../DB/db");
 // const bcrypt = require("bcrypt");
 // const { createTokens } = require("../utils/JWT.js");
@@ -7,8 +8,32 @@ const { Usuarios } = require("../DB/db");
 const getAllUsers = async (req, res) => {
   try {
     const users = await Usuarios.findAll();
-    res.status(200).send(users);
+    res.status(201).send({users});
   } catch (error) {
+    res.status(404).send(error);
+  }
+};
+
+//POST Usuario
+const postUsuario = async (req, res)=>{
+
+  try{
+    const {username, email, password, isAdmin, isSuscrip, suscripIni, suscripFin } = matchedData(req);
+
+    if (!username || !email || !password)
+      return res.status(404).send("Falta completar un dato..");
+
+    const data = await Usuarios.create({
+      username, 
+      email, 
+      password, 
+      isAdmin:req.isAdmin, 
+      isSuscrip, 
+      suscripIni, 
+      suscripFin
+    });
+    res.status(200).send(data)
+  }catch(error) {
     res.status(404).send(error);
   }
 };
@@ -259,6 +284,7 @@ const getAllUsers = async (req, res) => {
 
 module.exports = {
   
-  getAllUsers
+  getAllUsers,
+  postUsuario,
 
 };
