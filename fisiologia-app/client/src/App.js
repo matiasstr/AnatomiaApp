@@ -7,7 +7,8 @@ import Login from "./components/Login/Login";
 import Nav from "./components/NavBar/Nav";
 import Register from "./components/Register/Register";
 import Form from "./components/Form/Form";
-
+import FormularioProducto from "./components/Form/FormularioProducto.js";
+import Suscripcion from "./components/Suscripcion/Suscripcion";
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
           <Route index element={<LandingPage />}></Route>
           <Route element={<Home />} />
           <Route path="home" element={<Home />} />
+          <Route path="formProduct" element={<FormularioProducto />} />
+          <Route path="Suscripcion" element={<Suscripcion />} />
           <Route path="form" element={<Form/>}></Route>
           <Route path="detail" element={<Detail />} />
           <Route path="inicio" element={<Cards />} />

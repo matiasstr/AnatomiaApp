@@ -1,13 +1,29 @@
-import { GET_IMG, GET_INFO, POST_IMG,OBTENER_DETALLE,
-  OBTENER_IMG } from "../Actions/Actions";
-
+import {
+  GET_IMG,
+  GET_INFO,
+  POST_IMG,
+  OBTENER_DETALLE,
+  OBTENER_IMG,
+  CREAR_PRODUCTO,
+  CREAR_PLAN,
+  CREAR_SUBCRIPCION,
+} from "../Actions/Actions";
 
 const initialState = {
-  contenido: [{ nombre: "Titulo", descripcion: "hueso" }, { nombre: "Titulo", descripcion: "musculo" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" },{ nombre: "Titulo", descripcion: "hueso" }, { nombre: "Titulo", descripcion: "musculo" }],
+  contenido: [
+    { nombre: "Titulo", descripcion: "hueso" },
+    { nombre: "Titulo", descripcion: "musculo" },
+    { nombre: "Titulo", descripcion: "hueso" },
+    { nombre: "Titulo", descripcion: "hueso" },
+    { nombre: "Titulo", descripcion: "hueso" },
+    { nombre: "Titulo", descripcion: "hueso" },
+    { nombre: "Titulo", descripcion: "hueso" },
+    { nombre: "Titulo", descripcion: "hueso" },
+    { nombre: "Titulo", descripcion: "musculo" },
+  ],
   imagenes: [],
-  user: {login: false},
+  user: { login: false },
   detalleDeImg: [],
-
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -18,19 +34,31 @@ const rootReducer = (state = initialState, action) => {
         imagenes: action.payload,
       };
     case POST_IMG:
-      return{
+      return {
         ...state,
-      }
+      };
     case GET_IMG:
-      return{
+      return {
         ...state,
-        imagenes: action.payload
-      }
+        imagenes: action.payload,
+      };
     case OBTENER_DETALLE:
-      return{
+      return {
         ...state,
-        detalleDeImg: action.payload
-      }
+        detalleDeImg: action.payload,
+      };
+    case CREAR_PRODUCTO:
+      return {
+        ...state,
+      };
+    case CREAR_PLAN:
+      return {
+        ...state,
+      };
+    case CREAR_SUBCRIPCION:
+      return {
+        ...state,
+      };
 
     default:
       return state;
