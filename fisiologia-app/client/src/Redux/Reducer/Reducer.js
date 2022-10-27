@@ -7,7 +7,25 @@ import {
   CREAR_PRODUCTO,
   CREAR_PLAN,
   CREAR_SUBCRIPCION,
+  POST_IMAGEN,
+  AGREGAR_AL_CARRITO,
+  QUITAR_DEL_CARRITO
 } from "../Actions/Actions";
+
+
+let carritoStorage;
+try {
+  let local = localStorage.getItem("cart") || [];
+  if (local !== "undefined") {
+    carritoStorage = JSON.parse(local);
+  }
+} catch (error) {
+  console.log('Error carritoStorage',error)
+}
+
+if (!carritoStorage) {
+  carritoStorage = [];
+}
 
 const initialState = {
   contenido: [
@@ -56,6 +74,8 @@ const rootReducer = (state = initialState, action) => {
         ...state,
       };
     case CREAR_SUBCRIPCION:
+
+    case POST_IMAGEN:
       return {
         ...state,
       };

@@ -9,6 +9,8 @@ import Register from "./components/Register/Register";
 import Form from "./components/Form/Form";
 import FormularioProducto from "./components/Form/FormularioProducto.js";
 import Suscripcion from "./components/Suscripcion/Suscripcion";
+import Perfil from "./components/Perfil/Perfil";
+
 
 function App() {
   return (
@@ -24,8 +26,9 @@ function App() {
           <Route path="detail" element={<Detail />} />
           <Route path="inicio" element={<Cards />} />
           <Route path="Login" element={<Login />}></Route>
-          <Route path="Register" element={<Register />}></Route></Route>
-        
+          <Route path="Register" element={<Register />}></Route>
+          <Route path="Perfil" element={<Perfil />}></Route>
+        </Route>
       </Routes>
     </div>
   );
