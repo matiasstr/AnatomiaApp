@@ -1,0 +1,21 @@
+.detalleGeneral{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+}
+
+.img_detalle{
+   width: auto;
+   margin-top: -3rem;
+}
+
+.textoImg{
+   z-index: 50;
+   margin-bottom: -0.5rem;
+   margin-left: -47%;
+}
+
+.player{
+   padding: 1rem 0 1rem 0;
+}

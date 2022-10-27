@@ -10,12 +10,12 @@ function Cards() {
   const priPag = ultPag - porPagina;
   let informacion = allInfo?.slice(priPag, ultPag);
   const maximo = allInfo?.length / porPagina;
-  console.log(allInfo);
+
   return (
     // <div>
 
     // </div>
-    <div className="flex flex-col items-center dark:bg-slate-700">
+    <div className="flex flex-col items-center ">
       <Paginacion pagina={pagina} setPagina={setPagina} maximo={maximo} />
       <div className="flex flex-wrap items-start content-start justify-evenly">
         {informacion.map((e) => {

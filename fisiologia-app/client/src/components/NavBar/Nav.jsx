@@ -12,15 +12,17 @@ function Nav() {
     // 👆 false parameter is required for react project
   }, []);
   let userReducer = useSelector((state) => state.user);
+  const darkmode = ()=>{
+    document.documentElement.classList.toggle('dark')
+  }
 
-  console.log(userReducer.login);
   return (
     <main className="w-screen h-screen">
-      <nav className="navbar dark:bg-slate-800">
+      <nav className="navbar ">
         <div className="flex-1">
           <Link
-            to="/"
-            className="btn btn-ghost normal-case text-xl dark:text-white"
+            to="/inicio"
+            className="btn btn-ghost normal-case text-xl "
           >
             Anatomia Dibujada
           </Link>
@@ -32,22 +34,23 @@ function Nav() {
             className="toggle"
             data-toggle-theme="dark,light"
             data-act-class="ACTIVECLASS"
+            onClick={darkmode}
           />
           {userReducer.login === true ? (
-            <div className="dropdown dropdown-end">
+            <div className="flex dropdown dropdown-end">
               <SearchBar />
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full">
-                  <img src="https://placeimg.com/80/80/people" alt="profile" />
+                  <img src="https://cdn-icons-png.flaticon.com/512/16/16363.png" alt="profile" />
                 </div>
               </label>
               <ul
                 tabIndex={0}
-                className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+                className="mt-12 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52 "
               >
                 <li>
                   <Link to="/perfil" className="justify-between">
-                    Profile
+                    Perfil
                     {/* <span className="badge"></span> */}
                   </Link>
                 </li>
