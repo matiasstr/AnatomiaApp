@@ -7,6 +7,10 @@ const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 const modelUsuario = require("../models/Usuarios.js");
 const modelRef = require("../models/Referencias.js");
 const modelImages = require("../models/Images.js");
+const modelPlans = require("../models/Planes.js");
+
+
+
 
 let sequelize =
   process.env.NODE_ENV === "production"
@@ -64,8 +68,9 @@ sequelize.models = Object.fromEntries(capsEntries);
 modelUsuario(sequelize);
 modelImages(sequelize);
 modelRef(sequelize);
+modelPlans(sequelize)
 
-const { Usuarios, Images, Referencias} = sequelize.models;
+const { Usuarios, Images, Referencias,Planes } = sequelize.models;
 
 Images.belongsToMany(Referencias, { through: "Ref-Img" })
 Referencias.belongsToMany(Images, { through: "Ref-Img" })
