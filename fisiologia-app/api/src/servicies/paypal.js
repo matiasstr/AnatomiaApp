@@ -151,15 +151,15 @@ const createPlan = (req, res) => {
 };
 
 const generateSubscription = async(req, res) => {
-  // const { body } = req;
-  // console.log(body)
+  const { body } = req;
+  console.log(body)
 
-  //  let plan = await Planes.findOne({
-  //   where: {
-  //       id: body.id
-  //   }
-  //  })
-  //  console.log(plan.dataValues.plan_id)
+   let plan = await Planes.findOne({
+    where: {
+        id: body.id
+    }
+   })
+   console.log(plan.dataValues.plan_id)
 
   const subscription = {
     plan_id: 'P-3LA970144C083021SMNNNHZI', //P-3HK92642FR4448515MBQHCYQ
