@@ -1,14 +1,10 @@
 const { Router } = require("express");
 const route = Router();
-const {createPayment, executePayment,createProduct, createPlan, generateSubscription} = require("../servicies/paypal.js");
+const {generateSubscription, cancelSubscription} = require("../servicies/paypal.js");
 require("dotenv").config();
 
-route.post("/create-payment", createPayment)
-route.get("/execute", executePayment)
-
-route.post("/createProduct", createProduct);
-route.post("/plan", createPlan)
 route.post("/subscription", generateSubscription)
-// route.put("/IProfile", putProfile)
+route.post("/cancel", cancelSubscription)
+
 
 module.exports = route;

@@ -13,7 +13,7 @@ function Login() {
     });
   };
   const handleSubmit = (e) => {
-    // dispatch(postLogin(input));
+    dispatch(postLogin(input));
     e.preventDefault();
   };
 
@@ -45,7 +45,7 @@ function Login() {
                 type="password"
                 placeholder="Password"
                 className="input input-bordered"
-                name="contraseña"
+                name="password"
                 onChange={(e) => handleInputChange(e)}
               />
               <label className="label label-text-alt">
