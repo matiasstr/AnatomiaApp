@@ -12,3 +12,6 @@ route.post("/post", postImage);
 // route.put("/IProfile", putProfile)
 
 module.exports = route;
+
+
+
