@@ -14,10 +14,11 @@ function Register() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatch(postRegister(input))
+    console.log(input)
+    dispatch(postRegister(input))
   };
 
-console.log(input);
+// console.log(input);
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -32,9 +33,9 @@ console.log(input);
               </label>
               <input
                 type="text"
-                placeholder="Nombre"
+                placeholder="username"
                 className="input input-bordered"
-                name="nombre"
+                name="username"
                 onChange={handleInputChange}
               />
               <label className="label">
@@ -68,9 +69,9 @@ console.log(input);
               </label>
             </div>
             <div className="form-control mt-6">
-              <Link to="/Inicio">
+              {/* <Link to="/Inicio"> */}
                 <button className="btn btn-primary">Register</button>
-              </Link>
+              {/* </Link> */}
             </div>
           </form>
         </div>

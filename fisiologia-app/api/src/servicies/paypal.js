@@ -1,5 +1,8 @@
 require("dotenv").config();
+const {axios} = require("axios")
+const { verify } = require("jsonwebtoken");
 const { Planes } = require("../DB/db");
+const { Usuarios } = require("../DB/db");
 const request = require("request");
 const CLIENT =
   "AQQ6HIO71HvXznp7nZpLFfeVfmzyJfc3PRwvA36mCLV8lWq9Vv34gs-1OE4r6SEUBSSZPw_nl4FuMVnt";
@@ -8,190 +11,68 @@ const SECRET =
 const PAYPAL_API = "https://api-m.sandbox.paypal.com"; // Live https://api-m.paypal.com
 const auth = { user: CLIENT, pass: SECRET };
 
-const createPayment = (req, res) => {
-  console.log("entroasd");
-  const body = {
-    intent: "CAPTURE",
-    purchase_units: [
+const generateSubscription = async (req, res) => {
+  try {
+    let body = req.body;
+
+    let objetoSub = body[0];
+    let tokenParseado = JSON.parse(body[1]);
+    const dataUser = verify(tokenParseado, "jwtsecretcambiar");
+
+    let userUpdate = await Usuarios.update(
+      { isSuscrip: true, suscipData: objetoSub },
       {
-        amount: {
-          currency_code: "USD", //https://developer.paypal.com/docs/api/reference/currency-codes/
-          value: "3",
+        where: {
+          id: dataUser.id,
         },
-      },
-    ],
-    application_context: {
-      brand_name: `anatomiaApp`,
-      landing_page: "NO_PREFERENCE", // Default, para mas informacion https://developer.paypal.com/docs/api/orders/v2/#definition-order_application_context
-      user_action: "PAY_NOW", // Accion para que en paypal muestre el monto del pago
-      return_url: `http://localhost:3001/paypal/execute`, // Url despues de realizar el pago
-      cancel_url: `http://localhost:3000/cancel-payment`, // Url despues de realizar el pago
-    },
-  };
-  //https://api-m.sandbox.paypal.com/v2/checkout/orders [POST]
-  request.post(
-    `${PAYPAL_API}/v2/checkout/orders`,
-    {
-      auth,
-      body,
-      json: true,
-    },
-    (err, response) => {
-      res.json({ data: response.body });
-    }
-  );
+      }
+    );
+
+    res.status(200).json({ msg: "Usuario suscripto" });
+  } catch (error) {
+    res.status(400).json({ msg: "Problema en la suscripcion" });
+  }
 };
 
-const executePayment = (req, res) => {
-  const token = req.query.token; //<-----------
+const cancelSubscription = async(req,res)=>{
 
-  request.post(
-    `${PAYPAL_API}/v2/checkout/orders/${token}/capture`,
-    {
-      auth,
-      body: {},
-      json: true,
-    },
-    (err, response) => {
-      res.json({ data: response.body });
-    }
-  );
+  try {
+    let {key} = req.body;
+
+    const dataUser = verify(key, "jwtsecretcambiar");
+
+
+    console.log(dataUser.id)
+
+    let usuarioCancel =await Usuarios.findOne({
+      where: {
+        id: dataUser.id
+      }
+    })
+
+    console.log(usuarioCancel.dataValues.suscipData.subscriptionID)
+    
+    let subId = usuarioCancel.dataValues.suscipData.subscriptionID
+
+    // let cancel = await axios.post(`https://api-m.sandbox.paypal.com/v1/billing/subscriptions/${subId}/cancel`, {
+    //   "reason": "Not satisfied with the service"
+    // }, {
+    //   headers: {
+    //     //aca van los headers del postman, a chequear como lo hago
+    //   }
+    // })
+
+
+
+
+  } catch (error) {
+    console.log(error)
+  }
+
 };
 
-const createProduct = (req, res) => {
-  let body = req.body;
-
-  // console.log(body)
-
-  const product = {
-    name: body.name,
-    description: body.description,
-    type: "SERVICE",
-    category: "SOFTWARE",
-    image_url: body.image_url,
-  };
-
-  //https://developer.paypal.com/docs/api/catalog-products/v1/#products_create
-  request.post(
-    `${PAYPAL_API}/v1/catalogs/products`,
-    {
-      auth,
-      body: product,
-      json: true,
-    },
-    (err, response) => {
-      res.status(200).json({ data: response.body });
-    }
-  );
-};
-
-const createPlan = (req, res) => {
-  const { body } = req;
-  const plan = {
-    name: "PLAN mensual",
-    product_id: body.product_id,
-    status: "ACTIVE",
-    billing_cycles: [
-      {
-        frequency: {
-          interval_unit: body.interval_unit,
-          interval_count: 1,
-        },
-        tenure_type: "REGULAR",
-        sequence: 1,
-        total_cycles: parseInt(body.total_cycles),
-        pricing_scheme: {
-          fixed_price: {
-            value: body.value, // PRECIO MENSUAL QUE COBRAS 3.30USD
-            currency_code: "USD",
-          },
-        },
-      },
-    ],
-    payment_preferences: {
-      auto_bill_outstanding: true,
-      setup_fee: {
-        value: "0",
-        currency_code: "USD",
-      },
-      setup_fee_failure_action: "CONTINUE",
-      payment_failure_threshold: 3,
-    },
-    taxes: {
-      percentage: body.percentage, // 10USD + 10% = 11 USD
-      inclusive: false,
-    },
-  };
-
-  request.post(
-    `${PAYPAL_API}/v1/billing/plans`,
-    {
-      auth,
-      body: plan,
-      json: true,
-    },
-    async (err, response) => {
-      body.plan_id = response.body.id;
-
-      let planCreado = await Planes.create({
-        name: body.name,
-        description: body.description,
-        image_url: body.image_url,
-        interval_unit: body.interval_unit,
-        total_cycles: body.total_cycles,
-        value: body.value,
-        percentage: body.percentage,
-        product_id: body.product_id,
-        plan_id: body.plan_id,
-      });
-
-      res.json({ data: planCreado });
-    }
-  );
-};
-
-const generateSubscription = async(req, res) => {
-  const { body } = req;
-  console.log(body)
-
-   let plan = await Planes.findOne({
-    where: {
-        id: body.id
-    }
-   })
-   console.log(plan.dataValues.plan_id)
-
-  const subscription = {
-    plan_id: 'P-3LA970144C083021SMNNNHZI', //P-3HK92642FR4448515MBQHCYQ
-    start_time: "2022-11-26T20:04:00Z",
-    quantity: 1,
-    subscriber: {
-      name: {
-        given_name: "Leifer",
-        surname: "Mendez",
-      },
-      email_address: "customer@example.com",
-    },
-    return_url: "https://www.youtube.com/",
-    cancel_url: "http://localhost/fallo",
-  };
-  request.post(
-    `${PAYPAL_API}/v1/billing/subscriptions`,
-    {
-      auth,
-      body: subscription,
-      json: true,
-    },
-    (err, response) => {
-      res.json({ data: response.body });
-    }
-  );
-};
 
 module.exports = {
-  createPayment,
-  executePayment,
-  createProduct,
-  createPlan,
   generateSubscription,
+  cancelSubscription
 };

@@ -6,12 +6,14 @@ import {
   OBTENER_IMG,
   CREAR_PRODUCTO,
   CREAR_PLAN,
-  CREAR_SUBCRIPCION,
+  NEW_SUBSCRIBE,
   POST_IMAGEN,
+  POST_REGISTER,
+  POST_LOGIN,
   AGREGAR_AL_CARRITO,
-  QUITAR_DEL_CARRITO
+  QUITAR_DEL_CARRITO,
+  CANCEL_SUBSCRIBE,
 } from "../Actions/Actions";
-
 
 let carritoStorage;
 try {
@@ -20,7 +22,7 @@ try {
     carritoStorage = JSON.parse(local);
   }
 } catch (error) {
-  console.log('Error carritoStorage',error)
+  console.log("Error carritoStorage", error);
 }
 
 if (!carritoStorage) {
@@ -73,13 +75,28 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
-    case CREAR_SUBCRIPCION:
+    case NEW_SUBSCRIBE:
+      return {
+        ...state,
+      };
+
+    case CANCEL_SUBSCRIBE:
+      return {
+        ...state,
+      };
 
     case POST_IMAGEN:
       return {
         ...state,
       };
-
+    case POST_REGISTER:
+      return {
+        ...state,
+      };
+    case POST_LOGIN:
+      return {
+        ...state,
+      };
     default:
       return state;
   }
