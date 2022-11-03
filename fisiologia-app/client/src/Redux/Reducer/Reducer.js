@@ -12,37 +12,52 @@ import {
   POST_LOGIN,
   AGREGAR_AL_CARRITO,
   QUITAR_DEL_CARRITO,
-  CANCEL_SUBSCRIBE,
+  FILTER_NAME,CANCEL_SUBSCRIBE,CREAR_SUBCRIPCION
 } from "../Actions/Actions";
 
-let carritoStorage;
-try {
-  let local = localStorage.getItem("cart") || [];
-  if (local !== "undefined") {
-    carritoStorage = JSON.parse(local);
-  }
-} catch (error) {
-  console.log("Error carritoStorage", error);
-}
+// let carritoStorage;
+// try {
+//   let local = localStorage.getItem("cart") || [];
+//   if (local !== "undefined") {
+//     carritoStorage = JSON.parse(local);
+//   }
+// } catch (error) {
+//   console.log('Error carritoStorage',error)
+// }
 
-if (!carritoStorage) {
-  carritoStorage = [];
-}
+// if (!carritoStorage) {
+//   carritoStorage = [];
+// }
+  
 
 const initialState = {
   contenido: [
-    { nombre: "Titulo", descripcion: "hueso" },
-    { nombre: "Titulo", descripcion: "musculo" },
-    { nombre: "Titulo", descripcion: "hueso" },
-    { nombre: "Titulo", descripcion: "hueso" },
-    { nombre: "Titulo", descripcion: "hueso" },
-    { nombre: "Titulo", descripcion: "hueso" },
-    { nombre: "Titulo", descripcion: "hueso" },
-    { nombre: "Titulo", descripcion: "hueso" },
-    { nombre: "Titulo", descripcion: "musculo" },
+    // { nombre: "Titulo", descripcion: "hueso" },
+    // { nombre: "Titulo", descripcion: "musculo" },
+    // { nombre: "Titulo", descripcion: "hueso" },
+    // { nombre: "Titulo", descripcion: "hueso" },
+    // { nombre: "Titulo", descripcion: "hueso" },
+    // { nombre: "Titulo", descripcion: "hueso" },
+    // { nombre: "Titulo", descripcion: "hueso" },
+    // { nombre: "Titulo", descripcion: "hueso" },
+    // { nombre: "Titulo", descripcion: "musculo" },
+    // { nombre: "Titulo", descripcion: "musculo" },
+    // { nombre: "Titulo", descripcion: "musculo" },
+    // { nombre: "Titulo", descripcion: "musculo" },
+    // { nombre: "Titulo", descripcion: "musculo" },
+    // { nombre: "Titulo", descripcion: "musculo" },
+    // { nombre: "Titulo", descripcion: "musculo" },
+    // { nombre: "Titulo", descripcion: "musculo" },
+    // { nombre: "Titulo", descripcion: "musculo" },
+    // { nombre: "Titulo", descripcion: "musculo" },
+    // { nombre: "Titulo", descripcion: "musculo" },
+    // { nombre: "Titulo", descripcion: "musculo" },
+    // { nombre: "Titulo", descripcion: "musculo" },
+    // { nombre: "Titulo", descripcion: "musculo" },
   ],
   imagenes: [],
-  user: { login: false },
+  backup: [],
+  user: { login: true },
   detalleDeImg: [],
 };
 
@@ -52,6 +67,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         imagenes: action.payload,
+       
       };
     case POST_IMG:
       return {
@@ -61,11 +77,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         imagenes: action.payload,
+        backup: action.payload,
       };
     case OBTENER_DETALLE:
       return {
         ...state,
-        detalleDeImg: action.payload,
+        detalleDeImg: [action.payload],
       };
     case CREAR_PRODUCTO:
       return {
@@ -75,6 +92,21 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+    case CREAR_SUBCRIPCION:
+    case FILTER_NAME:
+      if (action.payload.length === 0) {
+        return { ...state, imagenes: state.backup };
+      } else {
+        const filter = state.imagenes.filter(
+          (e) =>
+            e.title.toLowerCase().includes(action.payload.toLowerCase()) ||
+            e.grupo.toLowerCase().includes(action.payload.toLowerCase())
+        );
+        return{
+        ...state,
+        imagenes: filter
+        }
+      }
     case NEW_SUBSCRIBE:
       return {
         ...state,

@@ -1,14 +1,13 @@
 import React from 'react'
+import Form from '../Form/Form'
+import FormProducto from '../Form/FormProducto'
 
 function Dashboard() {
   return (
-    <div>
-      <h1>Agregar una imagen</h1>
-      <h1>Eliminar imagen</h1>
-      <h1>Bloquear usuario</h1>
-      <h1>Desbloquear usuario</h1>
-      <h1>???</h1>
-      <h1>???</h1>
+    <div className='flex justify-around'>
+      <Form/>
+      <FormProducto/>
+      
     </div>
   )
 }

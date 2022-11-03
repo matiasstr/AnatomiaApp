@@ -10,6 +10,7 @@ export const CREAR_SUBCRIPCION="CREAR_SUBCRIPCION"
 export const POST_IMAGEN = "POST_IMAGEN";
 export const AGREGAR_AL_CARRITO = "AGREGAR_AL_CARRITO";
 export const QUITAR_DEL_CARRITO = "QUITAR_DEL_CARRITO";
+export const FILTER_NAME = "FILTER_NAME";
 export const LOGIN_REGISTER = "LOGUEAR_USUARIO";
 
 export const NEW_SUBSCRIBE = "NEW_SUBSCRIBE";
@@ -50,8 +51,10 @@ export const postImg = (payload) => {
   };
 };
 export const obtenerDetalle = (id) => {
+  
   return async function (dispatch) {
-    let obtenerDetalle = await axios(`Ruta a designar/${id}`);
+    let obtenerDetalle = await axios(`http://localhost:3001/images/getId/${id}`);
+    // console.log(obtenerDetalle.data);
     return dispatch({
       type: OBTENER_DETALLE,
       payload: obtenerDetalle.data,
@@ -191,4 +194,12 @@ export const postImagen = (payload) => {
       payload: imagenCreada.data,
     });
   };
+};
+
+export const filter = (payload) => {
+  return (dispatch) =>
+    dispatch({
+      type: FILTER_NAME,
+      payload: payload,
+    });
 };
