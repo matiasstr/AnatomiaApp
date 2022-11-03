@@ -19,7 +19,7 @@ const postUsuario = async (req, res) => {
   try {
     const body = matchedData(req);
 
-    console.log(body);
+    // console.log(body);
 
     if (!body.username || !body.email || !body.password)
       return res.status(404).send("Falta completar un dato..");

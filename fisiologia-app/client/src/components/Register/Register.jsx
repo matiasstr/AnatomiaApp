@@ -5,6 +5,7 @@ import { postRegister } from "../../Redux/Actions/Actions";
 function Register() {
   const dispatch = useDispatch()
   const [input, setInput] = useState();
+  
   const handleInputChange = (e) => {
     e.preventDefault();
     setInput({
@@ -12,6 +13,7 @@ function Register() {
       [e.target.name]: e.target.value,
     });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(input)
