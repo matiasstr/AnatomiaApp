@@ -44,6 +44,15 @@ module.exports = (sequelize) => {
         type: DataTypes.ENUM(["mes", "trimes"]),
         defaultValue: "mes",
       },
+      fechaDeinicio: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
+      nombreDePlan:{
+        type: DataTypes.STRING,
+        defaultValue: null,
+      }
+
     },
     {
       timestamps: false,

@@ -4,6 +4,7 @@ const { verify } = require("jsonwebtoken");
 const { Planes } = require("../DB/db");
 const { Usuarios } = require("../DB/db");
 const request = require("request");
+const { verifyToken } = require("../helpers/handleJwt");
 const CLIENT =
   "AQQ6HIO71HvXznp7nZpLFfeVfmzyJfc3PRwvA36mCLV8lWq9Vv34gs-1OE4r6SEUBSSZPw_nl4FuMVnt";
 const SECRET =
@@ -14,37 +15,48 @@ const auth = { user: CLIENT, pass: SECRET };
 const generateSubscription = async (req, res) => {
   try {
     let body = req.body;
-
     let objetoSub = body[0];
-    let tokenParseado = JSON.parse(body[1]);
-    const dataUser = verify(tokenParseado, "jwtsecretcambiar");
 
+    const timeElapsed = Date.now();
+    const today = new Date(timeElapsed);
+
+    console.log(objetoSub);
+    console.log(today.toLocaleDateString());
+
+    const dataUser = await verifyToken(body[1]);
     let userUpdate = await Usuarios.update(
-      { isSuscrip: true, suscipData: objetoSub },
+      {
+        isSuscrip: true,
+        suscipData: objetoSub,
+        fechaDeinicio: today.toLocaleDateString(),
+        nombreDePlan: body[2],
+      },
       {
         where: {
-          id: dataUser.id,
+          id: dataUser._id,
         },
       }
     );
 
     res.status(200).json({ msg: "Usuario suscripto" });
   } catch (error) {
+    console.log(error);
     res.status(400).json({ msg: "Problema en la suscripcion" });
   }
 };
 
 const cancelSubscription = async (req, res) => {
   try {
-    let { key } = req.body;
-    console.log(key);
-    const dataUser = verify(key, "jwtsecretcambiar");
+    console.log("entro al back");
 
-    console.log(dataUser.id);
+    let { key } = req.body;
+    const dataUser = await verifyToken(key);
+
+    console.log(dataUser._id);
 
     let usuarioCancel = await Usuarios.findOne({
       where: {
-        id: dataUser.id,
+        id: dataUser._id,
       },
     });
 
@@ -70,16 +82,39 @@ const cancelSubscription = async (req, res) => {
     );
 
     let usuarioUpdate = await Usuarios.update(
-      { isSuscrip: false, suscipData: null },
+      {
+        isSuscrip: false,
+        suscipData: null,
+        fechaDeinicio: null,
+        nombreDePlan: null,
+      },
       {
         where: {
-          id: dataUser.id,
+          id: dataUser._id,
         },
       }
     );
-    // console.log(usuarioUpdate)
 
-    res.status(200).json(usuarioUpdate);
+
+    
+    let usuarioUpdated = await Usuarios.findOne({
+      where: {
+        id: dataUser._id,
+      },
+    });
+
+    console.log(usuarioUpdated.dataValues);
+
+    let userObj = {
+      email: usuarioUpdated.dataValues.email,
+      fechaDeinicio: usuarioUpdated.dataValues.fechaDeinicio,
+      nombreDePlan: usuarioUpdated.dataValues.nombreDePlan,
+      username: usuarioUpdated.dataValues.username,
+    };
+
+    console.log(userObj);
+
+    res.status(200).json(userObj);
   } catch (error) {
     res.status(404).json({ err: "Error en la cancelacion de la suscripcion" });
     console.log(error);

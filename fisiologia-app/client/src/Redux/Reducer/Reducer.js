@@ -10,24 +10,11 @@ import {
   POST_IMAGEN,
   POST_REGISTER,
   POST_LOGIN,
-  AGREGAR_AL_CARRITO,
-  QUITAR_DEL_CARRITO,
   CANCEL_SUBSCRIBE,
+  SESION_ACTIVA,
+  LOAD_USER
 } from "../Actions/Actions";
 
-let carritoStorage;
-try {
-  let local = localStorage.getItem("cart") || [];
-  if (local !== "undefined") {
-    carritoStorage = JSON.parse(local);
-  }
-} catch (error) {
-  console.log("Error carritoStorage", error);
-}
-
-if (!carritoStorage) {
-  carritoStorage = [];
-}
 
 const initialState = {
   contenido: [
@@ -44,6 +31,7 @@ const initialState = {
   imagenes: [],
   user: { login: false },
   detalleDeImg: [],
+  datosUsuario: null
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -81,8 +69,12 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case CANCEL_SUBSCRIBE:
+
+      console.log(action.payload)
+
       return {
         ...state,
+        datosUsuario: action.payload
       };
 
     case POST_IMAGEN:
@@ -92,11 +84,23 @@ const rootReducer = (state = initialState, action) => {
     case POST_REGISTER:
       return {
         ...state,
+        user: { login: true },
       };
     case POST_LOGIN:
       return {
         ...state,
+        user: { login: true },
       };
+    case SESION_ACTIVA:
+      return{
+        ...state,
+        user: { login: true },
+      }
+    case LOAD_USER:
+      return{
+        ...state,
+        datosUsuario: action.payload,
+      }
     default:
       return state;
   }

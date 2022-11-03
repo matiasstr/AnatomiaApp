@@ -4,12 +4,26 @@ const { Usuarios } = require("../DB/db");
 const bcrypt = require("bcrypt");
 const { createTokens } = require("../utils/JWT");
 const { verify } = require("jsonwebtoken");
+const { tokenSign, verifyToken } = require("../helpers/handleJwt");
 // const { mandarEmail } = require("../utils/sendEmail");
 
-const getAllUsers = async (req, res) => {
+const getUser = async (req, res) => {
   try {
-    const users = await Usuarios.findAll();
-    res.status(201).send({ users });
+    let body = req.body;
+    let user = await verifyToken(body.key);
+    const users = await Usuarios.findOne({
+      where: {
+        id: user._id,
+      },
+    });
+
+    let userObj = {
+      email: users.dataValues.email,
+      fechaDeinicio: users.dataValues.fechaDeinicio,
+      nombreDePlan: users.dataValues.nombreDePlan,
+      username: users.dataValues.username,
+    };
+    res.status(200).json(userObj);
   } catch (error) {
     res.status(404).send(error);
   }
@@ -91,7 +105,7 @@ const postLogin = async (req, res) => {
         }
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         res.status(400).json(err);
       });
   } catch (error) {
@@ -262,7 +276,7 @@ const postLogin = async (req, res) => {
 // };
 
 module.exports = {
-  getAllUsers,
+  getUser,
   postUsuario,
   postLogin,
 };

@@ -11,21 +11,17 @@ import FormularioProducto from "./components/Form/FormularioProducto.js";
 import Perfil from "./components/Perfil/Perfil";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import PayPalBtn from "./components/PaypalCheckoutButton/PayPalBtn.jsx";
-import { useDispatch } from "react-redux";
-import {newSubscribe} from "../src/Redux/Actions/Actions"
-
-
+import { useDispatch,useSelector } from "react-redux";
+import { newSubscribe } from "../src/Redux/Actions/Actions";
 
 function App() {
-
-  let dispatch = useDispatch()
+  let userData = useSelector((state) => state.datosUsuario);
+  let dispatch = useDispatch();
 
   const paypalSubscribe = (data, actions) => {
-
-      return actions.subscription.create({
-          'plan_id': "P-97343867KJ7796001MNOGNTY",
-      });
-
+    return actions.subscription.create({
+      plan_id: "P-97343867KJ7796001MNOGNTY",
+    });
   };
 
   const paypalOnError = (err) => {
@@ -35,24 +31,14 @@ function App() {
   const paypalOnApprove = (data, actions) => {
     // call the backend api to store transaction details
 
-    const token = sessionStorage.getItem("token");
-    let arraux =[data,token]
+    const token = sessionStorage.getItem("info");
+    let arraux = [data, token, "Plan1"];
+    dispatch(newSubscribe(arraux));
 
-    dispatch(newSubscribe(arraux))
-
-    console.log("Payapl approved");
-    
-
-    return actions.subscription.get().then(function(details) {
-      // Show a success message to your buyer
-      alert("Subscription completed");
-    })
-
-
+    alert("Subscription completed");
   };
 
   return (
-
     <div className="w-screen h-screen">
       <Routes>
         <Route path="/" element={<Nav />}>
@@ -64,7 +50,7 @@ function App() {
             path="Suscripcion"
             element={
               <PayPalBtn
-                options={{vault: true}}
+                options={{ vault: true }}
                 amount="3"
                 currency="USD"
                 createSubscription={paypalSubscribe}

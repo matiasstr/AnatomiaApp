@@ -18,14 +18,14 @@ export function PayPalBtn(props) {
     "AWyg5wffWeyS-vtM5s-tppE2ey-JFPkBQhqF5z-JeJcXfHAbu1pNLHC9ofuILXbdoGYzz0p3XShmLl5B";
 
 
-  const HandleClick  = (e) =>{      //PARA PROBAR LA RUTA, DESPUES HAY QUE SACAR EL BOTON 
-      e.preventDefault()
-      const token = sessionStorage.getItem("token");
-      console.log(token)
-      dispatch(cancelSubscribe(token))
+  // const HandleClick  = (e) =>{      //PARA PROBAR LA RUTA, DESPUES HAY QUE SACAR EL BOTON 
+  //     e.preventDefault()
+  //     const token = sessionStorage.getItem("token");
+  //     console.log(token)
+  //     dispatch(cancelSubscribe(token))
 
 
-  }
+  // }
   return (
     <>
       <PayPalButton
@@ -49,7 +49,7 @@ export function PayPalBtn(props) {
           label: "subscribe",
         }}
       />
-      <button onClick={HandleClick}>CANCEL</button>
+      {/* <button onClick={HandleClick}>CANCEL</button> */}
     </>
   );
 }
