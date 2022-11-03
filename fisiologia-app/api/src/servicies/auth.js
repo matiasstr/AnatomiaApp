@@ -1,7 +1,8 @@
 const { matchedData } = require("express-validator");
 const { encrypt, compare } = require("../helpers/handlePassword");
 const { Usuarios } = require("../DB/db");
-const { tokenSign } = require("../helpers/handleJwt");
+const { tokenSign,verifyToken} = require("../helpers/handleJwt");
+const { verify } = require("jsonwebtoken");
 
 //Registro de nuevo usuario
 const regController = async (req, res) => {
@@ -16,7 +17,9 @@ const regController = async (req, res) => {
       token: await tokenSign(dataUser.dataValues),
       user: dataUser.dataValues,
     };
-    res.status(200).send(data);
+    let user= await verifyToken(data.token);
+    console.log("Algo!!!!",user)
+    res.status(200).send(data.token);
   } catch (error) {
     res.status(404).send("ERROR_DE_REGISTRO");
     console.log(error);
@@ -44,24 +47,12 @@ const loginController = async (req, res) => {
       res.status(402).send("PASSWORD_INVALIDO");
       return;
     };
-
     //Enmascara el Password para que no se vea por pantalla
     user.set("password", undefined, { strict: false });
-
-    //Controla si el Usuario ya esta activo (logueado)
-    if (user.isActiv === false) {
-      //Si no lo esta lo loguea y lo coloca como activo
-      console.log("Usuario NO ESTA activo");
-      user.isActiv = true;
-      console.log(user);
-      return res.send("USUARIO_LOGUEADO");
-    } else {
-      //Si esta activo ya(logueado) deberia borrar el token
-      return res.send("ERROR_USUARIO_YA_ESTA_LOGUEADO");
-    }
+    return res.send("USUARIO_LOGUEADO");
   } catch (error) {
     console.log(error);
-    res.send("USUARIO_LOGUEADO");
+    res.send("ERROR_DE_LOGUEO");
   }
 };
 

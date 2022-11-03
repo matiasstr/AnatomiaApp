@@ -1,6 +1,7 @@
 import {GET_IMG, GET_INFO, POST_IMG,OBTENER_DETALLE,
   OBTENER_IMG,
   POST_IMAGEN,
+  POST_REGISTER,
   AGREGAR_AL_CARRITO,
   QUITAR_DEL_CARRITO,} from "../Actions/Actions";
 
@@ -43,6 +44,13 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+
+      case POST_REGISTER:
+        return {
+          ...state,
+        };
+
+        
 
     default:
       return state;

@@ -7,6 +7,8 @@ export const OBTENER_IMG = "OBTENER_IMG";
 export const POST_IMAGEN = "POST_IMAGEN";
 export const AGREGAR_AL_CARRITO = "AGREGAR_AL_CARRITO";
 export const QUITAR_DEL_CARRITO = "QUITAR_DEL_CARRITO";
+export const POST_REGISTER = "REGISTRAR_USUARIO";
+export const LOGIN_REGISTER = "LOGUEAR_USUARIO";
 
 // export const first = (payload) => ({
 //   type: GET_INFO,
@@ -70,15 +72,57 @@ export const postLogin = (payload) => {
     }
   };
 };
+// export const postRegister = (payload) => {
+//   return async function (dispatch) {
+//     let obtenerImg = await axios("/images");
+//     return {
+//       type: OBTENER_IMG,
+//       payload: obtenerImg.data,
+//     };
+//   };
+// };
+
+
 export const postRegister = (payload) => {
+   console.log("llego al front:",payload)
   return async function (dispatch) {
-    let obtenerImg = await axios("/images");
-    return {
-      type: OBTENER_IMG,
-      payload: obtenerImg.data,
+      try {
+      let postRegister = await axios.post("http://localhost:3001/auth/register", payload);
+      console.log(postRegister.data)
+      sessionStorage.setItem('info',postRegister.data);
+      return dispatch({
+        type: POST_REGISTER,
+        payload: postRegister.data,
+      });
+    } catch (error) {
+      // console.log(error.response.data)
+      return dispatch({
+        type: POST_REGISTER,
+        payload:error.response.data ,
+      });
+    }
     };
-  };
 };
+
+export const loginUser = (payload) => {
+  console.log("llego al front:",payload)
+ return async function (dispatch) {
+     try {
+     let logUser = await axios.post("http://localhost:3001/auth/login", payload);
+     sessionStorage.setItem('info',postRegister.data);
+     return dispatch({
+       type: POST_REGISTER,
+       payload: postRegister.data,
+     });
+   } catch (error) {
+     // console.log(error.response.data)
+     return dispatch({
+       type: POST_REGISTER,
+       payload:error.response.data ,
+     });
+   }
+   };
+}
 
 export const postImagen = (payload) => {
   return async function (dispatch) {

@@ -18,6 +18,8 @@
     "nodemon": "^2.0.20",
     "pg": "^8.8.0",
     "sequelize": "^6.25.3",
+    "sessionstorage": "^0.1.0",
+    "sessionstorage-for-nodejs": "^1.0.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

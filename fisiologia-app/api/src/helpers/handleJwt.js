@@ -6,6 +6,8 @@ const tokenSign = async (user) => {
     const sing = await jwt.sign(
       {
         _id: user.id,
+        isActiv: user.isActiv,
+        isSuscrip:user.isSuscrip,
         isAdmin: user.isAdmin,
       },
       process.env.JWT_SECRET, //Firma para verificar
