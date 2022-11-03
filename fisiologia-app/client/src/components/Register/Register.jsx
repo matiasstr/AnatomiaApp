@@ -39,7 +39,7 @@ function Register() {
               </label>
               <input
                 type="text"
-                placeholder="Nombre"
+                placeholder="username"
                 className="input input-bordered"
                 name="username"
                 onChange={handleInputChange}

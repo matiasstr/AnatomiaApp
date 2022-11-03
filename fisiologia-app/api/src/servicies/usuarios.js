@@ -1,8 +1,9 @@
 require("dotenv").config();
 const { matchedData } = require("express-validator");
 const { Usuarios } = require("../DB/db");
-// const bcrypt = require("bcrypt");
-// const { createTokens } = require("../utils/JWT.js");
+const bcrypt = require("bcrypt");
+const { createTokens } = require("../utils/JWT");
+const { verify } = require("jsonwebtoken");
 // const { mandarEmail } = require("../utils/sendEmail");
 
 const getAllUsers = async (req, res) => {
@@ -13,35 +14,88 @@ const getAllUsers = async (req, res) => {
     res.status(404).send(error);
   }
 };
-
 //POST Usuario
 const postUsuario = async (req, res) => {
   try {
-    const {
-      username,
-      email,
-      password,
-      isAdmin,
-      isSuscrip,
-      suscripIni,
-      suscripFin,
-    } = matchedData(req);
+    const body = matchedData(req);
 
-    if (!username || !email || !password)
+    console.log(body);
+
+    if (!body.username || !body.email || !body.password)
       return res.status(404).send("Falta completar un dato..");
 
-    const data = await Usuarios.create({
-      username,
-      email,
-      password,
-      isAdmin: req.isAdmin,
-      isSuscrip,
-      suscripIni,
-      suscripFin,
+    const duplicado = await Usuarios.findAll({
+      where: {
+        email: body.email,
+      },
     });
-    res.status(200).send(data);
+
+    if (duplicado.length === 0) {
+      bcrypt
+        .hash(body.password, 10)
+
+        .then(async (hash) => {
+          const data = await Usuarios.create({
+            username: body.username,
+            email: body.email,
+            password: hash,
+          }).then((response) => {
+            console.log("entre de las promesas 2");
+            res.status(200).json(response);
+          });
+        })
+        .catch((err) => {
+          if (err) {
+            res.status(400).json("El usuario ya existe");
+          }
+        });
+    } else {
+      res
+        .status(400)
+        .json({ err: "Un usuario ya existe con el email ingresado" });
+    }
   } catch (error) {
     res.status(404).send(error);
+  }
+};
+//POST Login
+const postLogin = async (req, res) => {
+  try {
+    const { password, email } = req.body;
+    const user = await Usuarios.findOne({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!user) {
+      return res.status(400).send("Usuario no existente");
+    }
+
+    if (user.length === 0)
+      res.status(400).json({ error: "El usuario no existe" });
+
+    const dbPass = user.dataValues.password;
+
+    bcrypt
+      .compare(password, dbPass)
+      .then((match) => {
+        if (!match) {
+          res
+            .status(400)
+            .json({ error: "Combinacions de usuario y password erroneo" });
+        } else {
+          const accessToken = createTokens(user);
+
+          res.status(200).json(accessToken);
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        res.status(400).json(err);
+      });
+  } catch (error) {
+    res.status(400).json(error);
   }
 };
 
@@ -81,89 +135,7 @@ const postUsuario = async (req, res) => {
 //     console.log(error);
 //     res.status(404).send(error);
 //   }
-// };
 
-// const postLogin = async (req, res) => {
-//   try {
-//     const { username, password } = req.body;
-//     const user = await Usuarios.findOne({
-//       where: {
-//         username: username,
-//       },
-//     });
-
-//     if (!user) {
-//       return res.status(400).send("Usuario no existente");
-//     }
-
-//     const carrito = await Carros.findOne({
-//       where: {
-//         UsuarioId: user.dataValues.id,
-//       },
-//     });
-
-//     const deseados = await Deseados.findOne({
-//       where: {
-//         UsuarioId: user.dataValues.id,
-//       },
-//     });
-
-//     if (user.length === 0)
-//       res.status(400).json({ error: "El usuario no existe" });
-
-//     const dbPass = user.dataValues.password;
-
-//     bcrypt
-//       .compare(password, dbPass)
-//       .then((match) => {
-//         if (!match) {
-//           res
-//             .status(400)
-//             .json({ error: "Combinacions de usuario y password erroneo" });
-//         } else {
-//           const accessToken = createTokens(user);
-
-//           res.status(200).cookie("access-token", accessToken, {
-//             maxAge: 60 * 60 * 60,
-//           });
-
-//           if (carrito && deseados) {
-//             arrAux = [
-//               accessToken,
-//               carrito.dataValues.contenido,
-//               deseados.dataValues.contenido,
-//               "Te logueaste con exito",
-//               user,
-//             ];
-//           } else if (carrito) {
-//             arrAux = [
-//               accessToken,
-//               carrito.dataValues.contenido,
-//               [],
-//               "Te logueaste con exito",
-//               user,
-//             ];
-//           } else if (deseados) {
-//             arrAux = [
-//               accessToken,
-//               [],
-//               deseados.dataValues.contenido,
-//               "Te logueaste con exito",
-//               user,
-//             ];
-//           } else {
-//             arrAux = [accessToken, [], [], "Te logueaste con exito", user];
-//           }
-
-//           res.status(200).json(arrAux);
-//         }
-//       })
-//       .catch((err) => {
-//         res.status(400).json(err);
-//       });
-//   } catch (error) {
-//     res.status(400).json(error);
-//   }
 // };
 
 // const putProfile = async (req, res) => {
@@ -292,4 +264,5 @@ const postUsuario = async (req, res) => {
 module.exports = {
   getAllUsers,
   postUsuario,
+  postLogin,
 };

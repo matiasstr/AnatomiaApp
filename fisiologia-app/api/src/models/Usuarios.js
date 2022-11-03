@@ -36,9 +36,9 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
-      suscripFin: {
-        type: DataTypes.DATEONLY,
-        defaultValue: DataTypes.NOW,
+      suscipData: {
+        type: DataTypes.JSON,
+        defaultValue: null,
       },
       suscripTipo: {
         type: DataTypes.ENUM(["mes", "trimes"]),

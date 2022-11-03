@@ -15,3 +15,6 @@ route.post("/post",  authMiddleware, authRolMiddleware, postImage);
 // route.put("/IProfile", putProfile)
 
 module.exports = route;
+
+
+

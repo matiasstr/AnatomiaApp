@@ -4,12 +4,18 @@ export const GET_IMG = "GET_IMG";
 export const POST_IMG = "POST_IMG";
 export const OBTENER_DETALLE = "OBTENER_DETALLE";
 export const OBTENER_IMG = "OBTENER_IMG";
+export const CREAR_PRODUCTO="CREAR_PRODUCTO"
+export const CREAR_PLAN="CREAR_PLAN"
+export const CREAR_SUBCRIPCION="CREAR_SUBCRIPCION"
 export const POST_IMAGEN = "POST_IMAGEN";
 export const AGREGAR_AL_CARRITO = "AGREGAR_AL_CARRITO";
 export const QUITAR_DEL_CARRITO = "QUITAR_DEL_CARRITO";
-export const POST_REGISTER = "REGISTRAR_USUARIO";
 export const LOGIN_REGISTER = "LOGUEAR_USUARIO";
 
+export const NEW_SUBSCRIBE = "NEW_SUBSCRIBE";
+export const POST_REGISTER="POST_REGISTER";
+export const POST_LOGIN = "POST_LOGIN";
+export const CANCEL_SUBSCRIBE = "CANCEL_SUBSCRIBE";
 // export const first = (payload) => ({
 //   type: GET_INFO,
 //   payload
@@ -54,23 +60,76 @@ export const obtenerDetalle = (id) => {
 };
 
 export const obtenerImg = () => {
-  return async function (dispatch) {
-    let obtenerImg = await axios("/images");
-    return {
-      type: OBTENER_IMG,
-      payload: obtenerImg.data,
-    };
-  };
-};
+   return async function (dispatch) {
+      let obtenerImg = await axios('/images');
+      return({
+         type: OBTENER_IMG,
+         payload: obtenerImg.data
+      })
+   }
+}
 
+export const postProducto = (payload) => {
+
+  return async function (dispatch) {
+     let producto = await axios.post('http://localhost:3001/paypal/createProduct', payload);
+     payload.product_id = producto.data.data.id
+     let plan = await axios.post('http://localhost:3001/paypal/plan', payload)
+
+     return({
+        type: CREAR_PRODUCTO,
+        payload: producto.data
+     })
+  }
+};
+// export const plan = () => {
+//   return async function (dispatch) {
+//      let plan = await axios('/paypal/plan');
+//      return({
+//         type: CREAR_PLAN,
+//         payload: plan.data
+//      })
+//   }
+// }
+export const newSubscribe = (payload) => {
+  return async function (dispatch) {
+     let subcripcion = await axios.post('http://localhost:3001/paypal/subscription', payload);
+     return dispatch({
+        type: NEW_SUBSCRIBE,
+        payload: subcripcion.data
+     })
+  }
+};
+export const cancelSubscribe = (payload) => {
+  console.log(payload)
+
+  let tokenAux =  JSON.parse(payload);
+  var auxObj = {
+
+    'key' : tokenAux
+
+  }
+  return async function (dispatch) {
+     let cancel = await axios.post('http://localhost:3001/paypal/cancel', auxObj);
+     return dispatch({
+        type: CANCEL_SUBSCRIBE,
+        payload: cancel.data
+     })
+  }
+};
 export const postLogin = (payload) => {
   return async function (dispatch) {
-    try {
-      let created = payload;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    let loginData = await axios.post('http://localhost:3001/usuarios/login', payload);
+    // console.log(loginData.data)
+
+    sessionStorage.setItem("token", JSON.stringify(loginData.data));
+
+
+    return dispatch({
+       type: POST_LOGIN,
+       payload: loginData.data
+    })
+ }
 };
 // export const postRegister = (payload) => {
 //   return async function (dispatch) {
