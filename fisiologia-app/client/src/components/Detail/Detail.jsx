@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { obtenerDetalle } from "../../Redux/Actions/Actions";
-
+import {Image} from "cloudinary-react"
 import { BsFillJournalBookmarkFill } from "react-icons/bs";
-import { CgPlayButtonO, CgPlayPauseO } from "react-icons/cg";
+
 
 import img1 from "./anatomiaslide.png";
 import tremendoAudio from "../../assets/media/audio.mp3";
@@ -13,14 +13,14 @@ import styles from "./Detalle.module.css";
 
 function Detail() {
   const dispatch = useDispatch();
-  let detalleImg = useSelector((state) => state.detalleDeImg);
-  console.log(detalleImg);
   let { id } = useParams();
-  console.log(id);
-
   useEffect(() => {
     dispatch(obtenerDetalle(id));
   }, []);
+  let detalleImg = useSelector((state) => state.detalleDeImg);
+  console.log(detalleImg);
+  console.log(id);
+
 
   return (
     <div>
@@ -54,7 +54,13 @@ function Detail() {
           </div>
         </div>
         <div>
-          <img className={styles.img_detalle} src={img1} alt="img" />
+          {detalleImg && detalleImg.map(e => {
+            return (
+              <Image cloudName="dwgzicpxf" publicId={e.img} width="700"/>
+            )
+          })}
+     
+      
         </div>
         <div className={styles.player}>
           <audio controls>

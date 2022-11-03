@@ -47,7 +47,12 @@ function Perfil() {
         <div class="flex  rounded-b-3xl bg-gray-100 dark:bg-gray-700 space-y-5 flex-col items-center py-7">
           <span className="text-3xl">{`${userData.username}`}</span>
         </div>
-        <div class="grid px-7 py-2  items-center justify-around grid-cols-2 gap-4 divide-x divide-solid ">
+        
+        <div class="grid px-7 py-2  items-center justify-around grid-cols-3 gap-4 divide-x divide-solid ">
+        <div class="col-span-1 flex flex-col items-center ">
+            <span class=" text-xl font-bold dark:text-gray-300">Estado de la suscripcion</span>
+            <span class="text-lg font-medium 0">"Activo"</span>
+          </div>
           <div class="col-span-1 px-3 flex flex-col items-center ">
             <span class="text-2xl font-bold dark:text-gray-300">Plan</span>
             <span class="text-lg font-medium">{`${userData.nombreDePlan}`}</span>
@@ -58,6 +63,8 @@ function Perfil() {
             </span>
             <span class="text-lg font-medium 0">{`${userData.fechaDeinicio}`}</span>
           </div>
+         
+          
         </div>
       </div>
 
@@ -221,7 +228,7 @@ function Perfil() {
     </div>
 
     ):(
-      
+
       <h1>No estas suscripto a ningun plan</h1>
 
     )

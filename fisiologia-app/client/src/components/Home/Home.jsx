@@ -5,7 +5,7 @@ import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { useEffect } from "react";
 import { getImg } from "../../Redux/Actions/Actions";
 import { Image } from "cloudinary-react";
-import { PayPalButtons } from "@paypal/react-paypal-js";
+
 
 
 function Home() {
