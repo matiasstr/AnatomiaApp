@@ -11,7 +11,12 @@ export const POST_IMAGEN = "POST_IMAGEN";
 export const AGREGAR_AL_CARRITO = "AGREGAR_AL_CARRITO";
 export const QUITAR_DEL_CARRITO = "QUITAR_DEL_CARRITO";
 export const FILTER_NAME = "FILTER_NAME";
+export const LOGIN_REGISTER = "LOGUEAR_USUARIO";
 
+export const NEW_SUBSCRIBE = "NEW_SUBSCRIBE";
+export const POST_REGISTER="POST_REGISTER";
+export const POST_LOGIN = "POST_LOGIN";
+export const CANCEL_SUBSCRIBE = "CANCEL_SUBSCRIBE";
 // export const first = (payload) => ({
 //   type: GET_INFO,
 //   payload
@@ -79,7 +84,7 @@ export const postProducto = (payload) => {
         payload: producto.data
      })
   }
-}
+};
 // export const plan = () => {
 //   return async function (dispatch) {
 //      let plan = await axios('/paypal/plan');
@@ -89,34 +94,97 @@ export const postProducto = (payload) => {
 //      })
 //   }
 // }
-export const subscripcion = () => {
+export const newSubscribe = (payload) => {
   return async function (dispatch) {
-     let subcripcion = await axios('/paypal/subscription');
-     return({
-        type: CREAR_SUBCRIPCION,
+     let subcripcion = await axios.post('http://localhost:3001/paypal/subscription', payload);
+     return dispatch({
+        type: NEW_SUBSCRIBE,
         payload: subcripcion.data
      })
   }
-}
+};
+export const cancelSubscribe = (payload) => {
+  console.log(payload)
 
+  let tokenAux =  JSON.parse(payload);
+  var auxObj = {
+
+    'key' : tokenAux
+
+  }
+  return async function (dispatch) {
+     let cancel = await axios.post('http://localhost:3001/paypal/cancel', auxObj);
+     return dispatch({
+        type: CANCEL_SUBSCRIBE,
+        payload: cancel.data
+     })
+  }
+};
 export const postLogin = (payload) => {
   return async function (dispatch) {
-    try {
-      let created = payload;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    let loginData = await axios.post('http://localhost:3001/usuarios/login', payload);
+    // console.log(loginData.data)
+
+    sessionStorage.setItem("token", JSON.stringify(loginData.data));
+
+
+    return dispatch({
+       type: POST_LOGIN,
+       payload: loginData.data
+    })
+ }
 };
+// export const postRegister = (payload) => {
+//   return async function (dispatch) {
+//     let obtenerImg = await axios("/images");
+//     return {
+//       type: OBTENER_IMG,
+//       payload: obtenerImg.data,
+//     };
+//   };
+// };
+
+
 export const postRegister = (payload) => {
+   console.log("llego al front:",payload)
   return async function (dispatch) {
-    let obtenerImg = await axios("/images");
-    return {
-      type: OBTENER_IMG,
-      payload: obtenerImg.data,
+      try {
+      let postRegister = await axios.post("http://localhost:3001/auth/register", payload);
+      console.log(postRegister.data)
+      sessionStorage.setItem('info',postRegister.data);
+      return dispatch({
+        type: POST_REGISTER,
+        payload: postRegister.data,
+      });
+    } catch (error) {
+      // console.log(error.response.data)
+      return dispatch({
+        type: POST_REGISTER,
+        payload:error.response.data ,
+      });
+    }
     };
-  };
 };
+
+export const loginUser = (payload) => {
+  console.log("llego al front:",payload)
+ return async function (dispatch) {
+     try {
+     let logUser = await axios.post("http://localhost:3001/auth/login", payload);
+     sessionStorage.setItem('info',postRegister.data);
+     return dispatch({
+       type: POST_REGISTER,
+       payload: postRegister.data,
+     });
+   } catch (error) {
+     // console.log(error.response.data)
+     return dispatch({
+       type: POST_REGISTER,
+       payload:error.response.data ,
+     });
+   }
+   };
+}
 
 export const postImagen = (payload) => {
   return async function (dispatch) {

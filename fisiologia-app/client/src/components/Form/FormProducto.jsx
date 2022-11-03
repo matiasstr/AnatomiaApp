@@ -56,88 +56,77 @@ function FormProducto() {
           </label> */}
           {/* <input type="text" name="name" onChange={handleInputText} /> */}
         </div>
-   
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Descripcion</span>
-            </label>
-            <textarea
-              className="textarea textarea-bordered h-24"
-              placeholder="Bio"
-              name="description"
-              onChange={handleInputText}
-            ></textarea>
-          </div>
-     
 
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Descripcion</span>
+          </label>
+          <textarea
+            className="textarea textarea-bordered h-24"
+            placeholder="Bio"
+            name="description"
+            onChange={handleInputText}
+          ></textarea>
+        </div>
 
+        <div className="form-control w-full max-w-xs">
+          <label className="label">
+            <span className="label-text">Plan: tipo de intervalo</span>
+          </label>
+          <input
+            type="text"
+            placeholder="Intervalo.."
+            className="input input-bordered w-full max-w-xs"
+            onChange={handleInputText}
+            name="interval_unit"
+          />
+        </div>
 
-  
-          <div className="form-control w-full max-w-xs">
-            <label className="label">
-              <span className="label-text">Plan: tipo de intervalo</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Intervalo.."
-              className="input input-bordered w-full max-w-xs"
-              onChange={handleInputText}
-              name="interval_unit"
-            />
-          </div>
-       
-      
-          <div className="form-control w-full max-w-xs">
-            <label className="label">
-              <span className="label-text">Tiempo de vigencia</span>
-            </label>
+        <div className="form-control w-full max-w-xs">
+          <label className="label">
+            <span className="label-text">Tiempo de vigencia</span>
+          </label>
+          <input
+            type="number"
+            placeholder="Intervalo.."
+            className="input input-bordered w-full max-w-xs"
+            name="total_cycles"
+            onChange={handleInputText}
+          />
+        </div>
+
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Precio</span>
+          </label>
+          <label className="input-group">
+            <span>Price</span>
             <input
               type="number"
-              placeholder="Intervalo.."
-              className="input input-bordered w-full max-w-xs"
-              name="total_cycles"
+              placeholder="10"
+              className="input input-bordered"
+              name="value"
               onChange={handleInputText}
             />
-          </div>
-         
-     
-    
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Precio</span>
-            </label>
-            <label className="input-group">
-              <span>Price</span>
-              <input
-                type="number"
-                placeholder="10"
-                className="input input-bordered"
-                name="value"
-                onChange={handleInputText}
-              />
-              <span>USD</span>
-            </label>
-          </div>
-   
-      
-        <div className="form-control">
-            <label className="label">
-              <span className="label-text">Impuestos</span>
-            </label>
-            <label className="input-group">
-              
-              <input
-                type="number"
-                placeholder="10"
-                className="input input-bordered"
-                name="value"
-                onChange={handleInputText}
-              />
-              <span>%</span>
-            </label>
-          </div>
-     
+            <span>USD</span>
+          </label>
+        </div>
 
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Impuestos</span>
+          </label>
+          <label className="input-group">
+            <input
+              type="number"
+              placeholder="10"
+              className="input input-bordered"
+              name="value"
+              onChange={handleInputText}
+            />
+            <span>%</span>
+          </label>
+        </div>
 
         <button type="submit">submit</button>
       </form>

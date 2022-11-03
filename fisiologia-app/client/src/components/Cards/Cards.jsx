@@ -5,7 +5,7 @@ import Paginacion from "./Paginacion";
 function Cards() {
   let allInfo = useSelector((state) => state.imagenes);
   const [pagina, setPagina] = useState(1);
-  const porPagina = 9;
+  const porPagina = 8;
   const ultPag = pagina * porPagina;
   const priPag = ultPag - porPagina;
   let informacion = allInfo?.slice(priPag, ultPag);

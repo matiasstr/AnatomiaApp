@@ -6,11 +6,13 @@ import {
   OBTENER_IMG,
   CREAR_PRODUCTO,
   CREAR_PLAN,
-  CREAR_SUBCRIPCION,
+  NEW_SUBSCRIBE,
   POST_IMAGEN,
+  POST_REGISTER,
+  POST_LOGIN,
   AGREGAR_AL_CARRITO,
   QUITAR_DEL_CARRITO,
-  FILTER_NAME,
+  FILTER_NAME,CANCEL_SUBSCRIBE,CREAR_SUBCRIPCION
 } from "../Actions/Actions";
 
 // let carritoStorage;
@@ -26,6 +28,7 @@ import {
 // if (!carritoStorage) {
 //   carritoStorage = [];
 // }
+  
 
 const initialState = {
   contenido: [
@@ -104,11 +107,28 @@ const rootReducer = (state = initialState, action) => {
         imagenes: filter
         }
       }
-    case POST_IMAGEN:
+    case NEW_SUBSCRIBE:
       return {
         ...state,
       };
 
+    case CANCEL_SUBSCRIBE:
+      return {
+        ...state,
+      };
+
+    case POST_IMAGEN:
+      return {
+        ...state,
+      };
+    case POST_REGISTER:
+      return {
+        ...state,
+      };
+    case POST_LOGIN:
+      return {
+        ...state,
+      };
     default:
       return state;
   }
