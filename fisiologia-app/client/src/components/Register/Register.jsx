@@ -2,23 +2,29 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { postRegister } from "../../Redux/Actions/Actions";
+
 function Register() {
+
   const dispatch = useDispatch()
   const [input, setInput] = useState();
+
   const handleInputChange = (e) => {
     e.preventDefault();
+    console.log(e.target.name)
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     });
-  };
+  }
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(input)
-    dispatch(postRegister(input))
+    console.log("entro!")
+    dispatch(postRegister(input));
+    //console.log(data);
   };
 
-// console.log(input);
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">

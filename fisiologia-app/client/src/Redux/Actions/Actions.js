@@ -10,6 +10,8 @@ export const CREAR_SUBCRIPCION="CREAR_SUBCRIPCION"
 export const POST_IMAGEN = "POST_IMAGEN";
 export const AGREGAR_AL_CARRITO = "AGREGAR_AL_CARRITO";
 export const QUITAR_DEL_CARRITO = "QUITAR_DEL_CARRITO";
+export const LOGIN_REGISTER = "LOGUEAR_USUARIO";
+
 export const NEW_SUBSCRIBE = "NEW_SUBSCRIBE";
 export const POST_REGISTER="POST_REGISTER";
 export const POST_LOGIN = "POST_LOGIN";
@@ -129,13 +131,24 @@ export const postLogin = (payload) => {
     })
  }
 };
+// export const postRegister = (payload) => {
+//   return async function (dispatch) {
+//     let obtenerImg = await axios("/images");
+//     return {
+//       type: OBTENER_IMG,
+//       payload: obtenerImg.data,
+//     };
+//   };
+// };
+
+
 export const postRegister = (payload) => {
-  // console.log("llego al front")
-  
+   console.log("llego al front:",payload)
   return async function (dispatch) {
       try {
-      let postRegister = await axios.post("http://localhost:3001/usuarios/register", payload);
-      // console.log(postRegister)
+      let postRegister = await axios.post("http://localhost:3001/auth/register", payload);
+      console.log(postRegister.data)
+      sessionStorage.setItem('info',postRegister.data);
       return dispatch({
         type: POST_REGISTER,
         payload: postRegister.data,
@@ -146,13 +159,30 @@ export const postRegister = (payload) => {
         type: POST_REGISTER,
         payload:error.response.data ,
       });
-  
     }
-    
     };
-    
-    
 };
+
+export const loginUser = (payload) => {
+  console.log("llego al front:",payload)
+ return async function (dispatch) {
+     try {
+     let logUser = await axios.post("http://localhost:3001/auth/login", payload);
+     sessionStorage.setItem('info',postRegister.data);
+     return dispatch({
+       type: POST_REGISTER,
+       payload: postRegister.data,
+     });
+   } catch (error) {
+     // console.log(error.response.data)
+     return dispatch({
+       type: POST_REGISTER,
+       payload:error.response.data ,
+     });
+   }
+   };
+}
+
 export const postImagen = (payload) => {
   return async function (dispatch) {
     let imagenCreada = await axios.post(`Ruta del post a definir`, payload);
