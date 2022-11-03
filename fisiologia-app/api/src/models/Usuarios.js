@@ -10,7 +10,6 @@ module.exports = (sequelize) => {
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true,
-        
       },
       username: {
         type: DataTypes.STRING,
@@ -41,7 +40,11 @@ module.exports = (sequelize) => {
         type: DataTypes.JSON,
         defaultValue: null,
       },
-    }, 
+      suscripTipo: {
+        type: DataTypes.ENUM(["mes", "trimes"]),
+        defaultValue: "mes",
+      },
+    },
     {
       timestamps: false,
     }
