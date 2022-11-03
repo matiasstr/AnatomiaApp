@@ -51,62 +51,77 @@ function Form() {
     <div>
       <form onSubmit={handleSubmit}>
         <div className="grid h-screen place-items-center">
-          <div className="form">
-            <input
-              type="file"
-              name="image"
-              onChange={handleInputFile}
-              value={fileInputState}
-            />
+          <div className="form flex flex-row">
+            <div className="flex justify-center">
+              <div className="mb-3 w-96">
+                <label className="label">
+                  <span className="label-text"> Subir imagen</span>
+                </label>
+
+                <input
+                  className="form-control block w-full px-3 py-1.5 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  type="file"
+                  name="image"
+                  onChange={handleInputFile}
+                  value={fileInputState}
+                />
+              </div>
+            </div>
           </div>
-          <div className="form">
+
+          <div className="form-control w-2/4 max-w-xs">
+            <label className="label">
+              <span className="label-text">Titulo de la imagen</span>
+            </label>
             <input
               type="text"
-              placeholder="Titulo de la imagen"
-              className="input input-bordered border-slate-500 w-full max-w-xs h-9 text-center"
+              className="input input-bordered w-full max-w-xs"
               name="title"
               onChange={handleInputText}
             />
           </div>
-          <div className="flex w-2/3 justify-around">
-            <div>
-              {previewSource && (
-                <img
-                  className="rounded-md"
-                  src={previewSource.img}
-                  alt="img"
-                  style={{ height: "300px" }}
-                />
-              )}
-            </div>
-            <div className="">
-              <div className="form my-2">
-                <input
-                  type="text"
-                  placeholder="Grupo al que pertenece"
-                  className="input input-bordered border-slate-500 w-full max-w-xs h-9 text-center"
-                  name="grupo"
-                  onChange={handleInputText}
-                />
-              </div>
-              <div className="form my-2">
-                <textarea
-                  type="text"
-                  placeholder="Descripcion"
-                  className="input input-bordered border-slate-500 max-w-xs w-96 h-32 text-center"
-                  name="desc"
-                  onChange={handleInputText}
-                />
-              </div>
-            </div>
+          <div className="form-control w-2/4 max-w-xs">
+            <label className="label">
+              <span className="label-text">Grupo al que pertenece</span>
+            </label>
+            <input
+              type="text"
+              className="input input-bordered w-full max-w-xs"
+              name="grupo"
+              onChange={handleInputText}
+            />
+          </div>
+
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Descripcion</span>
+            </label>
+            <textarea
+              className="textarea textarea-bordered h-24"
+              placeholder="Bio"
+              name="desc"
+              onChange={handleInputText}
+            ></textarea>
           </div>
           <div className="form my-2">
+            <label className="label">
+              <span className="label-text">Podcast</span>
+            </label>
             <input type="text" name="podcast" onChange={handleInputText} />
+          </div>
+          <div>
+            {previewSource && (
+              <img
+                className="rounded-md"
+                src={previewSource.img}
+                alt="img"
+                style={{ height: "300px" }}
+              />
+            )}
           </div>
           <button className="btn btn-sm" type="submit">
             Agregar
           </button>
-          {/* <button className="rounded-md border border-slate-500 w-32 my-2 bg-slate-700" type="submit">Agregar</button> */}
         </div>
       </form>
     </div>
