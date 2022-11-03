@@ -24,14 +24,23 @@ export const LOAD_USER = "LOAD_USER";
 // })
 
 export const getImg = () => {
-  return async function (dispatch) {
-    let getImg = await axios("http://localhost:3001/images");
+  try {
+    
 
-    return dispatch({
-      type: GET_IMG,
-      payload: getImg.data,
-    });
-  };
+    return async function (dispatch) {
+      let getImg = await axios("http://localhost:3001/images");
+  
+      return dispatch({
+        type: GET_IMG,
+        payload: getImg.data,
+      });
+    
+
+    };
+
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 export const postImg = (payload) => {

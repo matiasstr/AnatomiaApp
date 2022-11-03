@@ -58,7 +58,7 @@ const initialState = {
   ],
   imagenes: [],
   backup: [],
-  user: { login: true },
+  user: { login: false },
   detalleDeImg: [],
   datosUsuario: null,
 };
