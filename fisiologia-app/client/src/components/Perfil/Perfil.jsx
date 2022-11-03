@@ -1,24 +1,51 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { loadUser, cancelSubscribe } from "../../Redux/Actions/Actions";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
+
 function Perfil() {
-  return (
-    <div class="h-full flex flex-col bg-gray-100 dark:bg-gray-700 shadow-xl overflow-y-scroll">
+  let userData = useSelector((state) => state.datosUsuario);
+  let dispatch = useDispatch();
+
+  useEffect(() => {
+    let token = sessionStorage.getItem("info");
+
+    dispatch(loadUser(token));
+  }, []);
+
+  const HandleClick = (e) => {
+    //PARA PROBAR LA RUTA, DESPUES HAY QUE SACAR EL BOTON
+    e.preventDefault();
+    const token = sessionStorage.getItem("info");
+    console.log(token);
+    dispatch(cancelSubscribe(token));
+  };
+
+  console.log(userData);
+
+  return !userData ? (
+    <>
+      <h1>LOADING</h1>
+    </>
+  ) : (
+
+
+
+    userData.nombreDePlan ? (
+
+      <div class="h-full flex flex-col bg-gray-100 dark:bg-gray-700 shadow-xl overflow-y-scroll">
       <div class="ml-3 h-7 flex justify-end items-center">
         <button
           type="button"
           class="bg-gray-100 dark:bg-gray-700 m-1 p-3 justify-end rounded-md text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-indigo-500"
         >
-         
           {/* <!-- Heroicon name: outline/x --> */}
-          
-         
-            
         </button>
       </div>
       <div class=" shadow-lg pb-3 rounded-b-3xl">
         <div class="flex  rounded-b-3xl bg-gray-100 dark:bg-gray-700 space-y-5 flex-col items-center py-7">
-          <span className="text-3xl">Michele</span>
+          <span className="text-3xl">{`${userData.username}`}</span>
         </div>
         
         <div class="grid px-7 py-2  items-center justify-around grid-cols-3 gap-4 divide-x divide-solid ">
@@ -28,11 +55,13 @@ function Perfil() {
           </div>
           <div class="col-span-1 px-3 flex flex-col items-center ">
             <span class="text-2xl font-bold dark:text-gray-300">Plan</span>
-            <span class="text-lg font-medium">"mensual"</span>
+            <span class="text-lg font-medium">{`${userData.nombreDePlan}`}</span>
           </div>
           <div class="col-span-1 flex flex-col items-center ">
-            <span class="text-2xl font-bold dark:text-gray-300">Vencimiento</span>
-            <span class="text-lg font-medium 0">"fecha"</span>
+            <span class="text-2xl font-bold dark:text-gray-300">
+              Fecha de inicio
+            </span>
+            <span class="text-lg font-medium 0">{`${userData.fechaDeinicio}`}</span>
           </div>
          
           
@@ -188,12 +217,22 @@ function Perfil() {
       <div class="flex mx-auto mt-3 w-100 ">
         <a href="">
           {" "}
-          <button class="p-2 shadow-lg  tr-300 w-100 font-medium  bg-red-600 rounded-md hover:bg-red-600 text-gray-50">
+          <button
+            class="p-2 shadow-lg  tr-300 w-100 font-medium  bg-red-600 rounded-md hover:bg-red-600 text-gray-50"
+            onClick={HandleClick}
+          >
             Cancelar membresía
           </button>
         </a>
       </div>
     </div>
+
+    ):(
+
+      <h1>No estas suscripto a ningun plan</h1>
+
+    )
+    
   );
 }
 

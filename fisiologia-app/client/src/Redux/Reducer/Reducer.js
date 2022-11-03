@@ -10,9 +10,11 @@ import {
   POST_IMAGEN,
   POST_REGISTER,
   POST_LOGIN,
-  AGREGAR_AL_CARRITO,
-  QUITAR_DEL_CARRITO,
-  FILTER_NAME,CANCEL_SUBSCRIBE,CREAR_SUBCRIPCION
+  CANCEL_SUBSCRIBE,
+  SESION_ACTIVA,
+  LOAD_USER,
+  FILTER_NAME,
+  CREAR_SUBCRIPCION,
 } from "../Actions/Actions";
 
 // let carritoStorage;
@@ -28,7 +30,6 @@ import {
 // if (!carritoStorage) {
 //   carritoStorage = [];
 // }
-  
 
 const initialState = {
   contenido: [
@@ -59,6 +60,7 @@ const initialState = {
   backup: [],
   user: { login: true },
   detalleDeImg: [],
+  datosUsuario: null,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -67,7 +69,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         imagenes: action.payload,
-       
       };
     case POST_IMG:
       return {
@@ -102,10 +103,10 @@ const rootReducer = (state = initialState, action) => {
             e.title.toLowerCase().includes(action.payload.toLowerCase()) ||
             e.grupo.toLowerCase().includes(action.payload.toLowerCase())
         );
-        return{
-        ...state,
-        imagenes: filter
-        }
+        return {
+          ...state,
+          imagenes: filter,
+        };
       }
     case NEW_SUBSCRIBE:
       return {
@@ -113,8 +114,11 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case CANCEL_SUBSCRIBE:
+      console.log(action.payload);
+
       return {
         ...state,
+        datosUsuario: action.payload,
       };
 
     case POST_IMAGEN:
@@ -124,10 +128,22 @@ const rootReducer = (state = initialState, action) => {
     case POST_REGISTER:
       return {
         ...state,
+        user: { login: true },
       };
     case POST_LOGIN:
       return {
         ...state,
+        user: { login: true },
+      };
+    case SESION_ACTIVA:
+      return {
+        ...state,
+        user: { login: true },
+      };
+    case LOAD_USER:
+      return {
+        ...state,
+        datosUsuario: action.payload,
       };
     default:
       return state;

@@ -13,10 +13,11 @@ import FormularioProducto from "./components/Form/FormProducto";
 import Perfil from "./components/Perfil/Perfil";
 
 import PayPalBtn from "./components/PaypalCheckoutButton/PayPalBtn.jsx";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { newSubscribe } from "../src/Redux/Actions/Actions";
 
 function App() {
+  let userData = useSelector((state) => state.datosUsuario);
   let dispatch = useDispatch();
 
   const paypalSubscribe = (data, actions) => {
@@ -32,17 +33,11 @@ function App() {
   const paypalOnApprove = (data, actions) => {
     // call the backend api to store transaction details
 
-    const token = sessionStorage.getItem("token");
-    let arraux = [data, token];
-
+    const token = sessionStorage.getItem("info");
+    let arraux = [data, token, "Plan1"];
     dispatch(newSubscribe(arraux));
 
-    console.log("Payapl approved");
-
-    return actions.subscription.get().then(function (details) {
-      // Show a success message to your buyer
-      alert("Subscription completed");
-    });
+    alert("Subscription completed");
   };
 
   return (

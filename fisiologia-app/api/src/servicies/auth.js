@@ -17,8 +17,6 @@ const regController = async (req, res) => {
       token: await tokenSign(dataUser.dataValues),
       user: dataUser.dataValues,
     };
-    let user= await verifyToken(data.token);
-    console.log("Algo!!!!",user)
     res.status(200).send(data.token);
   } catch (error) {
     res.status(404).send("ERROR_DE_REGISTRO");
@@ -49,7 +47,8 @@ const loginController = async (req, res) => {
     };
     //Enmascara el Password para que no se vea por pantalla
     user.set("password", undefined, { strict: false });
-    return res.send("USUARIO_LOGUEADO");
+    let token= await tokenSign(user.dataValues)
+    return res.status(200).json(token);
   } catch (error) {
     console.log(error);
     res.send("ERROR_DE_LOGUEO");

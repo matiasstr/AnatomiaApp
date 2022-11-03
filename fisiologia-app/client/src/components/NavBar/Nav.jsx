@@ -1,16 +1,21 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Outlet, Link } from "react-router-dom";
-
 import SearchBar from "./SearchBar";
-
+import { sesionActiva } from "../../Redux/Actions/Actions";
 import { themeChange } from "theme-change";
 
 function Nav() {
+  let dispatch = useDispatch()
   useEffect(() => {
     themeChange(false);
     // 👆 false parameter is required for react project
+    let token = sessionStorage.getItem("info")
+    if(token){
+      dispatch(sesionActiva())
+    }
   }, []);
+
   let userReducer = useSelector((state) => state.user);
   const darkmode = ()=>{
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -26,7 +31,7 @@ function Nav() {
       <nav className="navbar ">
         <div className="flex-1">
           <Link
-            to="/inicio"
+            to="/"
             className="btn btn-ghost normal-case text-xl "
           >
             Anatomia Dibujada
