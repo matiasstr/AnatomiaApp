@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const route = Router();
-const {postImage, getImage, getImageByRef} = require("../servicies/images.js");
+const {postImage, getImage, getImageByRef, getImgbyId} = require("../servicies/images.js");
 require("dotenv").config();
 
 route.get("/", getImage)
@@ -10,5 +10,6 @@ route.post("/post", postImage);
 // route.put("/cambiar", putModificarAdmin)
 // route.put("/eliminar", putElminar)
 // route.put("/IProfile", putProfile)
+route.get("/detail/:id", getImgbyId)
 
 module.exports = route;

@@ -19,7 +19,6 @@ export const QUITAR_DEL_CARRITO = "QUITAR_DEL_CARRITO";
 export const getImg = () => {
   return async function (dispatch) {
     let getImg = await axios("http://localhost:3001/images");
-
     return dispatch({
       type: GET_IMG,
       payload: getImg.data,
@@ -46,7 +45,7 @@ export const postImg = (payload) => {
 };
 export const obtenerDetalle = (id) => {
   return async function (dispatch) {
-    let obtenerDetalle = await axios(`Ruta a designar/${id}`);
+    let obtenerDetalle = await axios(`http://localhost:3001/images/detail/${id}`);
     return dispatch({
       type: OBTENER_DETALLE,
       payload: obtenerDetalle.data,
@@ -56,7 +55,7 @@ export const obtenerDetalle = (id) => {
 
 export const obtenerImg = () => {
    return async function (dispatch) {
-      let obtenerImg = await axios('/images');
+      let obtenerImg = await axios('http://localhost:3001/images');
       return({
          type: OBTENER_IMG,
          payload: obtenerImg.data

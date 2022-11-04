@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
-function Card({ nombre, descripcion }) {
+function Card({ nombre, descripcion, id }) {
   return (
-    <Link to="/Detail">
+    <Link to={`/detail/${id}`}>
       <div className="card w-auto h-auto bg-base-100 shadow-xl  m-2">
         <figure>
           <img src="https://placeimg.com/400/225/arch" alt="Shoes" />

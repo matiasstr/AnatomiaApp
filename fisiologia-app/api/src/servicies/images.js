@@ -70,8 +70,19 @@ const postImage = async (req, res) => {
   }
 };
 
+const getImgbyId = async (req, res) => {
+  let { id } = req.params;
+
+  const allImg = await getImage();
+  if(id){
+    const img = allImg.filter(e => e.id == id);
+    img.length ? res.status(200).json(img) : res.status(404).send('Error');
+  }
+}
+
 module.exports = {
   postImage,
   getImage,
   getImageByRef,
+  getImgbyId,
 };

@@ -12,10 +12,10 @@ import tremendoAudio from "../../assets/media/audio.mp3";
 import styles from "./Detalle.module.css";
 
 function Detail() {
+  let { id } = useParams();
   const dispatch = useDispatch();
   let detalleImg = useSelector((state) => state.detalleDeImg);
   console.log(detalleImg);
-  let { id } = useParams();
   console.log(id);
 
   useEffect(() => {
@@ -42,23 +42,20 @@ function Detail() {
                 ✕
               </label>
               <h3 className="text-lg font-bold">
-                Congratulations random Internet user!
+                {detalleImg.title}
               </h3>
               <p className="py-4">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-                voluptatum, molestias voluptate porro aut autem assumenda
-                perspiciatis doloribus totam obcaecati reiciendis optio a
-                consequuntur architecto non dolorum? Doloribus, vel obcaecati?
+                {detalleImg.desc}
               </p>
             </div>
           </div>
         </div>
         <div>
-          <img className={styles.img_detalle} src={img1} alt="img" />
+          <img className={styles.img_detalle} src={detalleImg.img} alt="img" />
         </div>
         <div className={styles.player}>
           <audio controls>
-            <source src={tremendoAudio} type="audio/mpeg" />
+            <source src={detalleImg.podcast} type="audio/mpeg" />
           </audio>
         </div>
       </div>
