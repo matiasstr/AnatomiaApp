@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
-
-function Card({ nombre, descripcion, id }) {
+import {Image } from "cloudinary-react"
+function Card({ nombre, descripcion, img, id }) {
+  console.log(id);
   return (
     <Link to={`/detail/${id}`}>
       <div className="card w-auto h-auto bg-base-100 shadow-xl  m-2">
-        <figure>
-          <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
-        </figure>
+        {/* <figure> */}
+          <Image cloudName="dwgzicpxf" publicId={img} width="300"/>
+          {/* <img src="https://placeimg.com/400/225/arch" alt="Shoes" /> */}
+        {/* </figure> */}
         <div className="card-body">
           <h2 className="card-title">{nombre}</h2>
           <p>{descripcion}</p>

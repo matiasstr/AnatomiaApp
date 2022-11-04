@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { getImg } from "../../Redux/Actions/Actions";
 import { Image } from "cloudinary-react";
 
+
+
 function Home() {
   const dispatch = useDispatch();
   const useImages = useSelector((state) => state.imagenes);
@@ -14,19 +16,9 @@ function Home() {
     dispatch(getImg());
   }, []);
 
+
   return (
     <div className="w-screen h-screen">
-      {/* {useImages.map((i, index) => (
-        <Image
-          key={index}
-          cloudName="dwgzicpxf"
-          publicId={i.img}
-          width="300"
-          crop="scale"
-          
-        />
-      ))} */}
-
       <Cards />
 
       {/* <Login/> */}

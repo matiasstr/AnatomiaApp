@@ -35,6 +35,22 @@ const getImageByRef = async (req, res) => {
     console.log(error);
   }
 };
+const getImageById = async (req, res) => {
+let {id} = req.params
+console.log(id);
+  try {
+    let response = await Images.findOne({
+      where: {
+        id: id,
+      },
+    });
+
+    res.status(200).json(response.dataValues);
+    // console.log(response.dataValues);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 // const storage = multer.diskStorage({
 //   destination: function (req, file, cb) {
@@ -84,5 +100,5 @@ module.exports = {
   postImage,
   getImage,
   getImageByRef,
-  getImgbyId,
+  getImageById
 };

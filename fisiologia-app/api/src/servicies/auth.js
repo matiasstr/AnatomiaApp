@@ -1,72 +1,58 @@
 const { matchedData } = require("express-validator");
 const { encrypt, compare } = require("../helpers/handlePassword");
 const { Usuarios } = require("../DB/db");
-const { tokenSign } = require("../helpers/handleJwt");
+const { tokenSign,verifyToken} = require("../helpers/handleJwt");
+const { verify } = require("jsonwebtoken");
 
+//Registro de nuevo usuario
 const regController = async (req, res) => {
-        try {
-          req = matchedData(req);
-          const password = await encrypt(req.password);
-          const body = { ...req, password };
-          console.log(body);
-          const dataUser = await Usuarios.create(body);
-          let data = {
-            token: await tokenSign(dataUser.dataValues),
-            user: dataUser.dataValues,
-          };
-          res.send( data );
-        } catch (error) {
-          console.log(error);
-    };
-};
-
-const loginController = async (req, res)=>{
   try {
-    req= matchedData(req);
-    const user = await Usuarios.findOne({where: {
-      email:req.email
-   }
-  });
-    
-    if(!user){
-      res.status(404).send('USUARIO_INEXISTENTE');
-      return
-    }
-    // console.log(user.dataValues.password);
-    const hashPassword= user.dataValues.password;
-    const check = await compare(req.password,hashPassword);
-
-    if(!check){
-      res.status(402).send('PASSWORD_INVALIDO');
-      return
-    }
-
-     user.set('password', undefined, {strict:false});
-    console.log('datosUser: ',user.dataValues)
-     if(user.dataValues.isActiv===false){
-      console.log('stateUser: ',user.dataValues.isActive);
-
-      let data = {
-        token: await tokenSign(user),
-        user: user.dataValues,
-      }
-      console.log('Usuario estado Activo')
-      res.send(data);      
-     } else {
-      let data = {
-        token: 'Bloqueado',
-        user: user.dataValues,
-      }
-      res.status(409).send('El ussuario ya se encuentra activo!')
-     }
-    
-    
-
-
-
+    req = matchedData(req);
+    //encripta password
+    const password = await encrypt(req.password);
+    const body = { ...req, password };
+    //Crea nuevo usuario
+    const dataUser = await Usuarios.create(body);
+    let data = {
+      token: await tokenSign(dataUser.dataValues),
+      user: dataUser.dataValues,
+    };
+    res.status(200).send(data.token);
   } catch (error) {
+    res.status(404).send("ERROR_DE_REGISTRO");
     console.log(error);
   }
-}
+};
+
+//Logueo y verificacion de actividad de usuario
+const loginController = async (req, res) => {
+  try {
+    req = matchedData(req);
+    const user = await Usuarios.findOne({
+      where: {
+        email: req.email,
+      },
+    });
+    //Verifica si existe el email en la BD de usuarios
+    if (!user) {
+      res.status(404).send("EMAIL_INEXISTENTE");
+      return;
+    }
+    //Verifica la coincidencia del password con el email
+    const hashPassword = user.dataValues.password;
+    const check = await compare(req.password, hashPassword);
+    if (!check) {
+      res.status(402).send("PASSWORD_INVALIDO");
+      return;
+    };
+    //Enmascara el Password para que no se vea por pantalla
+    user.set("password", undefined, { strict: false });
+    let token= await tokenSign(user.dataValues)
+    return res.status(200).json(token);
+  } catch (error) {
+    console.log(error);
+    res.send("ERROR_DE_LOGUEO");
+  }
+};
 
 module.exports = { regController, loginController };
