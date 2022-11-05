@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { postLogin } from "../../Redux/Actions/Actions";
+import { loginUser } from "../../Redux/Actions/Actions";
 function Login() {
   const dispatch = useDispatch();
   const [input, setInput] = useState();
@@ -13,7 +13,7 @@ function Login() {
     });
   };
   const handleSubmit = (e) => {
-    dispatch(postLogin(input));
+    dispatch(loginUser(input));
     e.preventDefault();
   };
 

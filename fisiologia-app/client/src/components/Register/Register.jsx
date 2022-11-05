@@ -7,7 +7,6 @@ function Register() {
 
   const dispatch = useDispatch()
   const [input, setInput] = useState();
-
   const handleInputChange = (e) => {
     e.preventDefault();
     console.log(e.target.name)

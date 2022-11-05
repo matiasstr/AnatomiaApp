@@ -48,7 +48,8 @@ const loginController = async (req, res) => {
     };
     //Enmascara el Password para que no se vea por pantalla
     user.set("password", undefined, { strict: false });
-    return res.send("USUARIO_LOGUEADO");
+    let token= await tokenSign(user.dataValues)
+    return res.status(200).json(token);
   } catch (error) {
     console.log(error);
     res.status(404).send("ERROR_DE_LOGUEO");
