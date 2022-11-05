@@ -56,7 +56,7 @@ const loginController = async (req, res) => {
 };
 
 //LogOut
-const LogOutController = async (req, res) => {
+const logOutController = async (req, res) => {
   try {
     //Matchear con el usuariogit 
     req = matchedData(req);
@@ -72,4 +72,4 @@ const LogOutController = async (req, res) => {
 };
 
 
-module.exports = { regController, loginController,LogOutController };
+module.exports = { regController, loginController,logOutController };
