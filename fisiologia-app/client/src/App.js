@@ -4,6 +4,7 @@ import Detail from "./components/Detail/Detail";
 import Home from "./components/Home/Home";
 import LandingPage from "./components/LandingPage/LandingPage";
 import Login from "./components/Login/Login";
+
 import Nav from "./components/NavBar/Nav";
 import Register from "./components/Register/Register";
 import Form from "./components/Form/Form";

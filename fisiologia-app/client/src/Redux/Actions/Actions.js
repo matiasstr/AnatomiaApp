@@ -15,7 +15,8 @@ export const LOGIN_REGISTER = "LOGUEAR_USUARIO";
 export const SESION_ACTIVA = "SESION_ACTIVA";
 export const NEW_SUBSCRIBE = "NEW_SUBSCRIBE";
 export const POST_REGISTER = "POST_REGISTER";
-export const POST_LOGIN = "POST_LOGIN";
+export const LOGIN_USER = "LOGIN_USER";
+export const LOGOUT_USER = "LOGOUT_USER";
 export const CANCEL_SUBSCRIBE = "CANCEL_SUBSCRIBE";
 export const LOAD_USER = "LOAD_USER";
 // export const first = (payload) => ({
@@ -143,7 +144,7 @@ export const postLogin = (payload) => {
     sessionStorage.setItem("token", JSON.stringify(loginData.data));
 
     return dispatch({
-      type: POST_LOGIN,
+      type: LOGIN_USER,
       payload: loginData.data,
     });
   };
@@ -182,6 +183,7 @@ export const postRegister = (payload) => {
   };
 };
 
+//Logueo de Usuario
 export const loginUser = (payload) => {
   return async function (dispatch) {
     try {
@@ -190,14 +192,39 @@ export const loginUser = (payload) => {
         payload
       );
       sessionStorage.setItem("info", logUser.data);
+      console.log('Usuario Logueado')
       return dispatch({
-        type: POST_REGISTER,
-        payload: postRegister.data,
+        type: LOGIN_USER,
+        payload: logUser.data,
       });
     } catch (error) {
       // console.log(error.response.data)
       return dispatch({
-        type: POST_REGISTER,
+        type: LOGIN_USER,
+        payload: error.response.data,
+      });
+    }
+  };
+};
+
+//Logueo de Usuario
+export const logOutUser = (payload) => {
+  return async function (dispatch) {
+    try {
+        await axios.post(
+        "http://localhost:3001/auth/logOut",
+        payload
+      );
+      sessionStorage.clear();
+      console.log('Usuario deslogueado')
+      return dispatch({
+        type: LOGOUT_USER,
+        
+      });
+    } catch (error) {
+      // console.log(error.response.data)
+      return dispatch({
+        type: LOGOUT_USER,
         payload: error.response.data,
       });
     }
