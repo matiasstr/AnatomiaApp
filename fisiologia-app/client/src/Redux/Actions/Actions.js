@@ -192,7 +192,7 @@ export const loginUser = (payload) => {
       sessionStorage.setItem("info", logUser.data);
       return dispatch({
         type: POST_REGISTER,
-        payload: postRegister.data,
+        payload: logUser.data,
       });
     } catch (error) {
       // console.log(error.response.data)

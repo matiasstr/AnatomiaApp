@@ -60,7 +60,7 @@ const initialState = {
   backup: [],
   user: { login: true },
   detalleDeImg: [],
-  datosUsuario: null,
+  datosUsuario: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -128,7 +128,7 @@ const rootReducer = (state = initialState, action) => {
     case POST_REGISTER:
       return {
         ...state,
-        user: { login: true },
+        datosUsuario:  action.payload,
       };
     case POST_LOGIN:
       return {

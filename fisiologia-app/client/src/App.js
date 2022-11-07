@@ -13,7 +13,7 @@ import FormularioProducto from "./components/Form/FormProducto";
 import Perfil from "./components/Perfil/Perfil";
 
 import PayPalBtn from "./components/PaypalCheckoutButton/PayPalBtn.jsx";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { newSubscribe } from "../src/Redux/Actions/Actions";
 
 function App() {
@@ -39,7 +39,7 @@ function App() {
 
     alert("Subscription completed");
   };
-
+  console.log(userData);
   return (
     <div className="w-screen h-screen">
       <Routes>
@@ -51,7 +51,7 @@ function App() {
           <Route path="form" element={<Form />}></Route>
           <Route path="detail/:id" element={<Detail />} />
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="home" element={<Home />} />
+         
           <Route path="formProduct" element={<FormularioProducto />} />
           <Route
             path="Suscripcion"

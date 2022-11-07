@@ -6,34 +6,36 @@ import { sesionActiva } from "../../Redux/Actions/Actions";
 import { themeChange } from "theme-change";
 
 function Nav() {
-  let dispatch = useDispatch()
+  let dispatch = useDispatch();
   useEffect(() => {
     themeChange(false);
     // 👆 false parameter is required for react project
-    let token = sessionStorage.getItem("info")
-    if(token){
-      dispatch(sesionActiva())
+    let token = sessionStorage.getItem("info");
+    if (token) {
+      dispatch(sesionActiva());
     }
   }, []);
 
-  let userReducer = useSelector((state) => state.user);
-  const darkmode = ()=>{
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-    document.documentElement.classList.toggle('dark')
-  }
+  let userReducer = useSelector((state) => state.datosUsuario);
 
+  const darkmode = () => {
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    document.documentElement.classList.toggle("dark");
+  };
+  console.log(userReducer);
   return (
     <main className="w-screen h-screen">
       <nav className="navbar ">
         <div className="flex-1">
-          <Link
-            to="/"
-            className="btn btn-ghost normal-case text-xl "
-          >
+          <Link to="/" className="btn btn-ghost normal-case text-xl ">
             Anatomia Dibujada
           </Link>
           {/* <button data-toggle-theme="dark,light" data-act-class="ACTIVECLASS"></button> */}
@@ -51,7 +53,10 @@ function Nav() {
               <SearchBar />
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full">
-                  <img src="https://cdn-icons-png.flaticon.com/512/16/16363.png" alt="profile" />
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/16/16363.png"
+                    alt="profile"
+                  />
                 </div>
               </label>
               <ul
