@@ -17,6 +17,7 @@ const regController = async (req, res) => {
       token: await tokenSign(dataUser.dataValues),
       user: dataUser.dataValues,
     };
+    let user= await verifyToken(data.token);
     res.status(200).send(data.token);
   } catch (error) {
     res.status(404).send("ERROR_DE_REGISTRO");
@@ -56,7 +57,7 @@ const loginController = async (req, res) => {
     return res.status(200).json(token);
   } catch (error) {
     console.log(error);
-    res.send("ERROR_DE_LOGUEO");
+    res.status(404).send("ERROR_DE_LOGUEO");
   }
 };
 
@@ -96,4 +97,22 @@ const authUserToken = async (req, res) => {
 }
 
 
-module.exports = { regController, loginController, authUserToken };
+
+//LogOut
+const logOutController = async (req, res) => {
+  try {
+    //Matchear con el usuariogit 
+    req = matchedData(req);
+    //Cambiarle isActive a False
+    const user = await Usuarios.update(
+      { isActive : false }, { where: { email:req.email} })
+    //eliminar Token y sessionStorage
+      console.log('USER_INACTIVO',user);
+     res.send("USUARIO_DESLOGUEADO");    
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+module.exports = { regController, loginController,logOutController,authUserToken };

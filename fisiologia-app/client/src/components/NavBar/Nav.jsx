@@ -5,7 +5,9 @@ import SearchBar from "./SearchBar";
 import { sesionActiva } from "../../Redux/Actions/Actions";
 import { themeChange } from "theme-change";
 
+
 function Nav() {
+
   let dispatch = useDispatch()
   useEffect(() => {
     themeChange(false);
@@ -28,6 +30,10 @@ function Nav() {
     }
     document.documentElement.classList.toggle('dark')
   }
+
+  const closeSession = async () => {
+    sessionStorage.clear();
+};
 
   return (
     <main className="w-screen h-screen">
@@ -68,8 +74,8 @@ function Nav() {
                   </Link>
                 </li>
 
-                <li>
-                  <Link to>Logout</Link>{" "}
+                <li onClick={() => closeSession()}>
+                  <Link to>Logout</Link>
                 </li>
               </ul>
             </div>

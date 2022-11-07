@@ -9,7 +9,8 @@ import {
   NEW_SUBSCRIBE,
   POST_IMAGEN,
   POST_REGISTER,
-  POST_LOGIN,
+  LOGIN_USER,
+  LOGOUT_USER,
   CANCEL_SUBSCRIBE,
   SESION_ACTIVA,
   LOAD_USER,
@@ -131,11 +132,16 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         user: { login: true },
       };
-    case POST_LOGIN:
+    case LOGIN_USER:
       return {
         ...state,
         user: { login: true },
       };
+      case LOGOUT_USER:
+        return {
+          ...state,
+          user: { login: true },
+        };
     case SESION_ACTIVA:
       return {
         ...state,

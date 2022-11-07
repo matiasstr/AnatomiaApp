@@ -5,6 +5,7 @@ import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { useEffect } from "react";
 import { getImg } from "../../Redux/Actions/Actions";
 import { Image } from "cloudinary-react";
+import Footer from "../Footer/Footer";
 
 
 
@@ -22,6 +23,7 @@ function Home() {
       <Cards />
 
       {/* <Login/> */}
+      <Footer />
     </div>
   );
 }
