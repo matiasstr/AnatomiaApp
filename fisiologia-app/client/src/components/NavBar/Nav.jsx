@@ -30,7 +30,6 @@ function Nav() {
 
   const closeSession = async () => {
     sessionStorage.clear();
-
 };
 
   return (
