@@ -140,7 +140,7 @@ const rootReducer = (state = initialState, action) => {
       case LOGOUT_USER:
         return {
           ...state,
-          user: { login: true },
+          user: { login: false },
         };
     case SESION_ACTIVA:
       return {

@@ -2,12 +2,13 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
-import { sesionActiva } from "../../Redux/Actions/Actions";
+import { useNavigate } from "react-router-dom";
+import { sesionActiva, logOutUser } from "../../Redux/Actions/Actions";
 import { themeChange } from "theme-change";
 
 
 function Nav() {
-
+  const navigate = useNavigate();
   let dispatch = useDispatch()
   useEffect(() => {
     themeChange(false);
@@ -32,7 +33,13 @@ function Nav() {
   }
 
   const closeSession = async () => {
-    sessionStorage.clear();
+    let token = localStorage.getItem("info")
+    let objToken = {
+        "token": token
+    }
+    dispatch(logOutUser(objToken))
+    navigate("/", { replace: true });
+
 };
 
   return (

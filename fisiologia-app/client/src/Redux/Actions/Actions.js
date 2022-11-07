@@ -213,6 +213,7 @@ export const postRegister = (payload) => {
 export const loginUser = (payload) => {
   return async function (dispatch) {
     try {
+      console.log(payload)
       let logUser = await axios.post(
         "http://localhost:3001/auth/login",
         payload
@@ -235,13 +236,13 @@ export const loginUser = (payload) => {
 //Logueo de Usuario
 export const logOutUser = (payload) => {
   return async function (dispatch) {
+    console.log(payload)
     try {
-        await axios.post(
-        "http://localhost:3001/auth/logOut",
+        let cositas = await axios.post(
+        "http://localhost:3001/auth/logout",
         payload
       );
-      sessionStorage.clear();
-      console.log('Usuario deslogueado')
+      localStorage.clear();
       return dispatch({
         type: LOGOUT_USER,
         
