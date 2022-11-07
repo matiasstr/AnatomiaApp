@@ -48,6 +48,11 @@ const loginController = async (req, res) => {
     //Enmascara el Password para que no se vea por pantalla
     user.set("password", undefined, { strict: false });
     let token= await tokenSign(user.dataValues)
+
+    
+    
+
+
     return res.status(200).json(token);
   } catch (error) {
     console.log(error);
@@ -55,4 +60,40 @@ const loginController = async (req, res) => {
   }
 };
 
-module.exports = { regController, loginController };
+
+const authUserToken = async (req, res) => {
+  try {
+
+
+    console.log("sasda")
+
+    // req = matchedData(req);
+    // const user = await Usuarios.findOne({
+    //   where: {
+    //     email: req.email,
+    //   },
+    // });
+    // //Verifica si existe el email en la BD de usuarios
+    // if (!user) {
+    //   res.status(404).send("EMAIL_INEXISTENTE");
+    //   return;
+    // }
+    // //Verifica la coincidencia del password con el email
+    // const hashPassword = user.dataValues.password;
+    // const check = await compare(req.password, hashPassword);
+    // if (!check) {
+    //   res.status(402).send("PASSWORD_INVALIDO");
+    //   return;
+    // };
+    // //Enmascara el Password para que no se vea por pantalla
+    // user.set("password", undefined, { strict: false });
+    // let token= await tokenSign(user.dataValues)
+    // return res.status(200).json(token);
+  } catch (error) {
+    // console.log(error);
+    // res.send("ERROR_DE_LOGUEO");
+  }
+}
+
+
+module.exports = { regController, loginController, authUserToken };

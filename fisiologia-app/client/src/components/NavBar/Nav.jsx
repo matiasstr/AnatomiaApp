@@ -10,7 +10,7 @@ function Nav() {
   useEffect(() => {
     themeChange(false);
     // 👆 false parameter is required for react project
-    let token = sessionStorage.getItem("info")
+    let token = localStorage.getItem("info")
     if(token){
       dispatch(sesionActiva())
     }

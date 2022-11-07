@@ -18,28 +18,44 @@ export const POST_REGISTER = "POST_REGISTER";
 export const POST_LOGIN = "POST_LOGIN";
 export const CANCEL_SUBSCRIBE = "CANCEL_SUBSCRIBE";
 export const LOAD_USER = "LOAD_USER";
+// export const AUTH_USER_TOKEN = "AUTH_USER_TOKEN";
 // export const first = (payload) => ({
 //   type: GET_INFO,
 //   payload
 // })
 
+// export const authUserToken = (payload) => {
+//   try {
+//     return async function (dispatch) {
+//       let authToken = await axios.post(
+//         "http://localhost:3001/auth/user",
+//         payload
+//       );
+
+//       return dispatch({
+//         type: AUTH_USER,
+//       });
+//     };
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+
+
+
 export const getImg = () => {
   try {
-    
-
     return async function (dispatch) {
       let getImg = await axios("http://localhost:3001/images");
-  
+
       return dispatch({
         type: GET_IMG,
         payload: getImg.data,
       });
-    
-
     };
-
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 
@@ -61,9 +77,10 @@ export const postImg = (payload) => {
   };
 };
 export const obtenerDetalle = (id) => {
-  
   return async function (dispatch) {
-    let obtenerDetalle = await axios(`http://localhost:3001/images/getId/${id}`);
+    let obtenerDetalle = await axios(
+      `http://localhost:3001/images/getId/${id}`
+    );
     // console.log(obtenerDetalle.data);
     return dispatch({
       type: OBTENER_DETALLE,
@@ -131,7 +148,7 @@ export const cancelSubscribe = (payload) => {
         "http://localhost:3001/paypal/cancel",
         auxObj
       );
-      console.log(cancel.data)
+      console.log(cancel.data);
       return dispatch({
         type: CANCEL_SUBSCRIBE,
         payload: cancel.data,
@@ -149,7 +166,7 @@ export const postLogin = (payload) => {
     );
     // console.log(loginData.data)
 
-    sessionStorage.setItem("token", JSON.stringify(loginData.data));
+    localStorage.setItem("token", JSON.stringify(loginData.data));
 
     return dispatch({
       type: POST_LOGIN,
@@ -176,7 +193,7 @@ export const postRegister = (payload) => {
         payload
       );
       console.log(postRegister.data);
-      sessionStorage.setItem("info", postRegister.data);
+      localStorage.setItem("info", postRegister.data);
       return dispatch({
         type: POST_REGISTER,
         payload: postRegister.data,
@@ -198,7 +215,7 @@ export const loginUser = (payload) => {
         "http://localhost:3001/auth/login",
         payload
       );
-      sessionStorage.setItem("info", logUser.data);
+      localStorage.setItem("info", logUser.data);
       return dispatch({
         type: POST_REGISTER,
         payload: postRegister.data,

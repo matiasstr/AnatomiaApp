@@ -15,6 +15,7 @@ import {
   LOAD_USER,
   FILTER_NAME,
   CREAR_SUBCRIPCION,
+  // AUTH_USER_TOKEN
 } from "../Actions/Actions";
 
 // let carritoStorage;
@@ -145,6 +146,10 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         datosUsuario: action.payload,
       };
+    // case AUTH_USER_TOKEN:
+    //   return {
+    //     ...state,
+    //   }
     default:
       return state;
   }
