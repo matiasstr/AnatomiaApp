@@ -19,20 +19,45 @@ export const LOGIN_USER = "LOGIN_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
 export const CANCEL_SUBSCRIBE = "CANCEL_SUBSCRIBE";
 export const LOAD_USER = "LOAD_USER";
+// export const AUTH_USER_TOKEN = "AUTH_USER_TOKEN";
 // export const first = (payload) => ({
 //   type: GET_INFO,
 //   payload
 // })
 
-export const getImg = () => {
-  return async function (dispatch) {
-    let getImg = await axios("http://localhost:3001/images");
+// export const authUserToken = (payload) => {
+//   try {
+//     return async function (dispatch) {
+//       let authToken = await axios.post(
+//         "http://localhost:3001/auth/user",
+//         payload
+//       );
 
-    return dispatch({
-      type: GET_IMG,
-      payload: getImg.data,
-    });
-  };
+//       return dispatch({
+//         type: AUTH_USER,
+//       });
+//     };
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+
+
+
+export const getImg = () => {
+  try {
+    return async function (dispatch) {
+      let getImg = await axios("http://localhost:3001/images");
+
+      return dispatch({
+        type: GET_IMG,
+        payload: getImg.data,
+      });
+    };
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const postImg = (payload) => {
@@ -53,9 +78,10 @@ export const postImg = (payload) => {
   };
 };
 export const obtenerDetalle = (id) => {
-  
   return async function (dispatch) {
-    let obtenerDetalle = await axios(`http://localhost:3001/images/getId/${id}`);
+    let obtenerDetalle = await axios(
+      `http://localhost:3001/images/getId/${id}`
+    );
     // console.log(obtenerDetalle.data);
     return dispatch({
       type: OBTENER_DETALLE,
@@ -123,7 +149,7 @@ export const cancelSubscribe = (payload) => {
         "http://localhost:3001/paypal/cancel",
         auxObj
       );
-      console.log(cancel.data)
+      console.log(cancel.data);
       return dispatch({
         type: CANCEL_SUBSCRIBE,
         payload: cancel.data,
@@ -141,7 +167,7 @@ export const postLogin = (payload) => {
     );
     // console.log(loginData.data)
 
-    sessionStorage.setItem("token", JSON.stringify(loginData.data));
+    localStorage.setItem("token", JSON.stringify(loginData.data));
 
     return dispatch({
       type: LOGIN_USER,
@@ -168,7 +194,7 @@ export const postRegister = (payload) => {
         payload
       );
       console.log(postRegister.data);
-      sessionStorage.setItem("info", postRegister.data);
+      localStorage.setItem("info", postRegister.data);
       return dispatch({
         type: POST_REGISTER,
         payload: postRegister.data,
@@ -187,12 +213,12 @@ export const postRegister = (payload) => {
 export const loginUser = (payload) => {
   return async function (dispatch) {
     try {
+      console.log(payload)
       let logUser = await axios.post(
         "http://localhost:3001/auth/login",
         payload
       );
-      sessionStorage.setItem("info", logUser.data);
-      console.log('Usuario Logueado')
+      localStorage.setItem("info", logUser.data);
       return dispatch({
         type: LOGIN_USER,
         payload: logUser.data,
@@ -210,13 +236,13 @@ export const loginUser = (payload) => {
 //Logueo de Usuario
 export const logOutUser = (payload) => {
   return async function (dispatch) {
+    console.log(payload)
     try {
-        await axios.post(
-        "http://localhost:3001/auth/logOut",
+        let cositas = await axios.post(
+        "http://localhost:3001/auth/logout",
         payload
       );
-      sessionStorage.clear();
-      console.log('Usuario deslogueado')
+      localStorage.clear();
       return dispatch({
         type: LOGOUT_USER,
         

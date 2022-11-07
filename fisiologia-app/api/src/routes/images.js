@@ -5,7 +5,8 @@ const authMiddleware = require ('../middlewares/session');
 const authRolMiddleware = require ('../middlewares/rolAdmin');
 require("dotenv").config();
 
-route.get("/", authMiddleware, getImage)
+// route.get("/", authMiddleware, getImage)
+route.get("/", getImage)
 route.get("/getRef", getImageByRef)
 route.post("/post",  authMiddleware, authRolMiddleware, postImage);
 route.get("/getId/:id", getImageById);

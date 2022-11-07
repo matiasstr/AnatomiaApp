@@ -20,7 +20,7 @@ export function PayPalBtn(props) {
 
   // const HandleClick  = (e) =>{      //PARA PROBAR LA RUTA, DESPUES HAY QUE SACAR EL BOTON 
   //     e.preventDefault()
-  //     const token = sessionStorage.getItem("token");
+  //     const token = localStorage.getItem("token");
   //     console.log(token)
   //     dispatch(cancelSubscribe(token))
 

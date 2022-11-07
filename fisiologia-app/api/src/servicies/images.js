@@ -6,12 +6,13 @@ const fs = require("fs");
 
 //Get de todas las imagenes
 const getImage = async (req, res) => {
+  
   // console.log(body.data);
   try {
     // console.log(arr)
     let response = await Images.findAll();
     // console.log(body)
-    // console.log(response)
+    console.log(response)
     res.status(200).json(response);
   } catch (error) {
     console.log(error);

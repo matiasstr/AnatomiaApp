@@ -16,6 +16,7 @@ import {
   LOAD_USER,
   FILTER_NAME,
   CREAR_SUBCRIPCION,
+  // AUTH_USER_TOKEN
 } from "../Actions/Actions";
 
 // let carritoStorage;
@@ -59,7 +60,7 @@ const initialState = {
   ],
   imagenes: [],
   backup: [],
-  user: { login: true },
+  user: { login: false },
   detalleDeImg: [],
   datosUsuario: null,
 };
@@ -139,7 +140,7 @@ const rootReducer = (state = initialState, action) => {
       case LOGOUT_USER:
         return {
           ...state,
-          user: { login: true },
+          user: { login: false },
         };
     case SESION_ACTIVA:
       return {
@@ -151,6 +152,10 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         datosUsuario: action.payload,
       };
+    // case AUTH_USER_TOKEN:
+    //   return {
+    //     ...state,
+    //   }
     default:
       return state;
   }
