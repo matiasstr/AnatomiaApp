@@ -2,8 +2,9 @@ import { Routes, Route } from "react-router-dom";
 // import Cards from "./components/Cards/Cards";
 import Detail from "./components/Detail/Detail";
 import Home from "./components/Home/Home";
-import LandingPage from "./components/LandingPage/LandingPage";
+import LandingPage from "./components/LandingPage/Landing2";
 import Login from "./components/Login/Login";
+
 import Nav from "./components/NavBar/Nav";
 import Register from "./components/Register/Register";
 import Form from "./components/Form/Form";
@@ -47,7 +48,6 @@ function App() {
           <Route index element={<LandingPage />}></Route>
           <Route element={<Home />} />
           <Route path="inicio" element={<Home />} />
-
           <Route path="form" element={<Form />}></Route>
           <Route path="detail/:id" element={<Detail />} />
           <Route path="dashboard" element={<Dashboard />} />
@@ -69,7 +69,6 @@ function App() {
             }
           />
           <Route path="form" element={<Form />}></Route>
-
           <Route path="Login" element={<Login />}></Route>
           <Route path="Register" element={<Register />}></Route>
           <Route path="Perfil" element={<Perfil />}></Route>
