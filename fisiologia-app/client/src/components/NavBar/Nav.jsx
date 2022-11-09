@@ -14,15 +14,15 @@ function Nav() {
     themeChange(false);
     // 👆 false parameter is required for react project
     let token = localStorage.getItem("info")
-    if(token){
-      dispatch(sesionActiva())
+    
+    if(token !== "false" && token.length > 200){
+      dispatch(sesionActiva(token))
     }
   }, []);
-
+  
+  let userData = useSelector((state)=> state.userType)
   let userReducer = useSelector((state) => state.user);
 
-
-  
   const darkmode = ()=>{
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add('dark')
@@ -80,7 +80,20 @@ function Nav() {
                     {/* <span className="badge"></span> */}
                   </Link>
                 </li>
+                
+                {
+                  userData?.isAdmin ? (
 
+                <li>
+                  <Link to="/Dashboard" className="justify-between">
+                    Dashboard
+                  </Link>
+                </li>
+
+                ):(
+                  <></>
+                )}
+ 
                 <li onClick={() => closeSession()}>
                   <Link to>Logout</Link>
                 </li>

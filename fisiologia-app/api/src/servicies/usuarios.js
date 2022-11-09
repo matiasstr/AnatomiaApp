@@ -33,7 +33,7 @@ const postUsuario = async (req, res) => {
   try {
     const body = matchedData(req);
 
-    // console.log(body);
+
 
     if (!body.username || !body.email || !body.password)
       return res.status(404).send("Falta completar un dato..");
@@ -54,7 +54,6 @@ const postUsuario = async (req, res) => {
             email: body.email,
             password: hash,
           }).then((response) => {
-            console.log("entre de las promesas 2");
             res.status(200).json(response);
           });
         })

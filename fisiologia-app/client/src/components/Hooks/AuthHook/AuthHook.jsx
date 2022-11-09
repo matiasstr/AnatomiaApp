@@ -4,12 +4,10 @@ import { UselocalStorageStorage } from "../UselocalStorageStorage/UselocalStorag
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  console.log("entro a auth");
-
-  const [user, setUser] = UselocalStorageStorage("user", false);
-
+  
+  const [user, setUser] = UselocalStorageStorage("info", false);
+  
   const navigate = useNavigate();
-
   // call this function when you want to authenticate the user
   const login = async (data) => {
     setUser(data);
