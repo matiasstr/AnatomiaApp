@@ -6,10 +6,14 @@ import { postRegister } from "../../Redux/Actions/Actions";
 function Register() {
 
   const dispatch = useDispatch()
-  const [input, setInput] = useState();
+  const [input, setInput] = useState({
+   email : "",
+   password : "",
+   username : "",
+   isAdmin: false
+  });
   const handleInputChange = (e) => {
     e.preventDefault();
-    console.log(e.target.name)
     setInput({
       ...input,
       [e.target.name]: e.target.value,
@@ -19,7 +23,6 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("entro!")
     dispatch(postRegister(input));
     //console.log(data);
   };

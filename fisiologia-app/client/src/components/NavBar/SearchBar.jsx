@@ -16,7 +16,6 @@ function SearchBar() {
   //     dispatch(filter(input))
   //   }
   // };
-  console.log(input);
   return (
     <div className="form-control">
       <input

@@ -20,8 +20,7 @@ const generateSubscription = async (req, res) => {
     const timeElapsed = Date.now();
     const today = new Date(timeElapsed);
 
-    console.log(objetoSub);
-    console.log(today.toLocaleDateString());
+
 
     const dataUser = await verifyToken(body[1]);
     let userUpdate = await Usuarios.update(
@@ -47,12 +46,10 @@ const generateSubscription = async (req, res) => {
 
 const cancelSubscription = async (req, res) => {
   try {
-    console.log("entro al back");
 
     let { key } = req.body;
     const dataUser = await verifyToken(key);
 
-    console.log(dataUser._id);
 
     let usuarioCancel = await Usuarios.findOne({
       where: {
@@ -63,7 +60,6 @@ const cancelSubscription = async (req, res) => {
     if (!usuarioCancel.dataValues.isSuscrip)
       res.status(400).json({ err: "El usuario no se encuentra suscripto" });
 
-    // console.log(usuarioCancel.dataValues.suscipData.subscriptionID);
 
     let subId = usuarioCancel.dataValues.suscipData.subscriptionID;
 
@@ -103,7 +99,7 @@ const cancelSubscription = async (req, res) => {
       },
     });
 
-    console.log(usuarioUpdated.dataValues);
+
 
     let userObj = {
       email: usuarioUpdated.dataValues.email,
@@ -112,7 +108,7 @@ const cancelSubscription = async (req, res) => {
       username: usuarioUpdated.dataValues.username,
     };
 
-    console.log(userObj);
+
 
     res.status(200).json(userObj);
   } catch (error) {
