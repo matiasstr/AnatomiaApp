@@ -47,9 +47,9 @@ cargarFot();
 setInterval(siguiente, 2000);
 
   return (
-    <div class="col-12">
+    <div className="col-12">
       <section id="inicio">
-        <img id="carrusel" class="img-fluid" src="" alt="" />
+        <img id="carrusel" className="img-fluid" src="" alt="" />
       </section>
     </div>
   );

@@ -57,7 +57,7 @@ function App() {
     setTimeout(navigate("/home", { replace: true }), 2000)
     
   };
-
+  console.log(userData);
   return (
     <div className="w-screen h-screen">
       <Routes>
