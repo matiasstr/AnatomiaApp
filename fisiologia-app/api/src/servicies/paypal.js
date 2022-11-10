@@ -6,9 +6,9 @@ const { Planes } = require("../DB/db");
 const { Usuarios } = require("../DB/db");
 const request = require("request");
 const CLIENT =
-  "AQQ6HIO71HvXznp7nZpLFfeVfmzyJfc3PRwvA36mCLV8lWq9Vv34gs-1OE4r6SEUBSSZPw_nl4FuMVnt";
+  `${process.env.CLIENT_ID_PAYPAL}`;
 const SECRET =
-  "EL3kdkr61kGl7sztXRAmgptScwDAT-TRnWnPB8hjM34gj6PLeiYPaO5J8kAXmxS9ofs2Oo6TAezYvTzk";
+  `${process.env.PASS_ID_PAYPAL}`;
 const PAYPAL_API = "https://api-m.sandbox.paypal.com"; // Live https://api-m.paypal.com
 const auth = { user: CLIENT, pass: SECRET };
 
@@ -73,8 +73,7 @@ const cancelSubscription = async (req, res) => {
         headers: {
           //aca van los headers del postman, a chequear como lo hago
           "Content-Type": "application/x-www-form-urlencoded",
-          Authorization:
-            "Basic QVd5ZzV3ZmZXZXlTLXZ0TTVzLXRwcEUyZXktSkZQa0JRaHFGNXotSmVKY1hmSEFidTFwTkxIQzlvZnVJTFhiZG9HWXp6MHAzWFNobUxsNUI6RUpmeTZ2bWVrMDhFamN1M2dkR05jUkR3VDMzMGRnT1BQb1gxaXg5eUx6alEyZ1MtSzBQQWRmLXo4WGpqQ0ZPbWtmQ2tNSjlVVU1ENlhOQ1M=",
+          Authorization: `${process.env.BASIC_AUTH}`,
         },
       }
     );
