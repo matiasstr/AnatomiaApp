@@ -41,9 +41,7 @@ const generateSubscription = async (req, res) => {
       },
     });
 
-
-    let token = await tokenSign(user.dataValues)
-
+    let token = await tokenSign(user.dataValues);
 
     res.status(200).json(token);
   } catch (error) {
@@ -68,6 +66,19 @@ const cancelSubscription = async (req, res) => {
 
     let subId = usuarioCancel.dataValues.suscipData.subscriptionID;
 
+    let authoken = await axios.post(
+      `https://api-m.sandbox.paypal.com/v1/oauth2/token`,
+      { grant_type: "client_credentials" },
+      {
+        headers: {
+          //aca van los headers del postman, a chequear como lo hago
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization:
+            "Basic QVd5ZzV3ZmZXZXlTLXZ0TTVzLXRwcEUyZXktSkZQa0JRaHFGNXotSmVKY1hmSEFidTFwTkxIQzlvZnVJTFhiZG9HWXp6MHAzWFNobUxsNUI6RUpmeTZ2bWVrMDhFamN1M2dkR05jUkR3VDMzMGRnT1BQb1gxaXg5eUx6alEyZ1MtSzBQQWRmLXo4WGpqQ0ZPbWtmQ2tNSjlVVU1ENlhOQ1M=",
+        },
+      }
+    );
+      console.log(subId)
     let cancel = await axios.post(
       `https://api-m.sandbox.paypal.com/v1/billing/subscriptions/${subId}/cancel`,
       {
@@ -76,8 +87,7 @@ const cancelSubscription = async (req, res) => {
       {
         headers: {
           //aca van los headers del postman, a chequear como lo hago
-          Authorization:
-            "Bearer A21AAJTwzOin5j4xlnmVpnk4jVw71iqjgJz0ruY0CFpINMUgfud7GIIgSmV_yfia3INIeVhz3IsAgeQdAMh0kTE4RZDlLC67g",
+          Authorization: `bearer ${authoken.data.access_token}`,
         },
       }
     );
@@ -109,15 +119,14 @@ const cancelSubscription = async (req, res) => {
       username: usuarioUpdated.dataValues.username,
     };
 
-    let token = await tokenSign(usuarioUpdated.dataValues)
+    let token = await tokenSign(usuarioUpdated.dataValues);
 
-
-    let arrAux = [userObj, token]
+    let arrAux = [userObj, token];
 
     res.status(200).json(arrAux);
   } catch (error) {
-    res.status(404).json({ err: "Error en la cancelacion de la suscripcion" });
     console.log(error);
+    res.status(404).json({ err: "Error en la cancelacion de la suscripcion" });
   }
 };
 

@@ -24,15 +24,20 @@ import { ProtectedRoute2 } from "./components/ProtectedRoute/ProtectedRoute2";
 import { ProtectedRoute3 } from "../src/components/ProtectedRoute/ProtectedRoute3";
 
 function App() {
-  let userData = useSelector((state) => state.datosUsuario);
   let dispatch = useDispatch();
   let navigate = useNavigate();
 
   useEffect(() => {
     let token = localStorage.getItem("info");
 
-    if (token !== "false" && token.length > 200) {
+    if (token === null) {
+
+      localStorage.setItem("info", "false")
+    }
+    else if(token !== "false" && token.length > 200){
       dispatch(sesionActiva(token));
+
+
     }
   }, []);
 
@@ -54,10 +59,8 @@ function App() {
     dispatch(newSubscribe(arraux));
     alert("Subscripcion completada");
 
-    setTimeout(navigate("/home", { replace: true }), 2000)
-    
+    setTimeout(navigate("/home", { replace: true }), 2000);
   };
-  console.log(userData);
   return (
     <div className="w-screen h-screen">
       <Routes>
@@ -66,9 +69,11 @@ function App() {
           <Route
             path="home"
             element={
-              <ProtectedRoute3>
-                <Home />
-              </ProtectedRoute3>
+              <ProtectedRoute>
+                <ProtectedRoute2>
+                  <Home />
+                </ProtectedRoute2>
+              </ProtectedRoute>
             }
           />
           {/* <Route path="inicio" element={<Home />} /> */}
@@ -83,25 +88,31 @@ function App() {
             path="detail/:id"
             element={
               <ProtectedRoute>
-                <Detail />
+                <ProtectedRoute2>
+                  <Detail />
+                </ProtectedRoute2>
               </ProtectedRoute>
             }
           />
           <Route //admin
             path="dashboard"
             element={
-              <ProtectedRoute2>
-                <Dashboard />
-              </ProtectedRoute2>
+              <ProtectedRoute>
+                <ProtectedRoute3>
+                  <Dashboard />
+                </ProtectedRoute3>
+              </ProtectedRoute>
             }
           />
           {/* <Route path="home" element={<Home />} /> */}
           <Route //admin
             path="formProduct"
             element={
-              <ProtectedRoute2>
-                <FormularioProducto />
-              </ProtectedRoute2>
+              <ProtectedRoute>
+                <ProtectedRoute3>
+                  <FormularioProducto />
+                </ProtectedRoute3>
+              </ProtectedRoute>
             }
           />
           <Route
@@ -124,16 +135,18 @@ function App() {
           <Route //admin
             path="form"
             element={
-              <ProtectedRoute2>
-                <Form />
-              </ProtectedRoute2>
+              <ProtectedRoute>
+                <ProtectedRoute3>
+                  <Form />
+                </ProtectedRoute3>
+              </ProtectedRoute>
             }
           ></Route>
 
           <Route path="Login" element={<Login />}></Route>
           <Route path="Register" element={<Register />}></Route>
           <Route
-            path="Perfil"
+            path="perfil"
             element={
               <ProtectedRoute>
                 <Perfil />

@@ -14,7 +14,6 @@ function Perfil() {
 
     dispatch(loadUser(token));
   }, []);
-
   const HandleClick = (e) => {
     //PARA PROBAR LA RUTA, DESPUES HAY QUE SACAR EL BOTON
     e.preventDefault();
@@ -22,9 +21,7 @@ function Perfil() {
     console.log(token);
     dispatch(cancelSubscribe(token));
 
-
-
-    navigate("/home", { replace: true })
+    // setTimeout(navigate("/home", { replace: true }),1000 );
   };
 
   console.log(userData);
@@ -33,13 +30,8 @@ function Perfil() {
     <>
       <h1>LOADING</h1>
     </>
-  ) : (
-
-
-
-    userData.nombreDePlan ? (
-
-      <div className="h-full flex flex-col bg-gray-100 dark:bg-gray-700 shadow-xl overflow-y-scroll">
+  ) : userData.nombreDePlan ? (
+    <div className="h-full flex flex-col bg-gray-100 dark:bg-gray-700 shadow-xl overflow-y-scroll">
       <div className="ml-3 h-7 flex justify-end items-center">
         <button
           type="button"
@@ -52,10 +44,12 @@ function Perfil() {
         <div className="flex  rounded-b-3xl bg-gray-100 dark:bg-gray-700 space-y-5 flex-col items-center py-7">
           <span className="text-3xl">{`${userData.username}`}</span>
         </div>
-        
+
         <div className="grid px-7 py-2  items-center justify-around grid-cols-3 gap-4 divide-x divide-solid ">
-        <div className="col-span-1 flex flex-col items-center ">
-            <span className=" text-xl font-bold dark:text-gray-300">Estado de la suscripcion</span>
+          <div className="col-span-1 flex flex-col items-center ">
+            <span className=" text-xl font-bold dark:text-gray-300">
+              Estado de la suscripcion
+            </span>
             <span className="text-lg font-medium 0">"Activo"</span>
           </div>
           <div className="col-span-1 px-3 flex flex-col items-center ">
@@ -68,8 +62,6 @@ function Perfil() {
             </span>
             <span className="text-lg font-medium 0">{`${userData.fechaDeinicio}`}</span>
           </div>
-         
-          
         </div>
       </div>
 
@@ -231,13 +223,8 @@ function Perfil() {
         </a>
       </div>
     </div>
-
-    ):(
-
-      <h1>No estas suscripto a ningun plan</h1>
-
-    )
-    
+  ) : (
+    <h1>No estas suscripto a ningun plan</h1>
   );
 }
 

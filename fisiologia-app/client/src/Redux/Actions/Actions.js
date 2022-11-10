@@ -135,7 +135,6 @@ export const newSubscribe = (payload) => {
     );
     
     localStorage.setItem("info", subcripcion.data);
-
     return dispatch({
       type: NEW_SUBSCRIBE,
       payload: subcripcion.data,
@@ -248,7 +247,9 @@ export const logOutUser = (payload) => {
         "http://localhost:3001/auth/logout",
         payload
       );
-      localStorage.clear();
+      
+      localStorage.setItem("info", "false");
+
       return dispatch({
         type: LOGOUT_USER,
         
