@@ -13,15 +13,31 @@ const regController = async (req, res) => {
     const body = { ...req, password };
     //Crea nuevo usuario
     const dataUser = await Usuarios.create(body);
-    let data = {
-      token: await tokenSign(dataUser.dataValues),
-      user: dataUser.dataValues,
-    };
+    
+    let token = await tokenSign(dataUser.dataValues)
+
+
     // let user= await verifyToken(data.token);
-    res.status(200).send(data.token);
+
+    let userAux = {
+
+      username: dataUser.dataValues.username,
+      email: dataUser.dataValues.email,
+      isAdmin: dataUser.dataValues.isAdmin,
+      isSuscrip: dataUser.dataValues.isSuscrip,
+      isActiv: dataUser.dataValues.isActiv,
+      suscipData: dataUser.dataValues.suscipData
+
+    }
+
+    let arrResp = [token, userAux]
+
+
+
+    res.status(200).json(arrResp);
   } catch (error) {
-    res.status(404).send("ERROR_DE_REGISTRO");
     console.log(error);
+    res.status(404).send("ERROR_DE_REGISTRO");
   }
 };
 
@@ -54,9 +70,28 @@ const loginController = async (req, res) => {
     }
     //Enmascara el Password para que no se vea por pantalla
     user.set("password", undefined, { strict: false });
+
+
     let token = await tokenSign(user.dataValues);
 
-    return res.status(200).json(token);
+    
+
+    let userAux = {
+
+      username: user.username,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      isSuscrip: user.isSuscrip,
+      isActiv: user.isActiv,
+      suscipData: user.suscipData
+
+    }
+
+    let arrResp = [token, userAux]
+
+    return res.status(200).json(arrResp);
+
+
   } catch (error) {
     console.log(error);
     res.status(404).send("ERROR_DE_LOGUEO");
@@ -65,33 +100,19 @@ const loginController = async (req, res) => {
 
 const authUserToken = async (req, res) => {
   try {
-    console.log("sasda");
+    let body = req.body;
 
-    // req = matchedData(req);
-    // const user = await Usuarios.findOne({
-    //   where: {
-    //     email: req.email,
-    //   },
-    // });
-    // //Verifica si existe el email en la BD de usuarios
-    // if (!user) {
-    //   res.status(404).send("EMAIL_INEXISTENTE");
-    //   return;
-    // }
-    // //Verifica la coincidencia del password con el email
-    // const hashPassword = user.dataValues.password;
-    // const check = await compare(req.password, hashPassword);
-    // if (!check) {
-    //   res.status(402).send("PASSWORD_INVALIDO");
-    //   return;
-    // };
-    // //Enmascara el Password para que no se vea por pantalla
-    // user.set("password", undefined, { strict: false });
-    // let token= await tokenSign(user.dataValues)
-    // return res.status(200).json(token);
+    let tokenVerificado = await verifyToken(body.token);
+
+    let objToken = { 
+      isActiv: tokenVerificado.isActiv,
+      isSuscrip: tokenVerificado.isSuscrip,
+      isAdmin: tokenVerificado.isAdmin,
+    }
+    res.status(200).json(objToken);
   } catch (error) {
-    // console.log(error);
-    // res.send("ERROR_DE_LOGUEO");
+    console.log(error);
+    res.send("ERROR_EN_VALIDACION");
   }
 };
 
@@ -101,7 +122,7 @@ const logOutController = async (req, res) => {
     //Matchear con el usuariogit
     let body = matchedData(req);
     // let user= await verifyToken(data.token);
-    let tokenVerificado= await verifyToken(body.token);
+    let tokenVerificado = await verifyToken(body.token);
     //Cambiarle isActive a False
     const user = await Usuarios.update(
       { isActiv: false },

@@ -7,12 +7,12 @@ const fs = require("fs");
 //Get de todas las imagenes
 const getImage = async (req, res) => {
   
-  // console.log(body.data);
+
   try {
-    // console.log(arr)
+
     let response = await Images.findAll();
-    // console.log(body)
-    console.log(response)
+
+
     res.status(200).json(response);
   } catch (error) {
     console.log(error);
@@ -31,14 +31,14 @@ const getImageByRef = async (req, res) => {
     });
 
     res.status(200).json(response);
-    console.log(response);
+
   } catch (error) {
     console.log(error);
   }
 };
 const getImageById = async (req, res) => {
 let {id} = req.params
-console.log(id);
+
   try {
     let response = await Images.findOne({
       where: {
@@ -47,7 +47,7 @@ console.log(id);
     });
 
     res.status(200).json(response.dataValues);
-    // console.log(response.dataValues);
+
   } catch (error) {
     console.log(error);
   }

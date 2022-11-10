@@ -68,8 +68,6 @@ function Form() {
       setpreviewSource({ ...previewSource, img: reader.result });
     };
   };
-  console.log(previewSource);
-  console.log(grupoAux);
   return (
     <div>
       <form onSubmit={handleSubmit}>

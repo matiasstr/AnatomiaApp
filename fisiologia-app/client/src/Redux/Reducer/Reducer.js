@@ -16,8 +16,9 @@ import {
   LOAD_USER,
   FILTER_NAME,
   CREAR_SUBCRIPCION,
-  // AUTH_USER_TOKEN
+  AUTH_USER_TOKEN,
 } from "../Actions/Actions";
+
 
 // let carritoStorage;
 // try {
@@ -32,6 +33,7 @@ import {
 // if (!carritoStorage) {
 //   carritoStorage = [];
 // }
+
 
 const initialState = {
   contenido: [
@@ -62,7 +64,8 @@ const initialState = {
   backup: [],
   user: { login: false },
   detalleDeImg: [],
-  datosUsuario: [],
+  datosUsuario: null,
+  userType: null,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -116,7 +119,6 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case CANCEL_SUBSCRIBE:
-      console.log(action.payload);
 
       return {
         ...state,
@@ -127,34 +129,53 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+
     case POST_REGISTER:
-      return {
-        ...state,
-        datosUsuario:  action.payload,
-      };
-    case LOGIN_USER:
+      console.log(action.payload[1])
       return {
         ...state,
         user: { login: true },
+        userType: action.payload[1],
       };
-      case LOGOUT_USER:
-        return {
-          ...state,
-          user: { login: false },
-        };
+
+    case LOGIN_USER:
+      console.log(action.payload[1])
+      return {
+        ...state,
+        user: { login: true },
+        userType: action.payload[1],
+
+      };
+
+    case LOGOUT_USER:
+      return {
+        ...state,
+        user: { login: false },
+      };
+
+
     case SESION_ACTIVA:
       return {
         ...state,
         user: { login: true },
+        userType: action.payload,
       };
+
+
+
+      
     case LOAD_USER:
       return {
         ...state,
         datosUsuario: action.payload,
       };
+
+
     // case AUTH_USER_TOKEN:
+    //   console.log(action.payload)
     //   return {
     //     ...state,
+    //     userType: action.payload
     //   }
     default:
       return state;

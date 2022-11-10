@@ -1,10 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { loadUser, cancelSubscribe } from "../../Redux/Actions/Actions";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
 function Perfil() {
+  let navigate = useNavigate();
   let userData = useSelector((state) => state.datosUsuario);
   let dispatch = useDispatch();
 
@@ -20,6 +21,10 @@ function Perfil() {
     const token = localStorage.getItem("info");
     console.log(token);
     dispatch(cancelSubscribe(token));
+
+
+
+    navigate("/home", { replace: true })
   };
 
   console.log(userData);

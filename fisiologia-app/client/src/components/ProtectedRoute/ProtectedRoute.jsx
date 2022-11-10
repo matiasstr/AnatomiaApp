@@ -3,8 +3,10 @@ import { useAuth } from "../Hooks/AuthHook/AuthHook";
 
 export const ProtectedRoute = ({ children }) => {
   const  {user}  = useAuth();
+  console.log(typeof(user))
   console.log(user)
-  if (!user) { //autenticacion de token de usuario
+
+  if (user === 'false' && user.length < 200) {  //autenticacion de token de usuario
     // user is not authenticated
     return <Navigate to="/" />;
   }

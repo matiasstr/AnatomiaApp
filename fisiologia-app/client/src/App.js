@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 // import Cards from "./components/Cards/Cards";
 import Detail from "./components/Detail/Detail";
 import Home from "./components/Home/Home";
@@ -16,13 +16,25 @@ import Perfil from "./components/Perfil/Perfil";
 import PayPalBtn from "./components/PaypalCheckoutButton/PayPalBtn.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { newSubscribe, authUser } from "../src/Redux/Actions/Actions";
+import { sesionActiva, logOutUser } from "../src/Redux/Actions/Actions";
 import { useEffect } from "react";
 
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
+import { ProtectedRoute2 } from "./components/ProtectedRoute/ProtectedRoute2";
+import { ProtectedRoute3 } from "../src/components/ProtectedRoute/ProtectedRoute3";
 
 function App() {
   let userData = useSelector((state) => state.datosUsuario);
   let dispatch = useDispatch();
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    let token = localStorage.getItem("info");
+
+    if (token !== "false" && token.length > 200) {
+      dispatch(sesionActiva(token));
+    }
+  }, []);
 
   const paypalSubscribe = (data, actions) => {
     return actions.subscription.create({
@@ -40,8 +52,10 @@ function App() {
     const token = localStorage.getItem("info");
     let arraux = [data, token, "Plan1"];
     dispatch(newSubscribe(arraux));
+    alert("Subscripcion completada");
 
-    alert("Subscription completed");
+    setTimeout(navigate("/home", { replace: true }), 2000)
+    
   };
   console.log(userData);
   return (
@@ -49,8 +63,15 @@ function App() {
       <Routes>
         <Route path="/" element={<Nav />}>
           <Route index element={<LandingPage />}></Route>
-          <Route element={<Home />} />
-          <Route path="inicio" element={<Home />} />
+          <Route
+            path="home"
+            element={
+              <ProtectedRoute3>
+                <Home />
+              </ProtectedRoute3>
+            }
+          />
+          {/* <Route path="inicio" element={<Home />} /> */}
           {/* <Route
             path="/*"
             element={
@@ -58,41 +79,70 @@ function App() {
             }
           /> */}
           {/* <Route path="form" element={<Form />}></Route> */}
-          <Route path="detail/:id" element={<Detail />} />
-          <Route path="dashboard" element={<Dashboard />} />
-         
-          <Route path="formProduct" element={<FormularioProducto />} />
           <Route
-            path="Suscripcion"
+            path="detail/:id"
             element={
-              <PayPalBtn
-                options={{ vault: true }}
-                amount="3"
-                currency="USD"
-                createSubscription={paypalSubscribe}
-                onApprove={paypalOnApprove}
-                catchError={paypalOnError}
-                onError={paypalOnError}
-                onCancel={paypalOnError}
-              />
+              <ProtectedRoute>
+                <Detail />
+              </ProtectedRoute>
+            }
+          />
+          <Route //admin
+            path="dashboard"
+            element={
+              <ProtectedRoute2>
+                <Dashboard />
+              </ProtectedRoute2>
+            }
+          />
+          {/* <Route path="home" element={<Home />} /> */}
+          <Route //admin
+            path="formProduct"
+            element={
+              <ProtectedRoute2>
+                <FormularioProducto />
+              </ProtectedRoute2>
             }
           />
           <Route
-            path="form"
+            path="Suscripcion"
             element={
               <ProtectedRoute>
-                <Form />
+                <PayPalBtn
+                  options={{ vault: true }}
+                  amount="3"
+                  currency="USD"
+                  createSubscription={paypalSubscribe}
+                  onApprove={paypalOnApprove}
+                  catchError={paypalOnError}
+                  onError={paypalOnError}
+                  onCancel={paypalOnError}
+                />
               </ProtectedRoute>
+            }
+          />
+          <Route //admin
+            path="form"
+            element={
+              <ProtectedRoute2>
+                <Form />
+              </ProtectedRoute2>
             }
           ></Route>
 
           <Route path="Login" element={<Login />}></Route>
           <Route path="Register" element={<Register />}></Route>
-          <Route path="Perfil" element={<Perfil />}></Route>
+          <Route
+            path="Perfil"
+            element={
+              <ProtectedRoute>
+                <Perfil />
+              </ProtectedRoute>
+            }
+          ></Route>
         </Route>
       </Routes>
     </div>
-    // </PayPalScriptProvider>
   );
 }
 
