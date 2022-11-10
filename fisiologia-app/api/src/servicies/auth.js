@@ -36,8 +36,8 @@ const regController = async (req, res) => {
 
     res.status(200).json(arrResp);
   } catch (error) {
-    res.status(404).send("ERROR_DE_REGISTRO");
     console.log(error);
+    res.status(404).send("ERROR_DE_REGISTRO");
   }
 };
 
