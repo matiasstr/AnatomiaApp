@@ -133,6 +133,9 @@ export const newSubscribe = (payload) => {
       "http://localhost:3001/paypal/subscription",
       payload
     );
+    
+    localStorage.setItem("info", subcripcion.data);
+
     return dispatch({
       type: NEW_SUBSCRIBE,
       payload: subcripcion.data,
@@ -152,10 +155,10 @@ export const cancelSubscribe = (payload) => {
         "http://localhost:3001/paypal/cancel",
         auxObj
       );
-
+      localStorage.setItem("info", cancel.data[1]);
       return dispatch({
         type: CANCEL_SUBSCRIBE,
-        payload: cancel.data,
+        payload: cancel.data[0],
       });
     };
   } catch (error) {
@@ -190,13 +193,14 @@ export const postLogin = (payload) => {
 // };
 
 export const postRegister = (payload) => {
-  console.log("llego al front:", payload);
   return async function (dispatch) {
     try {
       let postRegister = await axios.post(
         "http://localhost:3001/auth/register",
         payload
       );
+      
+      console.log(postRegister.data)
 
       localStorage.setItem("info", postRegister.data[0]);
 
@@ -216,7 +220,6 @@ export const postRegister = (payload) => {
 
 //Logueo de Usuario
 export const loginUser = (payload) => {
-  console.log(payload)
   return async function (dispatch) {
     try {
       let logUser = await axios.post(
