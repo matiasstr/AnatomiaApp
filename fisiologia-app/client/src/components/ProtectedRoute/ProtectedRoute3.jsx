@@ -6,8 +6,6 @@ export const ProtectedRoute3 = ({ children }) => {
   const { user } = useAuth();
   let info = localStorage.getItem("info");
 
-  const decoded = jwtDecode(info);
-  console.log(decoded)
 
   if (info !== "false") {
     const decoded = jwtDecode(info);
