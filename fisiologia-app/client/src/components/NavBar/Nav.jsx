@@ -101,7 +101,7 @@ function Nav() {
             </div>
           ) : (
             <Link to={"/Login"}>
-              <button className="btn btn-outline">Login</button>
+              <button className="btn btn-outline mr-4 px-4">Login</button>
             </Link>
           )}
         </div>
