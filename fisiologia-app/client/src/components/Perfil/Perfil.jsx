@@ -9,7 +9,7 @@ function Perfil() {
   let dispatch = useDispatch();
 
   useEffect(() => {
-    let token = sessionStorage.getItem("info");
+    let token = localStorage.getItem("info");
 
     dispatch(loadUser(token));
   }, []);
@@ -17,7 +17,7 @@ function Perfil() {
   const HandleClick = (e) => {
     //PARA PROBAR LA RUTA, DESPUES HAY QUE SACAR EL BOTON
     e.preventDefault();
-    const token = sessionStorage.getItem("info");
+    const token = localStorage.getItem("info");
     console.log(token);
     dispatch(cancelSubscribe(token));
   };

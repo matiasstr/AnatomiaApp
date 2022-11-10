@@ -9,12 +9,14 @@ import {
   NEW_SUBSCRIBE,
   POST_IMAGEN,
   POST_REGISTER,
-  POST_LOGIN,
+  LOGIN_USER,
+  LOGOUT_USER,
   CANCEL_SUBSCRIBE,
   SESION_ACTIVA,
   LOAD_USER,
   FILTER_NAME,
   CREAR_SUBCRIPCION,
+  // AUTH_USER_TOKEN
 } from "../Actions/Actions";
 
 // let carritoStorage;
@@ -58,7 +60,7 @@ const initialState = {
   ],
   imagenes: [],
   backup: [],
-  user: { login: true },
+  user: { login: false },
   detalleDeImg: [],
   datosUsuario: [],
 };
@@ -130,11 +132,16 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         datosUsuario:  action.payload,
       };
-    case POST_LOGIN:
+    case LOGIN_USER:
       return {
         ...state,
         user: { login: true },
       };
+      case LOGOUT_USER:
+        return {
+          ...state,
+          user: { login: false },
+        };
     case SESION_ACTIVA:
       return {
         ...state,
@@ -145,6 +152,10 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         datosUsuario: action.payload,
       };
+    // case AUTH_USER_TOKEN:
+    //   return {
+    //     ...state,
+    //   }
     default:
       return state;
   }

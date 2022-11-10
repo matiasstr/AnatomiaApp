@@ -2,35 +2,46 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
-import { sesionActiva } from "../../Redux/Actions/Actions";
+import { useNavigate } from "react-router-dom";
+import { sesionActiva, logOutUser } from "../../Redux/Actions/Actions";
 import { themeChange } from "theme-change";
 
+
 function Nav() {
-  let dispatch = useDispatch();
+  const navigate = useNavigate();
+  let dispatch = useDispatch()
   useEffect(() => {
     themeChange(false);
     // 👆 false parameter is required for react project
-    let token = sessionStorage.getItem("info");
-    if (token) {
-      dispatch(sesionActiva());
+    let token = localStorage.getItem("info")
+    if(token){
+      dispatch(sesionActiva())
     }
   }, []);
 
-  let userReducer = useSelector((state) => state.datosUsuario);
+  let userReducer = useSelector((state) => state.user);
 
-  const darkmode = () => {
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
+
+  
+  const darkmode = ()=>{
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark')
     } else {
-      document.documentElement.classList.remove("dark");
+      document.documentElement.classList.remove('dark')
     }
-    document.documentElement.classList.toggle("dark");
-  };
-  console.log(userReducer);
+    document.documentElement.classList.toggle('dark')
+  }
+
+  const closeSession = async () => {
+    let token = localStorage.getItem("info")
+    let objToken = {
+        "token": token
+    }
+    dispatch(logOutUser(objToken))
+    navigate("/", { replace: true });
+
+};
+
   return (
     <main className="w-screen h-screen">
       <nav className="navbar ">
@@ -70,8 +81,8 @@ function Nav() {
                   </Link>
                 </li>
 
-                <li>
-                  <Link to>Logout</Link>{" "}
+                <li onClick={() => closeSession()}>
+                  <Link to>Logout</Link>
                 </li>
               </ul>
             </div>

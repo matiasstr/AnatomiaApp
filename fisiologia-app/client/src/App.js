@@ -2,8 +2,9 @@ import { Routes, Route } from "react-router-dom";
 // import Cards from "./components/Cards/Cards";
 import Detail from "./components/Detail/Detail";
 import Home from "./components/Home/Home";
-import LandingPage from "./components/LandingPage/LandingPage";
+import LandingPage from "./components/LandingPage/Landing2";
 import Login from "./components/Login/Login";
+
 import Nav from "./components/NavBar/Nav";
 import Register from "./components/Register/Register";
 import Form from "./components/Form/Form";
@@ -14,7 +15,10 @@ import Perfil from "./components/Perfil/Perfil";
 
 import PayPalBtn from "./components/PaypalCheckoutButton/PayPalBtn.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import { newSubscribe } from "../src/Redux/Actions/Actions";
+import { newSubscribe, authUser } from "../src/Redux/Actions/Actions";
+import { useEffect } from "react";
+
+import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
   let userData = useSelector((state) => state.datosUsuario);
@@ -33,7 +37,7 @@ function App() {
   const paypalOnApprove = (data, actions) => {
     // call the backend api to store transaction details
 
-    const token = sessionStorage.getItem("info");
+    const token = localStorage.getItem("info");
     let arraux = [data, token, "Plan1"];
     dispatch(newSubscribe(arraux));
 
@@ -47,8 +51,13 @@ function App() {
           <Route index element={<LandingPage />}></Route>
           <Route element={<Home />} />
           <Route path="inicio" element={<Home />} />
-
-          <Route path="form" element={<Form />}></Route>
+          {/* <Route
+            path="/*"
+            element={
+              usuario.logged ? <DashboardRoutes /> : <Navigate to="/login" />
+            }
+          /> */}
+          {/* <Route path="form" element={<Form />}></Route> */}
           <Route path="detail/:id" element={<Detail />} />
           <Route path="dashboard" element={<Dashboard />} />
          
@@ -68,7 +77,14 @@ function App() {
               />
             }
           />
-          <Route path="form" element={<Form />}></Route>
+          <Route
+            path="form"
+            element={
+              <ProtectedRoute>
+                <Form />
+              </ProtectedRoute>
+            }
+          ></Route>
 
           <Route path="Login" element={<Login />}></Route>
           <Route path="Register" element={<Register />}></Route>

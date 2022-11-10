@@ -40,4 +40,15 @@ const validatorLogin =[
     }
 ];
 
-module.exports = {validatorRegUsuario,validatorLogin};
+
+const validatorLogOut =[
+
+    check('token')
+    .exists(),
+
+    (req,res,next)=>{
+        return validateResults(req,res,next)
+    }
+];
+
+module.exports = {validatorRegUsuario,validatorLogin, validatorLogOut};

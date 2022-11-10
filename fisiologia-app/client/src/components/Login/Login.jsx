@@ -13,6 +13,8 @@ function Login() {
     });
   };
   const handleSubmit = (e) => {
+
+    console.log(input)
     dispatch(loginUser(input));
     e.preventDefault();
   };
