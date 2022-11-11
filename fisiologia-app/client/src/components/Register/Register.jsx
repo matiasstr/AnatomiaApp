@@ -25,7 +25,10 @@ function Register() {
     e.preventDefault();
     dispatch(postRegister(input));
     //console.log(data);
-    setTimeout(navigate("/Suscripcion", { replace: true }), 2000);
+    setTimeout(() => {
+      navigate("/Suscripcion")
+    }, 500);
+    // let time = setTimeout(, 5000);
   };
 
   return (

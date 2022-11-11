@@ -66,6 +66,7 @@ export const getImg = () => {
 export const postImg = (payload) => {
   return async function (dispatch) {
     try {
+      console.log("easdasd")
       let postImg = await axios.post(
         "http://localhost:3001/images/post",
         payload
@@ -264,15 +265,15 @@ export const logOutUser = (payload) => {
   };
 };
 
-export const postImagen = (payload) => {
-  return async function (dispatch) {
-    let imagenCreada = await axios.post(`Ruta del post a definir`, payload);
-    return dispatch({
-      type: POST_IMAGEN,
-      payload: imagenCreada.data,
-    });
-  };
-};
+// export const postImagen = (payload) => {
+//   return async function (dispatch) {
+//     let imagenCreada = await axios.post(`http://localhost:3001/images/post`, payload);
+//     return dispatch({
+//       type: POST_IMAGEN,
+//       payload: imagenCreada.data,
+//     });
+//   };
+// };
 
 export const sesionActiva = (payload) => {
   return async function (dispatch) {

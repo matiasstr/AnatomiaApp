@@ -5,9 +5,12 @@ import { filter } from "../../Redux/Actions/Actions";
 function SearchBar() {
   const dispatch = useDispatch()
   const [input, setInput] = useState("");
+
+
   const handleInputChange = (e) => {
     setInput(e.target.value);
   };
+  
   useEffect(()=>{
     dispatch(filter(input))
   },[input])

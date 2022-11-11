@@ -59,7 +59,12 @@ function App() {
     dispatch(newSubscribe(arraux));
     alert("Subscripcion completada");
 
-    setTimeout(navigate("/home", { replace: true }), 2000);
+
+
+    setTimeout(() => {
+      navigate("/home")
+    }, 500);
+    // setTimeout(navigate("/home", { replace: true }), 2000);
   };
   return (
     <div className="w-screen h-screen">

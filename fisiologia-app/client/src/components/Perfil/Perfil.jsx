@@ -21,6 +21,10 @@ function Perfil() {
     console.log(token);
     dispatch(cancelSubscribe(token));
 
+    setTimeout(() => {
+      navigate("/home")
+    }, 500);
+    
     // setTimeout(navigate("/home", { replace: true }),1000 );
   };
 
