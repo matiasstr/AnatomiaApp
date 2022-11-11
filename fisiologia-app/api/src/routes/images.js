@@ -8,7 +8,8 @@ require("dotenv").config();
 // route.get("/", authMiddleware, getImage)
 route.get("/", getImage)
 route.get("/getRef", getImageByRef)
-route.post("/post",  authMiddleware, authRolMiddleware, postImage);
+// route.post("/post",  authMiddleware, authRolMiddleware, postImage);
+route.post("/post", postImage);
 route.get("/getId/:id", getImageById);
 // route.put("/cambiar", putModificarAdmin)
 // route.put("/eliminar", putElminar)

@@ -6,12 +6,8 @@ const fs = require("fs");
 
 //Get de todas las imagenes
 const getImage = async (req, res) => {
-  
-
   try {
-
     let response = await Images.findAll();
-
 
     res.status(200).json(response);
   } catch (error) {
@@ -31,13 +27,12 @@ const getImageByRef = async (req, res) => {
     });
 
     res.status(200).json(response);
-
   } catch (error) {
     console.log(error);
   }
 };
 const getImageById = async (req, res) => {
-let {id} = req.params
+  let { id } = req.params;
 
   try {
     let response = await Images.findOne({
@@ -47,7 +42,6 @@ let {id} = req.params
     });
 
     res.status(200).json(response.dataValues);
-
   } catch (error) {
     console.log(error);
   }
@@ -66,23 +60,32 @@ let {id} = req.params
 
 const postImage = async (req, res) => {
   try {
+    console.log("entro al back");
     let body = req.body;
-    console.log(body)
+    console.log(body);
+
     const uploadedResponse = await cloudinary.uploader.upload(body.img, {
       upload_preset: "dev_setups",
     });
+
+    var arrAux = [];
+
+    for (let i = 0; i < body.grupo.length; i++) {
+      arrAux.push(body.grupo[i].toLowerCase());
+    }
 
     const responseImg = await Images.create({
       title: body.title,
       img: uploadedResponse.public_id,
       desc: body.desc,
-      grupo: body.grupo,
+      grupo: arrAux,
       podcast: body.podcast,
     });
 
     res.status(200).json(responseImg);
   } catch (error) {
     console.log(error);
+    console.log("entro por aca");
     res.status(404).send(error);
   }
 };
@@ -91,5 +94,5 @@ module.exports = {
   postImage,
   getImage,
   getImageByRef,
-  getImageById
+  getImageById,
 };
