@@ -18,15 +18,14 @@ function SearchBar() {
   // };
   console.log(input);
   return (
-    <div className="form-control">
+    <div className="form-control ml-4 mr-4">
       <input
         type="text"
         placeholder="Search"
-        className="input input-bordered"
+        className="input input-bordered ml-4 mr-4"
         onChange={handleInputChange}
         // onKeyDown={handleSubmit}
       />
-
     </div>
   );
 }

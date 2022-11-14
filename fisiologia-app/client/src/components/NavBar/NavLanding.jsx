@@ -35,33 +35,24 @@ function Nav() {
   };
 
   return (
-    <main className="w-screen">
+    <main className="w-screen h-screen p-4">
       <nav className="navbar">
         <div className="flex-1">
-          <Link to="/" className="ml-8">
-            <div >
-              <h3 className="absolute mt-10 z-10 text-2xl hover:text-amber-600" >Gianluca Savarella</h3>
-              <img src="https://res.cloudinary.com/dvyv9wbmv/image/upload/v1667706080/firma_rr3ppk.png" className="relative z-0 w-28" alt="Firma"/>
-            </div>
+          <Link to="/" className="btn btn-ghost normal-case text-xl ">
+            <img src="https://res.cloudinary.com/dvyv9wbmv/image/upload/v1667706080/firma_rr3ppk.png" className="z-0" alt="Firma"/>
+            <h3 className="z-10" >Gianluca Savarella</h3>
           </Link>
           {/* <button data-toggle-theme="dark,light" data-act-class="ACTIVECLASS"></button> */}
         </div>
         <div className="flex-none gap-2">
-          <input
-            type="checkbox"
-            className="toggle"
-            data-toggle-theme="dark,light"
-            data-act-class="ACTIVECLASS"
-            onClick={darkmode}
-          />
           {userReducer.login === true ? (
             <div className="flex dropdown dropdown-end m-2">
-              <SearchBar />
-              <label tabIndex={0} className="btn btn-ghost btn-circle avatar ml-4 mr-8">
+              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full">
                   <img
                     src="https://cdn-icons-png.flaticon.com/512/16/16363.png"
                     alt="profile"
+                   
                   />
                 </div>
               </label>
@@ -88,7 +79,7 @@ function Nav() {
           )}
         </div>
       </nav>
-      <section className="w-full">
+      <section className="w-full h-full">
         <Outlet />
       </section>
     </main>
