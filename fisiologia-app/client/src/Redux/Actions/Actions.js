@@ -20,6 +20,8 @@ export const LOGOUT_USER = "LOGOUT_USER";
 export const CANCEL_SUBSCRIBE = "CANCEL_SUBSCRIBE";
 export const LOAD_USER = "LOAD_USER";
 export const AUTH_USER_TOKEN = "AUTH_USER_TOKEN";
+export const PRECARGA_USER = "PRECARGA_USER";
+export const PRECARGA_IMG = "PRECARGA_IMG";
 
 // export const first = (payload) => ({
 //   type: GET_INFO,
@@ -45,9 +47,6 @@ export const AUTH_USER_TOKEN = "AUTH_USER_TOKEN";
 //   }
 // };
 
-
-
-
 export const getImg = () => {
   try {
     return async function (dispatch) {
@@ -66,7 +65,7 @@ export const getImg = () => {
 export const postImg = (payload) => {
   return async function (dispatch) {
     try {
-      console.log("easdasd")
+      console.log("easdasd");
       let postImg = await axios.post(
         "http://localhost:3001/images/post",
         payload
@@ -134,7 +133,7 @@ export const newSubscribe = (payload) => {
       "http://localhost:3001/paypal/subscription",
       payload
     );
-    
+
     localStorage.setItem("info", subcripcion.data);
     return dispatch({
       type: NEW_SUBSCRIBE,
@@ -143,7 +142,6 @@ export const newSubscribe = (payload) => {
   };
 };
 export const cancelSubscribe = (payload) => {
-
   try {
     let tokenAux = payload;
 
@@ -171,8 +169,7 @@ export const postLogin = (payload) => {
     let loginData = await axios.post(
       "http://localhost:3001/usuarios/login",
       payload
-      );
-
+    );
 
     localStorage.setItem("token", JSON.stringify(loginData.data));
 
@@ -199,8 +196,8 @@ export const postRegister = (payload) => {
         "http://localhost:3001/auth/register",
         payload
       );
-      
-      console.log(postRegister.data)
+
+      console.log(postRegister.data);
 
       localStorage.setItem("info", postRegister.data[0]);
 
@@ -209,7 +206,6 @@ export const postRegister = (payload) => {
         payload: postRegister.data,
       });
     } catch (error) {
-
       return dispatch({
         type: POST_REGISTER,
         payload: error.response,
@@ -234,7 +230,7 @@ export const loginUser = (payload) => {
         payload: logUser.data,
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 };
@@ -242,18 +238,16 @@ export const loginUser = (payload) => {
 //Logueo de Usuario
 export const logOutUser = (payload) => {
   return async function (dispatch) {
-
     try {
-        let cositas = await axios.post(
+      let cositas = await axios.post(
         "http://localhost:3001/auth/logout",
         payload
       );
-      
+
       localStorage.setItem("info", "false");
 
       return dispatch({
         type: LOGOUT_USER,
-        
       });
     } catch (error) {
       // console.log(error.response.data)
@@ -277,10 +271,9 @@ export const logOutUser = (payload) => {
 
 export const sesionActiva = (payload) => {
   return async function (dispatch) {
-    let tokenAuth = await axios.post(
-      `http://localhost:3001/auth/user`,
-      {token: payload}
-    );
+    let tokenAuth = await axios.post(`http://localhost:3001/auth/user`, {
+      token: payload,
+    });
     return dispatch({
       type: SESION_ACTIVA,
       payload: tokenAuth.data,
@@ -303,6 +296,42 @@ export const loadUser = (payload) => {
     });
   };
 };
+
+export const precargaImg = () => {
+  try {
+    return async function (dispatch) {
+      try {
+        let datos = await axios(`http://localhost:3001/images/precarga`);
+        return dispatch({
+          type: PRECARGA_IMG,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const precargaUser = () => {
+  try {
+    return async function (dispatch) {
+      try {
+        let datos = await axios(`http://localhost:3001/usuarios/precarga`);
+
+        return dispatch({
+          type: PRECARGA_USER,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const filter = (payload) => {
   return (dispatch) =>
     dispatch({

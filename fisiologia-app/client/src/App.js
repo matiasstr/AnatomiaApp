@@ -16,7 +16,7 @@ import Perfil from "./components/Perfil/Perfil";
 import PayPalBtn from "./components/PaypalCheckoutButton/PayPalBtn.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { newSubscribe, authUser } from "../src/Redux/Actions/Actions";
-import { sesionActiva, logOutUser } from "../src/Redux/Actions/Actions";
+import { sesionActiva, logOutUser, precargaImg, precargaUser } from "../src/Redux/Actions/Actions";
 import { useEffect } from "react";
 
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
@@ -39,6 +39,12 @@ function App() {
 
 
     }
+
+    dispatch(precargaUser())
+    dispatch(precargaImg())
+
+
+
   }, []);
 
   const paypalSubscribe = (data, actions) => {
