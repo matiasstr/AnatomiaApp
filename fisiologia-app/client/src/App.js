@@ -103,9 +103,9 @@ function App() {
             path="dashboard"
             element={
               <ProtectedRoute>
-                <ProtectedRoute3>
+                {/* <ProtectedRoute3> */}
                   <Dashboard />
-                </ProtectedRoute3>
+                {/* </ProtectedRoute3> */}
               </ProtectedRoute>
             }
           />

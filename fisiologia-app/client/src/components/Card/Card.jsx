@@ -7,7 +7,7 @@ function Card({ nombre, descripcion, img, id }) {
     <Link to={`/detail/${id}`}>
       <div className="card w-auto h-auto bg-base-100 shadow-xl  m-2">
         {/* <figure> */}
-          <Image cloudName="dwgzicpxf" publicId={img} width="300"/>
+          <Image cloudName="dwgzicpxf" publicId={img} className="w-80 h-72" />
           {/* <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
         </figure>  */}
         <div className="card-body">

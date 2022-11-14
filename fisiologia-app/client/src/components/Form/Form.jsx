@@ -58,7 +58,7 @@ function Form() {
   );
 
   const handleInputFile = (e) => {
-    const file = e.target.files;
+    const file = e.target.files[0];
     previewFile(file);
   };
 
@@ -121,6 +121,7 @@ function Form() {
     reader.onloadend = () => {
       setpreviewSource({ ...previewSource, img: reader.result });
     };
+    
   };
   return (
     <div>
@@ -139,9 +140,10 @@ function Form() {
                   name="imagen"
                   onChange={handleInputFile}
                   value={fileInputState}
+                  placeholder={previewSource.img}
                 />
                 {errors.img && (
-                  <p className="">{errors.img}</p>
+                  <p className="text-red-500">{errors.img}</p>
                 )}
               </div>
             </div>
@@ -159,6 +161,9 @@ function Form() {
               onChange={handleInputText}
               value={previewSource.title}
             />
+            {errors.title && (
+            <p className="text-red-500">{errors.title}</p>
+                )}
           </div>
           <div className="form-control w-2/4 max-w-xs">
             <label className="label">
@@ -173,7 +178,7 @@ function Form() {
               value={grupoAux.grupo}
             />
             {errors.grupo && (
-                    <p className="">{errors.grupo}</p>
+                    <p className="text-red-500">{errors.grupo}</p>
                   )}
             <button type="button" onClick={addClick}>
               add
@@ -196,6 +201,9 @@ function Form() {
               value={previewSource.desc}
             ></textarea>
           </div>
+          {errors.desc && (
+           <p className="text-red-500">{errors.desc}</p>
+            )}
           <div className="form my-2">
             <label className="label">
               <span className="label-text">Podcast</span>
@@ -209,6 +217,9 @@ function Form() {
               onChange={handleInputText}
               value={previewSource.podcast}
             />
+            {errors.podcast && (
+           <p className="text-red-500">{errors.podcast}</p>
+            )}
           </div>
           <div>
             {previewSource && (
