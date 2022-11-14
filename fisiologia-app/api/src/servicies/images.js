@@ -86,7 +86,93 @@ const postImage = async (req, res) => {
     res.status(200).json(responseImg);
   } catch (error) {
     console.log(error);
-    console.log("entro por aca");
+    res.status(404).send(error);
+  }
+};
+
+const createDefaulImg = async (req, res) => {
+  try {
+    //dev_setups/x09elitmfz5bbg6krybj //cerebro
+
+    //dev_setups/nnkncr9oh30lsokyf3r6 //columna
+
+    //dev_setups/kkrr1syxhiczr6tpxh39 // Neurona
+    //dev_setups/iethoxxtqiryngyh3sui // mano
+
+    const Imagenes = [
+      {
+        title: "Columna",
+        img: "dev_setups/nnkncr9oh30lsokyf3r6",
+        desc: "Vista de columna vertebral, oseo",
+        podcast: " asd",
+        grupo: ["hueso", "esqueleto"],
+      },
+      {
+        title: "Cerebro",
+        img: "dev_setups/x09elitmfz5bbg6krybj",
+        desc: "Vista de cerebro",
+        podcast: " asd",
+        grupo: ["encefalo", "snc"],
+      },
+      {
+        title: "Neurona",
+        img: "dev_setups/kkrr1syxhiczr6tpxh39",
+        desc: "Vista de neurona",
+        podcast: " asd",
+        grupo: ["snp", "neurona"],
+      },
+      {
+        title: "Mano",
+        img: "dev_setups/iethoxxtqiryngyh3sui",
+        desc: "Vista de Mano, oseo",
+        podcast: " asd",
+        grupo: ["esqueleto", "mano"],
+      },
+    ];
+
+    const imagesFound = await Images.findAll();
+
+    if (imagesFound.length > 0) {
+      return res.status(400).json({msg : "Imagenes creadas previamente"});
+    }
+
+
+    var arrPromiseAux = [];
+
+    Imagenes.forEach((img) => {
+      let imgProm = "";
+      imgProm = Images.create({
+        title: img.title,
+        img: img.img,
+        desc: img.desc,
+        podcast: img.podcast,
+        grupo: img.grupo,
+      });
+      arrPromiseAux.push(imgProm);
+    });
+
+    // console.log("acac es tasd",arrPromiseAux)
+
+    const resultado = await Promise.all(arrPromiseAux);
+
+    let arrResultadoAux = [];
+
+    resultado.forEach((img) => {
+      arrResultadoAux.push(img.dataValues);
+    });
+
+    // console.log(imagenesPrecargadas.dataValues)
+    // const { resources } = await cloudinary.search
+    //   .expression("folder:dev_setups")
+    //   .sort_by("public_id", "desc")
+    //   .max_results(30)
+    //   .execute();
+
+    res.status(200).json(arrResultadoAux);
+    // console.log(imagenesPrecargadas)
+    // const public_ids = resources.map((file) => file.public_id);
+  } catch (error) {
+    console.log(error);
     res.status(404).send(error);
   }
 };
@@ -96,4 +182,5 @@ module.exports = {
   getImage,
   getImageByRef,
   getImageById,
+  createDefaulImg,
 };

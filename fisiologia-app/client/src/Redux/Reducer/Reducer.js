@@ -17,6 +17,8 @@ import {
   FILTER_NAME,
   CREAR_SUBCRIPCION,
   AUTH_USER_TOKEN,
+  PRECARGA_USER,
+  PRECARGA_IMG,
 } from "../Actions/Actions";
 
 // let carritoStorage;
@@ -100,6 +102,16 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+
+    case PRECARGA_IMG:
+      return {
+        ...state,
+      };
+    case PRECARGA_USER:
+      return {
+        ...state,
+      };
+
     case FILTER_NAME:
       if (action.payload.length === 0) {
         return { ...state, imagenes: state.backup };
