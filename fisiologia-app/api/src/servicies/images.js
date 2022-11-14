@@ -31,6 +31,7 @@ const getImageByRef = async (req, res) => {
     console.log(error);
   }
 };
+
 const getImageById = async (req, res) => {
   let { id } = req.params;
 

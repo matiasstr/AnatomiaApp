@@ -21,7 +21,6 @@ function Nav() {
 
   let userData = useSelector((state) => state.userType);
   let userReducer = useSelector((state) => state.user);
-
   const darkmode = () => {
     if (
       localStorage.theme === "dark" ||
@@ -45,12 +44,18 @@ function Nav() {
   };
 
   return (
-    <main className="w-screen h-screen">
-      <nav className="navbar ">
+    <main className="w-screen">
+      <nav className="navbar">
         <div className="flex-1">
-          <Link to="/" className="btn btn-ghost normal-case text-xl ">
+          <Link to="/" className="ml-8">
+            <div >
+              <h3 className="absolute mt-10 z-10 text-2xl hover:text-amber-600" >Gianluca Savarella</h3>
+              <img src="https://res.cloudinary.com/dvyv9wbmv/image/upload/v1667706080/firma_rr3ppk.png" className="relative z-0 w-28" alt="Firma"/>
+            </div>
+            </Link>
+          {/* <Link to="/" className="btn btn-ghost normal-case text-xl ">
             Anatomia Dibujada
-          </Link>
+          </Link> */}
           {/* <button data-toggle-theme="dark,light" data-act-class="ACTIVECLASS"></button> */}
         </div>
         <div className="flex-none gap-2">
@@ -107,7 +112,7 @@ function Nav() {
           )}
         </div>
       </nav>
-      <section className="w-full h-full">
+      <section className="w-full">
         <Outlet />
       </section>
     </main>
