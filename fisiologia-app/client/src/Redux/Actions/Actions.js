@@ -19,30 +19,59 @@ export const LOGIN_USER = "LOGIN_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
 export const CANCEL_SUBSCRIBE = "CANCEL_SUBSCRIBE";
 export const LOAD_USER = "LOAD_USER";
+export const AUTH_USER_TOKEN = "AUTH_USER_TOKEN";
+
 // export const first = (payload) => ({
 //   type: GET_INFO,
 //   payload
 // })
 
-export const getImg = () => {
-  return async function (dispatch) {
-    let getImg = await axios("http://localhost:3001/images");
+// export const authUserToken = (payload) => {
+//   try {
+//     console.log(payload)
+//     return async function (dispatch) {
+//       let authToken = await axios.post(
+//         "http://localhost:3001/auth/user",
+//         payload
+//       );
 
-    return dispatch({
-      type: GET_IMG,
-      payload: getImg.data,
-    });
-  };
+//       return dispatch({
+//         type: AUTH_USER_TOKEN,
+//         payload: authToken.data
+//       });
+//     };
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+
+
+
+export const getImg = () => {
+  try {
+    return async function (dispatch) {
+      let getImg = await axios("http://localhost:3001/images");
+
+      return dispatch({
+        type: GET_IMG,
+        payload: getImg.data,
+      });
+    };
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const postImg = (payload) => {
   return async function (dispatch) {
     try {
+      console.log("easdasd")
       let postImg = await axios.post(
         "http://localhost:3001/images/post",
         payload
       );
-      console.log("entro aca2");
+
       return dispatch({
         type: POST_IMG,
         payload: postImg.data,
@@ -53,10 +82,11 @@ export const postImg = (payload) => {
   };
 };
 export const obtenerDetalle = (id) => {
-  
   return async function (dispatch) {
-    let obtenerDetalle = await axios(`http://localhost:3001/images/getId/${id}`);
-    // console.log(obtenerDetalle.data);
+    let obtenerDetalle = await axios(
+      `http://localhost:3001/images/getId/${id}`
+    );
+
     return dispatch({
       type: OBTENER_DETALLE,
       payload: obtenerDetalle.data,
@@ -104,6 +134,8 @@ export const newSubscribe = (payload) => {
       "http://localhost:3001/paypal/subscription",
       payload
     );
+    
+    localStorage.setItem("info", subcripcion.data);
     return dispatch({
       type: NEW_SUBSCRIBE,
       payload: subcripcion.data,
@@ -111,7 +143,7 @@ export const newSubscribe = (payload) => {
   };
 };
 export const cancelSubscribe = (payload) => {
-  // console.log(payload);
+
   try {
     let tokenAux = payload;
 
@@ -123,10 +155,10 @@ export const cancelSubscribe = (payload) => {
         "http://localhost:3001/paypal/cancel",
         auxObj
       );
-      console.log(cancel.data)
+      localStorage.setItem("info", cancel.data[1]);
       return dispatch({
         type: CANCEL_SUBSCRIBE,
-        payload: cancel.data,
+        payload: cancel.data[0],
       });
     };
   } catch (error) {
@@ -134,14 +166,15 @@ export const cancelSubscribe = (payload) => {
   }
 };
 export const postLogin = (payload) => {
+  // console.log("llego al front:", payload);
   return async function (dispatch) {
     let loginData = await axios.post(
       "http://localhost:3001/usuarios/login",
       payload
-    );
-    // console.log(loginData.data)
+      );
 
-    sessionStorage.setItem("token", JSON.stringify(loginData.data));
+
+    localStorage.setItem("token", JSON.stringify(loginData.data));
 
     return dispatch({
       type: LOGIN_USER,
@@ -160,24 +193,26 @@ export const postLogin = (payload) => {
 // };
 
 export const postRegister = (payload) => {
-  console.log("llego al front:", payload);
   return async function (dispatch) {
     try {
       let postRegister = await axios.post(
         "http://localhost:3001/auth/register",
         payload
       );
-      console.log(postRegister.data);
-      sessionStorage.setItem("info", postRegister.data);
+      
+      console.log(postRegister.data)
+
+      localStorage.setItem("info", postRegister.data[0]);
+
       return dispatch({
         type: POST_REGISTER,
         payload: postRegister.data,
       });
     } catch (error) {
-      // console.log(error.response.data)
+
       return dispatch({
         type: POST_REGISTER,
-        payload: error.response.data,
+        payload: error.response,
       });
     }
   };
@@ -191,18 +226,15 @@ export const loginUser = (payload) => {
         "http://localhost:3001/auth/login",
         payload
       );
-      sessionStorage.setItem("info", logUser.data);
-      console.log('Usuario Logueado')
+
+      localStorage.setItem("info", logUser.data[0]);
+
       return dispatch({
         type: LOGIN_USER,
         payload: logUser.data,
       });
     } catch (error) {
-      // console.log(error.response.data)
-      return dispatch({
-        type: LOGIN_USER,
-        payload: error.response.data,
-      });
+      console.log(error)
     }
   };
 };
@@ -210,13 +242,15 @@ export const loginUser = (payload) => {
 //Logueo de Usuario
 export const logOutUser = (payload) => {
   return async function (dispatch) {
+
     try {
-        await axios.post(
-        "http://localhost:3001/auth/logOut",
+        let cositas = await axios.post(
+        "http://localhost:3001/auth/logout",
         payload
       );
-      sessionStorage.clear();
-      console.log('Usuario deslogueado')
+      
+      localStorage.setItem("info", "false");
+
       return dispatch({
         type: LOGOUT_USER,
         
@@ -231,20 +265,25 @@ export const logOutUser = (payload) => {
   };
 };
 
-export const postImagen = (payload) => {
-  return async function (dispatch) {
-    let imagenCreada = await axios.post(`Ruta del post a definir`, payload);
-    return dispatch({
-      type: POST_IMAGEN,
-      payload: imagenCreada.data,
-    });
-  };
-};
+// export const postImagen = (payload) => {
+//   return async function (dispatch) {
+//     let imagenCreada = await axios.post(`http://localhost:3001/images/post`, payload);
+//     return dispatch({
+//       type: POST_IMAGEN,
+//       payload: imagenCreada.data,
+//     });
+//   };
+// };
 
-export const sesionActiva = () => {
+export const sesionActiva = (payload) => {
   return async function (dispatch) {
+    let tokenAuth = await axios.post(
+      `http://localhost:3001/auth/user`,
+      {token: payload}
+    );
     return dispatch({
       type: SESION_ACTIVA,
+      payload: tokenAuth.data,
     });
   };
 };

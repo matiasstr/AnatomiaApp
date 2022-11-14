@@ -2,20 +2,24 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
-import { sesionActiva } from "../../Redux/Actions/Actions";
+import { useNavigate } from "react-router-dom";
+import { sesionActiva, logOutUser } from "../../Redux/Actions/Actions";
 import { themeChange } from "theme-change";
 
 function Nav() {
+  const navigate = useNavigate();
   let dispatch = useDispatch();
   useEffect(() => {
     themeChange(false);
     // 👆 false parameter is required for react project
-    let token = sessionStorage.getItem("info");
-    if (token) {
-      dispatch(sesionActiva());
+    let token = localStorage.getItem("info");
+
+    if (token !== "false" && token.length > 200) {
+      dispatch(sesionActiva(token));
     }
   }, []);
 
+  let userData = useSelector((state) => state.userType);
   let userReducer = useSelector((state) => state.user);
   const darkmode = () => {
     if (
@@ -31,7 +35,12 @@ function Nav() {
   };
 
   const closeSession = async () => {
-    sessionStorage.clear();
+    let token = localStorage.getItem("info");
+    let objToken = {
+      token: token,
+    };
+    dispatch(logOutUser(objToken));
+    navigate("/", { replace: true });
   };
 
   return (
@@ -43,7 +52,10 @@ function Nav() {
               <h3 className="absolute mt-10 z-10 text-2xl hover:text-amber-600" >Gianluca Savarella</h3>
               <img src="https://res.cloudinary.com/dvyv9wbmv/image/upload/v1667706080/firma_rr3ppk.png" className="relative z-0 w-28" alt="Firma"/>
             </div>
-          </Link>
+            </Link>
+          {/* <Link to="/" className="btn btn-ghost normal-case text-xl ">
+            Anatomia Dibujada
+          </Link> */}
           {/* <button data-toggle-theme="dark,light" data-act-class="ACTIVECLASS"></button> */}
         </div>
         <div className="flex-none gap-2">
@@ -55,35 +67,47 @@ function Nav() {
             onClick={darkmode}
           />
           {userReducer.login === true ? (
-            <div className="flex dropdown dropdown-end m-2">
+            <>
               <SearchBar />
-              <label tabIndex={0} className="btn btn-ghost btn-circle avatar ml-4 mr-8">
-                <div className="w-10 rounded-full">
-                  <img
-                    src="https://cdn-icons-png.flaticon.com/512/16/16363.png"
-                    alt="profile"
-                  />
-                </div>
-              </label>
-              <ul
-                tabIndex={0}
-                className="mt-12 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52 "
-              >
-                <li>
-                  <Link to="/perfil" className="justify-evenly">
-                    Perfil
-                    {/* <span className="badge"></span> */}
-                  </Link>
-                </li>
+              <div className="flex dropdown dropdown-end">
+                <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                  <div className="w-10 rounded-full">
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/512/16/16363.png"
+                      alt="profile"
+                    />
+                  </div>
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="mt-12 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52 "
+                >
+                  <li>
+                    <Link to="/perfil" className="justify-between">
+                      Perfil
+                      {/* <span className="badge"></span> */}
+                    </Link>
+                  </li>
 
-                <li onClick={() => closeSession()}>
-                  <Link to>Logout</Link>
-                </li>
-              </ul>
-            </div>
+                  {userData?.isAdmin ? (
+                    <li>
+                      <Link to="/Dashboard" className="justify-between">
+                        Dashboard
+                      </Link>
+                    </li>
+                  ) : (
+                    <></>
+                  )}
+
+                  <li onClick={() => closeSession()}>
+                    <Link to>Logout</Link>
+                  </li>
+                </ul>
+              </div>
+            </>
           ) : (
             <Link to={"/Login"}>
-              <button className="btn btn-outline">Login</button>
+              <button className="btn btn-outline mr-4 px-4">Login</button>
             </Link>
           )}
         </div>

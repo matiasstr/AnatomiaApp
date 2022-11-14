@@ -1,27 +1,34 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { postRegister } from "../../Redux/Actions/Actions";
 
 function Register() {
+  let navigate = useNavigate();
 
-  const dispatch = useDispatch()
-  const [input, setInput] = useState();
+  const dispatch = useDispatch();
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+    username: "",
+    isAdmin: false,
+  });
   const handleInputChange = (e) => {
     e.preventDefault();
-    console.log(e.target.name)
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     });
-  }
-
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("entro!")
     dispatch(postRegister(input));
     //console.log(data);
+    setTimeout(() => {
+      navigate("/Suscripcion")
+    }, 500);
+    // let time = setTimeout(, 5000);
   };
 
   return (
@@ -75,7 +82,9 @@ function Register() {
             </div>
             <div className="form-control mt-6">
               {/* <Link to="/Inicio"> */}
-                <button className="btn btn-primary">Register</button>
+              <button className="btn btn-primary" type="submit">
+                Register
+              </button>
               {/* </Link> */}
             </div>
           </form>

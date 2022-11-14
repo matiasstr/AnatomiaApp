@@ -5,9 +5,12 @@ import { filter } from "../../Redux/Actions/Actions";
 function SearchBar() {
   const dispatch = useDispatch()
   const [input, setInput] = useState("");
+
+
   const handleInputChange = (e) => {
     setInput(e.target.value);
   };
+  
   useEffect(()=>{
     dispatch(filter(input))
   },[input])
@@ -16,7 +19,6 @@ function SearchBar() {
   //     dispatch(filter(input))
   //   }
   // };
-  console.log(input);
   return (
     <div className="form-control ml-4 mr-4">
       <input

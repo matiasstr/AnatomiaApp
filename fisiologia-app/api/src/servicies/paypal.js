@@ -1,14 +1,14 @@
 require("dotenv").config();
 const axios = require("axios");
 const { verify } = require("jsonwebtoken");
+const { tokenSign, verifyToken } = require("../helpers/handleJwt");
 const { Planes } = require("../DB/db");
 const { Usuarios } = require("../DB/db");
 const request = require("request");
-const { verifyToken } = require("../helpers/handleJwt");
 const CLIENT =
-  "AQQ6HIO71HvXznp7nZpLFfeVfmzyJfc3PRwvA36mCLV8lWq9Vv34gs-1OE4r6SEUBSSZPw_nl4FuMVnt";
+  `${process.env.CLIENT_ID_PAYPAL}`;
 const SECRET =
-  "EL3kdkr61kGl7sztXRAmgptScwDAT-TRnWnPB8hjM34gj6PLeiYPaO5J8kAXmxS9ofs2Oo6TAezYvTzk";
+  `${process.env.PASS_ID_PAYPAL}`;
 const PAYPAL_API = "https://api-m.sandbox.paypal.com"; // Live https://api-m.paypal.com
 const auth = { user: CLIENT, pass: SECRET };
 
@@ -19,9 +19,6 @@ const generateSubscription = async (req, res) => {
 
     const timeElapsed = Date.now();
     const today = new Date(timeElapsed);
-
-    console.log(objetoSub);
-    console.log(today.toLocaleDateString());
 
     const dataUser = await verifyToken(body[1]);
     let userUpdate = await Usuarios.update(
@@ -38,7 +35,15 @@ const generateSubscription = async (req, res) => {
       }
     );
 
-    res.status(200).json({ msg: "Usuario suscripto" });
+    const user = await Usuarios.findOne({
+      where: {
+        id: dataUser._id,
+      },
+    });
+
+    let token = await tokenSign(user.dataValues);
+
+    res.status(200).json(token);
   } catch (error) {
     console.log(error);
     res.status(400).json({ msg: "Problema en la suscripcion" });
@@ -47,12 +52,8 @@ const generateSubscription = async (req, res) => {
 
 const cancelSubscription = async (req, res) => {
   try {
-    console.log("entro al back");
-
     let { key } = req.body;
     const dataUser = await verifyToken(key);
-
-    console.log(dataUser._id);
 
     let usuarioCancel = await Usuarios.findOne({
       where: {
@@ -63,10 +64,20 @@ const cancelSubscription = async (req, res) => {
     if (!usuarioCancel.dataValues.isSuscrip)
       res.status(400).json({ err: "El usuario no se encuentra suscripto" });
 
-    // console.log(usuarioCancel.dataValues.suscipData.subscriptionID);
-
     let subId = usuarioCancel.dataValues.suscipData.subscriptionID;
 
+    let authoken = await axios.post(
+      `https://api-m.sandbox.paypal.com/v1/oauth2/token`,
+      { grant_type: "client_credentials" },
+      {
+        headers: {
+          //aca van los headers del postman, a chequear como lo hago
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: `${process.env.BASIC_AUTH}`,
+        },
+      }
+    );
+      console.log(subId)
     let cancel = await axios.post(
       `https://api-m.sandbox.paypal.com/v1/billing/subscriptions/${subId}/cancel`,
       {
@@ -75,8 +86,7 @@ const cancelSubscription = async (req, res) => {
       {
         headers: {
           //aca van los headers del postman, a chequear como lo hago
-          Authorization:
-            "Bearer A21AAKZD3upovb_zzmykbwX53TTA5NqYRh8i2SS-bybbA3s49E6mMMWBnPFUJl-OAiq3V8P9kP7nm5Y4vX0u011tsjk7XfrEA",
+          Authorization: `bearer ${authoken.data.access_token}`,
         },
       }
     );
@@ -95,15 +105,11 @@ const cancelSubscription = async (req, res) => {
       }
     );
 
-
-    
     let usuarioUpdated = await Usuarios.findOne({
       where: {
         id: dataUser._id,
       },
     });
-
-    console.log(usuarioUpdated.dataValues);
 
     let userObj = {
       email: usuarioUpdated.dataValues.email,
@@ -112,12 +118,14 @@ const cancelSubscription = async (req, res) => {
       username: usuarioUpdated.dataValues.username,
     };
 
-    console.log(userObj);
+    let token = await tokenSign(usuarioUpdated.dataValues);
 
-    res.status(200).json(userObj);
+    let arrAux = [userObj, token];
+
+    res.status(200).json(arrAux);
   } catch (error) {
-    res.status(404).json({ err: "Error en la cancelacion de la suscripcion" });
     console.log(error);
+    res.status(404).json({ err: "Error en la cancelacion de la suscripcion" });
   }
 };
 

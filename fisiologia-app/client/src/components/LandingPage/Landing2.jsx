@@ -4,8 +4,13 @@ import { Link } from "react-router-dom";
 export default function Landing2() {
   return (
     //style={{ backgroundImage: `url("https://res.cloudinary.com/dvyv9wbmv/image/upload/v1667706009/11_sul6r9.png")` }}
+<<<<<<< HEAD
     <div className="hero-content flex-col lg:flex-row-reverse relative ">
       <div className="m-8 z-0">
+=======
+    <div className="hero containerHero ">
+      <div className="hero-content flex-col lg:flex-row-reverse justify-center ">
+>>>>>>> a5e5d14b416cfbd56f3e72bf460e36992d2e8232
         <Link to="/home">
           {/* <h2 className='absolute mt-32 ml-12 text-5xl z-10'>Bienvenidos</h2> */}
           <button className="absolute mt-32 z-20">
