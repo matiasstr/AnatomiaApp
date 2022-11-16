@@ -17,7 +17,9 @@ function Form() {
 
   const handleInputFile = (e) => {
     const file = e.target.files[0];
+    console.log(file)
     previewFile(file);
+
   };
 
   const handleSubmit = (e) => {
@@ -85,7 +87,6 @@ function Form() {
                   id="image"
                   name="image"
                   onChange={handleInputFile}
-                  value={fileInputState}
                 />
               </div>
             </div>
