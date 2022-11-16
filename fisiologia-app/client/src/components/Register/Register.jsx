@@ -2,15 +2,17 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { postRegister } from "../../Redux/Actions/Actions";
+import validate from "../../Utils/validate";
 
 function Register() {
   let navigate = useNavigate();
 
   const dispatch = useDispatch();
+  const [error, setError] = useState(null);
   const [input, setInput] = useState({
-    email: "",
-    password: "",
-    username: "",
+    email: null,
+    password: null,
+    username: null,
     isAdmin: false,
   });
   const handleInputChange = (e) => {
@@ -23,12 +25,25 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(postRegister(input));
-    //console.log(data);
-    setTimeout(() => {
-      navigate("/Suscripcion")
-    }, 500);
-    // let time = setTimeout(, 5000);
+
+    if (!input.email) {
+      setError(validate(input));
+      return;
+    } else if (!input.username) {
+      setError(validate(input));
+      return;
+    } else if (!input.password) {
+      setError(validate(input));
+      return;
+    } else {
+      dispatch(postRegister(input));
+      setError("");
+      //console.log(data);
+      setTimeout(() => {
+        navigate("/Suscripcion");
+      }, 500);
+      // let time = setTimeout(, 5000);
+    }
   };
 
   return (
@@ -85,7 +100,11 @@ function Register() {
               <button className="btn btn-primary" type="submit">
                 Register
               </button>
-              {/* </Link> */}
+              <div className="flex justify-center mt-5">
+                <div>{error?.email}</div>
+                <div>{error?.username}</div>
+                <div>{error?.password}</div>
+              </div>
             </div>
           </form>
         </div>

@@ -19,7 +19,7 @@ function Home() {
 
 
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen h-screen flex flex-col justify-between">
       <Cards />
 
       {/* <Login/> */}

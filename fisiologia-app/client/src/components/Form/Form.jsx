@@ -59,7 +59,9 @@ function Form() {
 
   const handleInputFile = (e) => {
     const file = e.target.files[0];
+    console.log(file)
     previewFile(file);
+
   };
 
   const handleSubmit = (e) => {
@@ -139,8 +141,8 @@ function Form() {
                   id="image"
                   name="imagen"
                   onChange={handleInputFile}
-                  value={fileInputState}
-                  placeholder={previewSource.img}
+                  // value={fileInputState}
+                  // placeholder={previewSource.img}
                 />
                 {errors.img && (
                   <p className="text-red-500">{errors.img}</p>
