@@ -21,7 +21,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       desc: {
-        type: DataTypes.STRING(1000),
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       podcast: {

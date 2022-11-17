@@ -103,7 +103,7 @@ const createDefaulImg = async (req, res) => {
       {
         title: "Columna",
         img: "dev_setups/nnkncr9oh30lsokyf3r6",
-        desc: "Vista de columna vertebral, oseo",
+        desc: "Vista de columna vertebral, oseo.Contrary to popular belief, Lorem Ipsum is not simply random text.",
         podcast: " asd",
         grupo: ["hueso", "esqueleto"],
       },
