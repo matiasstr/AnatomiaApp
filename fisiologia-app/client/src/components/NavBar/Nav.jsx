@@ -50,7 +50,7 @@ function Nav() {
           <Link to="/" className="ml-8">
             <div >
               <h3 className="absolute mt-10 z-10 text-2xl hover:text-amber-600" >Gianluca Savarella</h3>
-              <img src="https://res.cloudinary.com/dvyv9wbmv/image/upload/v1667706080/firma_rr3ppk.png" className="relative z-0 w-28" alt="Firma"/>
+              <img src="https://res.cloudinary.com/dvyv9wbmv/image/upload/v1668512088/firma_bwnb68.png" className="relative z-0 w-28" alt="Firma"/>
             </div>
             </Link>
           {/* <Link to="/" className="btn btn-ghost normal-case text-xl ">

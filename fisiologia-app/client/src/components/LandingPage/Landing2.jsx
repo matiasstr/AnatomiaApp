@@ -12,7 +12,7 @@ export default function Landing2() {
             <span className="box">Hover!</span>
           </button>
           <img
-            src="https://res.cloudinary.com/dvyv9wbmv/image/upload/v1667844752/16_n8utez.png"
+            src="https://res.cloudinary.com/dvyv9wbmv/image/upload/v1668513262/1_xed6df.png"
             className="rounded-lg w-72 z-10"
             alt="Img Muestra"
           />
