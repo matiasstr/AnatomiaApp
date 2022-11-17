@@ -16,8 +16,6 @@ function validate(e) {
     errors.title = "Se requiere un nombre";
   } else if (e.title.length > 50) {
     errors.title = "El nombre no puede tener mas de 50 caracteres";
-  } else if (!pattern.test(e.title)) {
-    errors.title = "El nombre solo puede contener letras";
     //-------Imagen---------------
   } else if (!e.img) {
     errors.img = "Se requiere una imagen";
@@ -57,7 +55,9 @@ function Form() {
 
   const handleInputFile = (e) => {
     const file = e.target.files[0];
+    console.log(file)
     previewFile(file);
+
   };
 
   const handleSubmit = (e) => {
@@ -140,8 +140,8 @@ function Form() {
                   id="image"
                   name="imagen"
                   onChange={handleInputFile}
-                  value={fileInputState}
-                  placeholder={previewSource.img}
+                  // value={fileInputState}
+                  // placeholder={previewSource.img}
                 />
                 {errors.img && <p className="text-red-500">{errors.img}</p>}
               </div>

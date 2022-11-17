@@ -42,7 +42,7 @@ function Detail() {
                     <div className="col-span-2">
                       <h1 className="text-3xl :hover text-4  text-amber-200">{e.title}</h1>
                       <div>
-                      <textarea className="textarea textarea-bordered w-full h-full" placeholder={e.desc}></textarea>               
+                        <textarea className="textarea w-full h-full text-center" placeholder={e.desc}></textarea>               
                       </div>                    
                     </div>
 
@@ -54,7 +54,7 @@ function Detail() {
                       <div className="drawer-side mt-20 h-32">
                         <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
                         <ul className="menu p-4 w-full bg-base-100 text-base-content">
-                          <div className="flex border-2">
+                          <div className="flex justify-center">
                             <audio controls>
                               <source src={tremendoAudio} type="audio/mpeg" />
                             </audio>

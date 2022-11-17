@@ -28,6 +28,6 @@ export default function Landing2() {
           <p className="">Dedicado a todos los estudiantes del mundo</p>
         </div>
       </div>
-    </div>
+      </div>
   );
 }

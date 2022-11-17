@@ -302,6 +302,9 @@ export const precargaImg = () => {
     return async function (dispatch) {
       try {
         let datos = await axios(`http://localhost:3001/images/precarga`);
+
+        
+
         return dispatch({
           type: PRECARGA_IMG,
         });
