@@ -200,15 +200,16 @@ export const postRegister = (payload) => {
       console.log(postRegister.data);
 
       localStorage.setItem("info", postRegister.data[0]);
-
+      
       return dispatch({
         type: POST_REGISTER,
         payload: postRegister.data,
       });
     } catch (error) {
+      console.log('aca sali el error',error.response.data)
       return dispatch({
         type: POST_REGISTER,
-        payload: error.response,
+        payload: error.response.data,
       });
     }
   };

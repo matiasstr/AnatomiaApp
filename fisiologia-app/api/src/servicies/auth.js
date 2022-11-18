@@ -16,7 +16,6 @@ const regController = async (req, res) => {
     
     let token = await tokenSign(dataUser.dataValues)
 
-
     // let user= await verifyToken(data.token);
 
     let userAux = {
@@ -37,7 +36,7 @@ const regController = async (req, res) => {
     res.status(200).json(arrResp);
   } catch (error) {
     console.log(error);
-    res.status(404).send("ERROR_DE_REGISTRO");
+    res.status(404).json({'error':error});
   }
 };
 
