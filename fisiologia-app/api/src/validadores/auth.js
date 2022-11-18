@@ -5,8 +5,8 @@ const validatorRegUsuario =[
 
     check('username')
     .exists()
-    .notEmpty()
-    .isLength({min:8, max:12}),
+    .notEmpty(),
+
 
     check('email')
     .exists()

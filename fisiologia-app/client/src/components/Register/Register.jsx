@@ -1,11 +1,21 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { render } from "react-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { postRegister } from "../../Redux/Actions/Actions";
 import validate from "../../Utils/validate";
 
 function Register() {
   let navigate = useNavigate();
+  let regStatus = useSelector((state) => state.regStatus);
+
+  useEffect(() => {
+    if (regStatus.stat === false) {
+      alert("Problema en el registro, email ya registrado");
+    } else if (regStatus.stat === true) {
+      navigate("/Suscripcion");
+    }
+  }, [regStatus]);
 
   const dispatch = useDispatch();
   const [error, setError] = useState(null);
@@ -38,11 +48,6 @@ function Register() {
     } else {
       dispatch(postRegister(input));
       setError("");
-      //console.log(data);
-      setTimeout(() => {
-        navigate("/Suscripcion");
-      }, 500);
-      // let time = setTimeout(, 5000);
     }
   };
 

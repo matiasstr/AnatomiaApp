@@ -66,6 +66,7 @@ const initialState = {
   detalleDeImg: [],
   datosUsuario: null,
   userType: null,
+  regStatus: {stat : null},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -155,11 +156,24 @@ const rootReducer = (state = initialState, action) => {
 
     case POST_REGISTER:
       console.log(action.payload[1]);
-      return {
-        ...state,
-        user: { login: true },
-        userType: action.payload[1],
-      };
+      console.log(action.payload);
+
+      if (action.payload.error) {
+        console.log("entro al error");
+        return {
+          ...state,
+          user: { login: false },
+          regStatus: {stat : false},
+        };
+      } else {
+        console.log("no entro al error");
+        return {
+          ...state,
+          regStatus: {stat : true},
+          user: { login: true },
+          userType: action.payload[1],
+        };
+      }
 
     case LOGIN_USER:
       console.log(action.payload[1]);
@@ -173,6 +187,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         user: { login: false },
+        regStatus: {stat : null},
       };
 
     case SESION_ACTIVA:

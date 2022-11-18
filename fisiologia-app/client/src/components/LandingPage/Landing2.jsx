@@ -12,7 +12,7 @@ export default function Landing2() {
               <span className="box">Hover!</span>
             </button>
             <img
-              src="https://res.cloudinary.com/dvyv9wbmv/image/upload/v1667844752/16_n8utez.png"
+              src="https://res.cloudinary.com/dwgzicpxf/image/upload/v1668710404/dev_setups/Capa_211_q40gak.png"
               className="rounded-lg w-72 z-10"
               alt="Img Muestra"
             />
@@ -31,3 +31,5 @@ export default function Landing2() {
       </div>
   );
 }
+
+
