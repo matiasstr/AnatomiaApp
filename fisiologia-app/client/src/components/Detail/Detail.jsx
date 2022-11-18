@@ -14,7 +14,6 @@ import styles from "./Detalle.module.css";
 function Detail() {
   let { id } = useParams();
   const dispatch = useDispatch();
-  let { id } = useParams();
   useEffect(() => {
     dispatch(obtenerDetalle(id));
   }, []);
