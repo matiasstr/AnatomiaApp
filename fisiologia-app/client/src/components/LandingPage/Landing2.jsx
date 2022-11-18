@@ -29,6 +29,7 @@ export default function Landing2() {
           </div>
         </div>
       </div>
+   
   );
 }
 

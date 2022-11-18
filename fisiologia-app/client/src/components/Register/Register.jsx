@@ -5,6 +5,28 @@ import { Link, useNavigate } from "react-router-dom";
 import { postRegister } from "../../Redux/Actions/Actions";
 import validate from "../../Utils/validate";
 
+function valid(e) {
+
+  let error = {};
+  if (!e.username) {
+    error.username = 'Se requiere un nombre de usuario';
+  }
+  else if (e.username.length > 12) {
+    error.username = 'Nombre demasiado largo.';
+  }
+  if (!e.email) {
+    error.email = 'Se requiere una direccion de correo electronico para continuar';
+  }
+  if (!e.password) {
+    error.password = 'Se requiere una contraseña de usuario';
+  } else if(e.password.length<3){
+    error.password = 'La contraseña debe contener mas de 4 caracteres';
+  } else if(e.password.length>15){
+    error.password = 'La contraseña no puede superar los 15 caracteres';
+  }
+  return error;
+}
+
 function Register() {
   let navigate = useNavigate();
   let regStatus = useSelector((state) => state.regStatus);
@@ -25,12 +47,26 @@ function Register() {
     username: null,
     isAdmin: false,
   });
+
+  const btnDisabled = !(
+    input.username &&
+    input.email &&
+    input.password
+  );
+
+
   const handleInputChange = (e) => {
     e.preventDefault();
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     });
+    setError(
+      valid({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    );
   };
 
   const handleSubmit = (e) => {
@@ -70,6 +106,8 @@ function Register() {
                 name="username"
                 onChange={handleInputChange}
               />
+              {error.username && <p className="text-red-500">{error.username}</p>}
+
               <label className="label">
                 <span className="label-text">Email</span>
               </label>
@@ -80,6 +118,7 @@ function Register() {
                 name="email"
                 onChange={handleInputChange}
               />
+              {error.img && <p className="text-red-500">{error.email}</p>}
             </div>
             <div className="form-control">
               <label className="label">
@@ -92,6 +131,7 @@ function Register() {
                 name="password"
                 onChange={handleInputChange}
               />
+              {error.password && <p className="text-red-500">{error.password}</p>}
               <label className="label label-text-alt">
                 {" "}
                 ¿Estas registrado?
@@ -102,7 +142,7 @@ function Register() {
             </div>
             <div className="form-control mt-6">
               {/* <Link to="/Inicio"> */}
-              <button className="btn btn-primary" type="submit">
+              <button className="btn btn-primary" type="submit" disabled={btnDisabled}>
                 Register
               </button>
               <div className="flex justify-center mt-5">
