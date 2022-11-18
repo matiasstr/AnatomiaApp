@@ -40,7 +40,7 @@ function Register() {
   }, [regStatus]);
 
   const dispatch = useDispatch();
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
   const [input, setInput] = useState({
     email: null,
     password: null,
@@ -106,7 +106,7 @@ function Register() {
                 name="username"
                 onChange={handleInputChange}
               />
-              {error.username && <p className="text-red-500">{error.username}</p>}
+              {error?.username && <p className="text-red-500">{error.username}</p>}
 
               <label className="label">
                 <span className="label-text">Email</span>
@@ -118,7 +118,7 @@ function Register() {
                 name="email"
                 onChange={handleInputChange}
               />
-              {error.img && <p className="text-red-500">{error.email}</p>}
+              {error.email && <p className="text-red-500">{error.email}</p>}
             </div>
             <div className="form-control">
               <label className="label">
@@ -145,11 +145,7 @@ function Register() {
               <button className="btn btn-primary" type="submit" disabled={btnDisabled}>
                 Register
               </button>
-              <div className="flex justify-center mt-5">
-                <div>{error?.email}</div>
-                <div>{error?.username}</div>
-                <div>{error?.password}</div>
-              </div>
+
             </div>
           </form>
         </div>

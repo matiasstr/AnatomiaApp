@@ -55,9 +55,8 @@ function Form() {
 
   const handleInputFile = (e) => {
     const file = e.target.files[0];
-    console.log(file)
+    console.log(file);
     previewFile(file);
-
   };
 
   const handleSubmit = (e) => {
@@ -127,12 +126,15 @@ function Form() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div className="grid h-screen place-items-center">
-          <div className="form flex flex-row">
-            <div className="flex justify-center">
-              <div className="mb-3 w-96">
+        <div className="grid place-items-center w-100">
+          {/* <div className="form flex flex-row"> */}
+          <div className="form flex flex-row w-full">
+            {/* <div className="flex justify-center"> */}
+            <div className="flex justify-center w-full">
+              {/* <div className="mb-3 w-96"> */}
+              <div className="mb-3 w-full">
                 <label className="label">
-                  <span className="label-text"> Subir imagen</span>
+                  <span className="label-text  text-xl"> Subir imagen</span>
                 </label>
                 <input
                   className="form-control block w-full px-3 py-1.5 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -148,28 +150,34 @@ function Form() {
             </div>
           </div>
 
-          <div className="form-control w-2/4 max-w-xs">
+          {/* <div className="form-control w-2/4 max-w-xs"> */}
+          <div className="flex form-control w-full">
             <label className="label">
-              <span className="label-text">Titulo de la imagen</span>
+              <span className="label-text  text-xl">Titulo de la imagen</span>
             </label>
             <input
               type="text"
               id="title"
-              className="input input-bordered w-full max-w-xs"
+              // className="input input-bordered w-full max-w-xs"
+              className="input input-bordered w-full"
               name="title"
               onChange={handleInputText}
               value={previewSource.title}
             />
             {errors.title && <p className="text-red-500">{errors.title}</p>}
           </div>
-          <div className="form-control w-2/4 max-w-xs">
+          {/* <div className="form-control w-2/4 max-w-xs"> */}
+          <div className="flex form-control w-full">
             <label className="label">
-              <span className="label-text">Grupo al que pertenece</span>
+              <span className="label-text  text-xl">
+                Grupo al que pertenece
+              </span>
             </label>
             <input
               id="grupo"
               type="text"
-              className="input input-bordered w-full max-w-xs"
+              // className="input input-bordered w-full max-w-xs"
+              className="input input-bordered w-full"
               name="grupo"
               onChange={handleGrupo}
               value={grupoAux.grupo}
@@ -183,13 +191,15 @@ function Form() {
             <li>{previewSource && previewSource.grupo.map((e) => e + " ")}</li>
           </ul>
 
-          <div className="form-control">
+          {/* <div className="form-control"> */}
+          <div className="flex form-control w-full">
             <label className="label">
-              <span className="label-text">Descripcion</span>
+              <span className="label-text  text-xl">Descripcion</span>
             </label>
             <textarea
               id="desc"
-              className="textarea textarea-bordered h-4 w-60"
+              // className="textarea textarea-bordered h-4 w-60"
+              className="textarea textarea-bordered h-4 w-full"
               placeholder="Descripcion"
               name="desc"
               onChange={handleInputText}
@@ -197,15 +207,17 @@ function Form() {
             ></textarea>
           </div>
           {errors.desc && <p className="text-red-500">{errors.desc}</p>}
-          <div className="form my-2">
+          {/* <div className="form my-2"> */}
+          <div className="flex flex-col form my-2 w-full">
             <label className="label">
-              <span className="label-text">Podcast</span>
+              <span className="label-text text-xl">Podcast</span>
             </label>
             {/* <input type="text" name="podcast" onChange={handleInputText} /> */}
             <input
               type="text"
               id="podcast"
-              className="input input-bordered w-full max-w-xs"
+              // className="input input-bordered w-full max-w-xs"
+              className="input input-bordered w-full"
               name="podcast"
               onChange={handleInputText}
               value={previewSource.podcast}
@@ -213,16 +225,20 @@ function Form() {
             {errors.podcast && <p className="text-red-500">{errors.podcast}</p>}
           </div>
           <div>
-            {previewSource && (
+            {previewSource.img && (
               <img
-                className="rounded-md"
+                className="rounded-md mt-3"
                 src={previewSource.img}
                 alt="img"
                 style={{ height: "300px" }}
               />
             )}
           </div>
-          <button className="btn btn-sm" type="submit" disabled={btnDisabled}>
+          <button
+            className="btn btn-sm my-4"
+            type="submit"
+            disabled={btnDisabled}
+          >
             Agregar
           </button>
         </div>
