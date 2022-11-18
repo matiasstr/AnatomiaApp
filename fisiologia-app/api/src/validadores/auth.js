@@ -18,6 +18,10 @@ const validatorRegUsuario =[
     .notEmpty()
     .isLength({min:3, max:15}),
 
+    check('isAdmin')
+    .exists(),
+
+
     (req,res,next)=>{
         return validateResults(req,res,next)
     }
@@ -40,4 +44,15 @@ const validatorLogin =[
     }
 ];
 
-module.exports = {validatorRegUsuario,validatorLogin};
+
+const validatorLogOut =[
+
+    check('token')
+    .exists(),
+
+    (req,res,next)=>{
+        return validateResults(req,res,next)
+    }
+];
+
+module.exports = {validatorRegUsuario,validatorLogin, validatorLogOut};

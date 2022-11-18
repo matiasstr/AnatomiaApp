@@ -33,7 +33,7 @@ const postUsuario = async (req, res) => {
   try {
     const body = matchedData(req);
 
-    // console.log(body);
+
 
     if (!body.username || !body.email || !body.password)
       return res.status(404).send("Falta completar un dato..");
@@ -54,7 +54,6 @@ const postUsuario = async (req, res) => {
             email: body.email,
             password: hash,
           }).then((response) => {
-            console.log("entre de las promesas 2");
             res.status(200).json(response);
           });
         })
@@ -259,24 +258,52 @@ const postLogin = async (req, res) => {
 //   }
 // };
 
-// const putElminar = async (req, res) => {
-//   let { id } = req.body;
-//   console.log(id);
-//   try {
-//     var eliminado = await Usuarios.destroy({
-//       where: {
-//         id: id,
-//       },
-//     });
-//     let userasd = await Usuarios.findByPk(id);
-//     res.status(200).json(userasd);
-//   } catch (error) {
-//     res.status(400).json(error);
-//   }
-// };
+const createDefaulUsers = async (req, res) => {
+
+  const admin = [
+    {
+      username: "Gianluca",
+      email: "a@a.com",
+      password: "12345678",
+      isAdmin: true,
+    },
+  ];
+
+
+  const usersFound = await Usuarios.findAll();
+
+  if (usersFound.length > 0) {
+    return res.status(400).json({msg : "Usuarios creados previamente"});
+  }
+
+  admin.forEach(async (user) => {
+    bcrypt.hash(user.password, 10).then(async (hash) => {
+      await Usuarios.create({
+        username: user.username,
+        email: user.email,
+        password: hash,
+        isAdmin: user.isAdmin,
+      })
+        .then((e) => {
+          console.log("Usuario", user.username, "agregado")
+          res.status(200).json({msg : "Usuarios pre cargados"})
+        })
+        .catch((e) =>
+        {
+          console.log("Usuario", user.username, "AGREGADO PREVIAMENTE")
+          res.status(400).json({msg : "Usuarios no fueron pre cargados"})
+
+        }
+        );
+    });
+
+    //  user.password = bcrypt(user.password);
+  });
+};
 
 module.exports = {
   getUser,
   postUsuario,
   postLogin,
+  createDefaulUsers
 };

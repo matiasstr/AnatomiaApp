@@ -1,8 +1,45 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postProducto } from "../../Redux/Actions/Actions";
+
+function validate(e){
+
+  const pattern = new RegExp('^[A-Z]+$', 'i');
+  const soloNum = new RegExp('/^[0-9]+$/');
+  
+  const urlImg = (url) => {
+    return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/.test(url);
+  };
+  let errors = {};
+  //--------Title----------------
+  if(!e.title){
+    errors.title = 'Se requiere un nombre'
+  }else if(e.title.lenght>50){
+    errors.title = 'El nombre no puede tener mas de 50 caracteres'
+  }else if(!pattern.test(e.title)){
+    errors.title = 'El nombre solo puede contener letras';
+    //-------Imagen---------------
+  }else if(!e.img){
+    errors.img = 'Se requiere una imagen'
+   //-------Podcast---------------
+  }else if(!e.podcast){
+    errors.Podcast = 'Se requiere una Podcast'
+  //--------Descripcion----------------
+   }else if(!e.desc){
+    errors.desc = 'Se requiere Descripcion de la Imagen.'
+  }else if(e.desc.lenght>300){
+    errors.desc = 'La Descripcion no puede tener mas de 300 caracteres'
+   //-------grupo---------------
+  }else if(!e.grupo){
+    errors.grupo = 'Se requiere una grupo'
+  }
+  return errors;
+};
+
 function FormProducto() {
   const dispatch = useDispatch();
+  const [errors,setErrors]=useState({});
+  
   const [productSource, setproductSource] = useState({
     name: null,
     description: null,

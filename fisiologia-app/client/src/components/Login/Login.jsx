@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { loginUser } from "../../Redux/Actions/Actions";
+
 function Login() {
   const dispatch = useDispatch();
   const [input, setInput] = useState();
@@ -13,6 +14,8 @@ function Login() {
     });
   };
   const handleSubmit = (e) => {
+
+    console.log(input)
     dispatch(loginUser(input));
     e.preventDefault();
   };

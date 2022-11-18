@@ -9,12 +9,16 @@ import {
   NEW_SUBSCRIBE,
   POST_IMAGEN,
   POST_REGISTER,
-  POST_LOGIN,
+  LOGIN_USER,
+  LOGOUT_USER,
   CANCEL_SUBSCRIBE,
   SESION_ACTIVA,
   LOAD_USER,
   FILTER_NAME,
   CREAR_SUBCRIPCION,
+  AUTH_USER_TOKEN,
+  PRECARGA_USER,
+  PRECARGA_IMG,
 } from "../Actions/Actions";
 
 // let carritoStorage;
@@ -58,9 +62,10 @@ const initialState = {
   ],
   imagenes: [],
   backup: [],
-  user: { login: true },
+  user: { login: false },
   detalleDeImg: [],
   datosUsuario: null,
+  userType: null,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -94,15 +99,39 @@ const rootReducer = (state = initialState, action) => {
         ...state,
       };
     case CREAR_SUBCRIPCION:
+      return {
+        ...state,
+      };
+
+    case PRECARGA_IMG:
+      return {
+        ...state,
+      };
+    case PRECARGA_USER:
+      return {
+        ...state,
+      };
+
     case FILTER_NAME:
       if (action.payload.length === 0) {
         return { ...state, imagenes: state.backup };
       } else {
+        // console.log(action.payload.toLowerCase())
         const filter = state.imagenes.filter(
-          (e) =>
-            e.title.toLowerCase().includes(action.payload.toLowerCase()) ||
-            e.grupo.toLowerCase().includes(action.payload.toLowerCase())
+          (e) => {
+            for (let i = 0; i < e.grupo.length; i++) {
+              if (
+                e.grupo[i].includes(action.payload.toLowerCase()) ||
+                e.title.toLowerCase().includes(action.payload.toLowerCase())
+              ) {
+                return true;
+              }
+            }
+          }
+          // console.log(e.grupo)
+          // e.title.toLowerCase().includes(action.payload.toLowerCase())
         );
+
         return {
           ...state,
           imagenes: filter,
@@ -114,8 +143,6 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case CANCEL_SUBSCRIBE:
-      console.log(action.payload);
-
       return {
         ...state,
         datosUsuario: action.payload,
@@ -125,26 +152,48 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+
     case POST_REGISTER:
+      console.log(action.payload[1]);
       return {
         ...state,
         user: { login: true },
+        userType: action.payload[1],
       };
-    case POST_LOGIN:
+
+    case LOGIN_USER:
+      console.log(action.payload[1]);
       return {
         ...state,
         user: { login: true },
+        userType: action.payload[1],
       };
+
+    case LOGOUT_USER:
+      return {
+        ...state,
+        user: { login: false },
+      };
+
     case SESION_ACTIVA:
       return {
         ...state,
         user: { login: true },
+        userType: action.payload,
       };
+
     case LOAD_USER:
       return {
         ...state,
         datosUsuario: action.payload,
       };
+
+    // case AUTH_USER_TOKEN:
+    //   console.log(action.payload)
+    //   return {
+    //     ...state,
+    //     userType: action.payload
+    //   }
     default:
       return state;
   }

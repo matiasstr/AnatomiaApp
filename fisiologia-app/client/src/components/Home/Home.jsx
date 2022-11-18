@@ -5,6 +5,7 @@ import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { useEffect } from "react";
 import { getImg } from "../../Redux/Actions/Actions";
 import { Image } from "cloudinary-react";
+import Footer from "../Footer/Footer";
 
 
 
@@ -18,10 +19,11 @@ function Home() {
 
 
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen h-screen flex flex-col justify-between">
       <Cards />
 
       {/* <Login/> */}
+      <Footer />
     </div>
   );
 }
