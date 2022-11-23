@@ -1,6 +1,6 @@
-import React from "react";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { render } from "react-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { postRegister } from "../../Redux/Actions/Actions";
 import validate from "../../Utils/validate";
@@ -29,9 +29,18 @@ function valid(e) {
 
 function Register() {
   let navigate = useNavigate();
+  let regStatus = useSelector((state) => state.regStatus);
+
+  useEffect(() => {
+    if (regStatus.stat === false) {
+      alert("Problema en el registro, email ya registrado");
+    } else if (regStatus.stat === true) {
+      navigate("/Suscripcion");
+    }
+  }, [regStatus]);
 
   const dispatch = useDispatch();
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
   const [input, setInput] = useState({
     email: null,
     password: null,
@@ -75,11 +84,6 @@ function Register() {
     } else {
       dispatch(postRegister(input));
       setError("");
-      //console.log(data);
-      setTimeout(() => {
-        navigate("/Suscripcion");
-      }, 500);
-      // let time = setTimeout(, 5000);
     }
   };
 
@@ -102,7 +106,7 @@ function Register() {
                 name="username"
                 onChange={handleInputChange}
               />
-              {error.username && <p className="text-red-500">{error.username}</p>}
+              {error?.username && <p className="text-red-500">{error.username}</p>}
 
               <label className="label">
                 <span className="label-text">Email</span>
@@ -114,7 +118,7 @@ function Register() {
                 name="email"
                 onChange={handleInputChange}
               />
-              {error.img && <p className="text-red-500">{error.email}</p>}
+              {error.email && <p className="text-red-500">{error.email}</p>}
             </div>
             <div className="form-control">
               <label className="label">
@@ -141,11 +145,7 @@ function Register() {
               <button className="btn btn-primary" type="submit" disabled={btnDisabled}>
                 Register
               </button>
-              <div className="flex justify-center mt-5">
-                <div>{error?.email}</div>
-                <div>{error?.username}</div>
-                <div>{error?.password}</div>
-              </div>
+
             </div>
           </form>
         </div>

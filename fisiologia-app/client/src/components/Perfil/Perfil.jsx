@@ -14,6 +14,15 @@ function Perfil() {
 
     dispatch(loadUser(token));
   }, []);
+
+  const HandleClickSus = (e) =>{
+    e.preventDefault()
+    navigate("/Suscripcion")
+
+
+  }
+
+
   const HandleClick = (e) => {
     //PARA PROBAR LA RUTA, DESPUES HAY QUE SACAR EL BOTON
     e.preventDefault();
@@ -228,7 +237,15 @@ function Perfil() {
       </div>
     </div>
   ) : (
-    <h1>No estas suscripto a ningun plan</h1>
+    <div>
+    <h1 className="m-5 text-xl">No estas suscripto a ningun plan</h1>
+    <button
+            className="p-2 m-3 shadow-lg  tr-300 w-100 font-medium  text-xl  bg-blue-600 rounded-md hover:bg-blue-600 text-gray-50"
+            onClick={HandleClickSus}
+          >
+            Suscribirse
+          </button>
+    </div>
   );
 }
 
