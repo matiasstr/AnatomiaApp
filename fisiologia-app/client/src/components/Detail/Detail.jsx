@@ -11,6 +11,7 @@ import tremendoAudio from "../../assets/media/audio.mp3";
 import styles from "./Detalle.module.css";
 
 function Detail() {
+  // let { id } = useParams();
   const dispatch = useDispatch();
 
   let { id } = useParams();

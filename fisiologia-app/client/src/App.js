@@ -22,6 +22,7 @@ import { useEffect } from "react";
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
 import { ProtectedRoute2 } from "./components/ProtectedRoute/ProtectedRoute2";
 import { ProtectedRoute3 } from "../src/components/ProtectedRoute/ProtectedRoute3";
+import Details from "./components/Detail/Details";
 
 function App() {
   let dispatch = useDispatch();
@@ -80,11 +81,11 @@ function App() {
           <Route
             path="home"
             element={
-              <ProtectedRoute>
-                <ProtectedRoute2>
+              // <ProtectedRoute>
+                // <ProtectedRoute2>
                   <Home />
-                </ProtectedRoute2>
-              </ProtectedRoute>
+                // </ProtectedRoute2>
+              // </ProtectedRoute>
             }
           />
           {/* <Route path="inicio" element={<Home />} /> */}
@@ -96,13 +97,19 @@ function App() {
           /> */}
           {/* <Route path="form" element={<Form />}></Route> */}
           <Route
-            path="detail/:id"
+            path="detail"
             element={
-              <ProtectedRoute>
-                <ProtectedRoute2>
+              // <ProtectedRoute>
+                // <ProtectedRoute2>
                   <Detail />
-                </ProtectedRoute2>
-              </ProtectedRoute>
+                // </ProtectedRoute2>
+              // </ProtectedRoute>
+            }
+          />
+          <Route 
+            path='detalle'
+            element={
+              <Details />
             }
           />
           <Route //admin

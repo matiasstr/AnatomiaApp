@@ -19,6 +19,7 @@ route.get("/precarga", createDefaulImg);
 
 // route.post("/login", postLogin);
 // route.put("/IProfile", putProfile)
+route.get("/detail/:id", getImageById)
 
 module.exports = route;
 
